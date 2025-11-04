@@ -1,0 +1,372 @@
+/******************************************************************************
+Date Created: September 2024
+	 by: Nina Buchmann (ncbuchmann@gmail.com )
+Paper: The Good Wife? Reputation Dynamics and Financial Decision-Making Inside the Household
+Section: Experiment 3 Results
+******************************************************************************/
+
+** PREPARE **
+********************************************************************************
+
+** Clear **
+set more off
+eststo clear
+
+** FIND PREDICTORS OF EXPERTISE USING RANDOM FOREST **
+********************************************************************************
+
+* Define list of controls that exists both in experiment 2 and experiment 3
+gl controls "age_reported education hh_children hh_member income_last income_prev hus_income_last hus_income_prev m1 m2 m3 m4 m5 m6 m_effort m_w m_h m_h_w m_h_h risk years_married income hus_income"
+
+* Load training data (experiment 2)
+u "$cdata/experiment12_cleaned.dta", clear
+
+* Rename variables to their variable names in experiment 3
+ren *_dec_* *_*
+ren purchase_* purchases_*
+ren health_* health_care_*
+ren children_* children_health_care_*
+ren schoolfees_* children_school_fees_*
+ren education_* children_education_*
+ren food_* children_food_*
+ren clothing_* children_clothing_*
+ren household_* household_expenses_*
+ren relatives_* relatives_support_*
+ren other_* other_basics_*
+
+* Save training data
+tempfile training
+save `training', replace
+* Load optimal hyper parameters (found above)
+u "$cdata/RF_parameters", clear
+		
+* Store optimal parameters
+foreach out in oob_error optim_iteration optim_number_vars{
+	sum `out'
+	local `out'=`r(mean)'
+}
+		
+* Load training data
+u `training', clear
+
+* Train the random forest algorithm with the oob-error minimizing hyper parameters *
+rforest qw $controls if qw!=., type(reg) iter(`optim_iteration') numvars(`optim_number_vars') 
+
+* List important variables
+ereturn list
+matrix vars=e(importance)
+matrix list vars
+	
+* Load prediction data
+u "$cdata/experiment3_cleaned.dta", clear	
+		
+* Prediction
+predict qw
+
+* Create types to match the distribution in experiment 2
+egen cutoff=pctile(qw), p(50)
+g low_qw=qw<cutoff if qw!=.
+
+* List of controls
+local controls "age_reported education income risk m hus_income years_married hh_children hh_member"
+
+* Create globals for the different control specifications
+local basic "i.enumeratorID"
+local sparse "`basic' i.tc"	
+local full "`sparse' `controls' *_miss"
+
+* Impute missing controls
+foreach var in `controls' {
+	g `var'_miss=`var'==.
+	replace `var'=0 if `var'==.
+}	
+
+* List of heterogeneity variables 
+local hets "bdm_last book" 
+
+* Regressors
+local regress0 "low_m_h_w free free_lr info info_lr free_info free_info_lr"
+local regress1 "low_m_h_w any_sticker any_sticker_lr"
+local regress2 "any_sticker"
+
+ ** MAIN RESULTS -- FIGURES 8-10, FIGURES A.1-A.3, TABLE A.4 
+********************************************************************************
+
+* Using math score (a=0), or random forest measure of expertise (a=1) 
+forval a=0/1{	
+	
+	* Define the names
+	if `a'==0{
+		local measure "math"
+		local topfolder "00_Main/"
+	}
+	if `a'==1{
+		local measure "forest"
+		local topfolder "01_Appendix/"
+	}
+		
+	* Replace expertise with alternative measure
+	if `a'==1{
+		replace low_m_h_w=low_qw
+		replace free_lr=free*low_m_h_w
+		replace info_lr=info*low_m_h_w
+		replace free_info_lr=free_info*low_m_h_w
+		replace any_sticker_lr=any_sticker*low_m_h_w
+	}
+	
+	* P-values of the interaction of any sticker and book as well as any sticker and salience
+	reg wtp bdm_last##(low_m_h_w any_sticker any_sticker_lr) i.enumeratorID i.tc, r
+	reg wtp book##(low_m_h_w any_sticker any_sticker_lr) i.enumeratorID i.tc, r
+
+	** Entire sample (h=0), or heterogeneity analysis (h=1)
+	forval h=0/1{
+				
+		** Foreach of the heterogeneity analyses		
+		foreach hetero in `hets'{
+			
+			** Define figure name
+			if `h'==0{
+				local hetero_n "all"
+				if `a'==0{
+				  local fn "Figure_8_"
+				}
+				if `a'==1{
+				local fn "Figure_A1_"
+				}
+			}
+			if `h'==1{
+				local hetero_n `hetero'
+				if "`hetero'"== "bdm_last" & `a'==0{
+					local fn "Figure_10_"
+				}
+				if "`hetero'"== "bdm_last" & `a'==1{
+					local fn "Figure_A3_"
+				}
+				if "`hetero'"== "book" & `a'==0{
+					local fn "Figure_9_"
+				}
+				if "`hetero'"== "book" & `a'==1{
+					local fn "Figure_A2_"
+				}
+			}
+								
+			** Run regression using different regressor groups 
+			forval r=0/2{
+		
+				** Run regressions for each of the groups in the heterogeneity analysis (g=0 or g=1)
+				forval g=0/1{
+				
+					** Run regression only one in the entire sample
+					if (`h'==0 & "`hetero'"=="bdm_last" & `g'==0) | `h'==1{
+						
+						preserve 
+																		
+						* Keep only observations in one heterogeneity group
+						if `h'==1{
+							keep if `hetero'==`g'
+						}
+						
+						** Foreach type of control variables
+						foreach control in basic sparse full{
+
+							* Run the regression 
+							qui: eststo reg`h'`hetero'`g'`r'`control': reg wtp `regress`r'' ``control'', r
+							* Extract the regression results
+							matrix values=r(table)
+							* Extract the control mean
+							sum wtp if info==0 & free==0 & low_m_h_w==0
+							* Store the control mean
+							estadd scalar control_mean=r(mean)
+
+							* Save the control mean
+							local T00`g'=r(mean)
+							* Save the sample size
+							qui: local N=e(N)
+							
+							* Add the p-values from comparing experts and non-experts across the different treatment arms
+							if `r'==2 {
+								estadd scalar p_val1=.
+							}
+							else {
+								test low_m_h_w=0
+								estadd scalar p_val1=r(p)
+							}
+							
+							if `r'==0 {
+								test low_m_h_w+free_lr=0
+								estadd scalar p_val2=r(p)
+								
+								test low_m_h_w+info_lr=0
+								estadd scalar p_val3=r(p)
+								
+								test free_info+free_info_lr=0
+								estadd scalar p_val4=r(p)
+								estadd scalar p_val5=. 
+							}
+														
+							if `r'==1 & "`control'"=="sparse"{
+
+								* Define names -- 1st digit is whether the woman is Non-Expert=1, 2nd digit whether she received a sticker
+								local name1 "10"
+								local name2 "01"
+								local name3 "11"
+								forval i=1/3{
+									* For each regressor, store the coefficient, the standard error and the p-value (Only do for non-expert vs expert for the non-play outcomes)
+									local T`name`i''`g'=`T00`g''+values[1,`i']
+									local T`name`i''_se=values[2,`i']
+									* Create the standard errors for the interaction term
+									if `i'==3 {
+										lincom low_m_h_w+any_sticker+any_sticker_lr
+										local T`name`i''`g'=`T00`g''+`r(estimate)'
+										local T`name`i''_se=`r(se)'
+									}
+									local Th`name`i''`g'=`T`name`i''`g''+invttail(`N'-1,0.025)*`T`name`i''_se'
+									local Tl`name`i''`g'=`T`name`i''`g''-invttail(`N'-1,0.025)*`T`name`i''_se'
+								}
+							 }
+								* Get p-values of the expert vs non-expert comparison with any sticker
+								if `r'!=2 {
+									test low_m_h_w=0
+								}
+								if `r'==1 & "`control'"=="sparse"{
+									local p10`g'=r(p)
+								}
+								if `r'!=0{
+									* Add empty p-values to fill out the any sticker empty rows
+									estadd scalar p_val2=. 
+									estadd scalar p_val3=. 
+									estadd scalar p_val4=. 
+								}
+								if `r'==1{
+									test low_m_h_w+any_sticker_lr=0
+									estadd scalar p_val5=r(p)
+										if "`control'"=="sparse"{
+											local p11`g'=r(p)
+										}
+								}
+								if `r'==1 & "`control'"=="sparse"{
+									local p01`g'=1
+								}
+							}
+							restore
+						}
+					}
+				}
+				
+			* Output the tables
+			if `h'==0 & `a'==0{
+				estout reg0* ///
+				using "$tables/01_Appendix/Table_A4_math.tex", label replace cells(b(fmt(3)) se(par fmt(3))) style(tex) ///
+				mlabels(, none) collabels(, none) ///
+				eqlabels(, none) ///
+				stats(control_mean p_val1 p_val2 p_val3 p_val4 p_val5 N, fmt(3 3 3 3 3 3 0) ///
+			labels("Mean(Control \& Expert)" "P-value (Expert vs. Non-Expert, Control)" "P-value (Expert vs. Non-Expert, Donated)" "P-value (Expert vs. Non-Expert, Effective)" "P-value (Expert vs. Non-Expert, D+E)" "P-value (Expert vs. Non-Expert, Any Sticker)" "Observations")) /// 
+				keep(low_m_h_w free free_lr info info_lr free_info free_info_lr any_sticker any_sticker_lr) noomitted
+			}
+				
+			* Output the figure
+			* Create a control mean variable
+			preserve
+			forval g=0/1{
+				if (`h'==0 & "`hetero'"=="bdm_last" & `g'==0) | `h'==1{
+					g T00`g'=`T00`g''
+					forval i=1/3{
+						* Store the coefficients, confidence intervals and p-values
+						foreach stat in T Tl Th{
+							g `stat'`name`i''`g'=``stat'`name`i''`g''
+						}
+						g p`name`i''`g'=""
+						if `p`name`i''`g''<0.1{
+							replace p`name`i''`g'="*"
+						}
+						if `p`name`i''`g''<0.05{
+							replace p`name`i''`g'="**"
+						}
+						if `p`name`i''`g''<0.01{
+							replace p`name`i''`g'="***"
+						}
+					}
+				}
+			}
+
+			if (`h'==0 & "`hetero'"=="bdm_last") | `h'==1{
+				* Reshape the data	
+				keep T0* Tl0* Th0* T1* Tl1* Th1* p0* *p1* 
+				if `h'==0{
+					ren *0 *
+				}
+				duplicates drop
+				g n=1
+				if `h'==0{
+					reshape long T0 Tl0 Th0 T1 Tl1 Th1 p1 p0, i(n) j(any_sticker)
+					drop n
+					reshape long T Th Tl p, i(any_sticker) j(type)
+				}
+				if `h'==1{
+					reshape long T00 T10 Tl10 Th10 p10 T01 Tl01 Th01 p01 T11 Tl11 Th11 p11, i(n) j(level)
+					drop n
+					reshape long T0 Tl0 Th0 T1 Tl1 Th1 p1 p0, i(level) j(any_sticker)
+					reshape long T Th Tl p, i(level any_sticker) j(type)
+				}
+				drop if T==.
+				* Define the figure labels
+				format T %5.0f
+				if `h'==0{
+					g stype=type if any_sticker==0
+					replace stype = type+2.5 if any_sticker==1
+					g p_y=T+9
+					g p_x=stype+0.29
+					if `a'==1{
+						replace p_x=stype+0.31
+					}
+					replace p_x=p_x-0.09 if stype==5
+					local xlabel `"0.5 "Control" 3 "Any Sticker" "'
+					local size "small"
+					local xline "" 
+					local max=5
+					local scale "100(100)400"
+				}
+				if `h'==1{
+					g stype=type if level==0 & any_sticker==0
+					replace stype=type+3 if level==0 & any_sticker==1
+					replace stype=type+6 if level==1 & any_sticker==0
+					replace stype=type+9 if level==1 & any_sticker==1
+					g p_y=T+15
+					g p_x=stype+0.58
+					if `a'==1{
+						replace p_x=stype+0.6
+					}
+					if "`hetero'"=="bdm_last"{
+						local label1 "Control"
+						local label2 "Salience"
+					}
+					if "`hetero'"=="book"{
+						local label1 "Low Hiding Cost (Bag)"
+						local label2 "High Hiding Cost (Book)"
+					}
+					local xlabel `"0.5 "No Sticker" 2 `" " " " " "`label1'" "' 3.5 "Any Sticker" 6.5 "No Sticker" 8 `" " " " "  "`label2'" "' 9.5 "Any Sticker" "'
+					local size "vsmall"
+					local xline "xline(5, lc(black))" 
+					local max=3
+					local scale "0(100)500"
+				}
+						
+				* In each iteration, show one more graph, so findings come in one-by-one for the presentations
+
+					* Export the graphs
+					
+					twoway (bar T stype if type==0) ///
+					(bar T stype if type==1) ///
+					(rcap Th Tl stype, color(black))  ///
+					(scatter T stype, msym(none) mlab(T) mlabpos(1) mlabcolor(black) mlabsiz(`size')) ///
+					(scatter p_y p_x , msym(none) mlab(p) mlabpos(0) mlabcolor(black) mlabsize(`size')), ///
+					legend(row(1) order(1 "Expert" 2 "Non-Expert")) ///
+					xlabel(`xlabel', noticks)  graphregion(color(white)) `xline' ///
+					xtitle("") ytitle("WTP (MWK)") ylabel(`scale') name(figure`hetero_n'_`measure', replace)
+				graph export "$graphs/`topfolder'`fn'`hetero_n'_`measure'.png", as(png) replace
+			}
+		restore
+		}
+	}
+}
+

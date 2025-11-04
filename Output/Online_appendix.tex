@@ -1,0 +1,1038 @@
+\renewcommand \thepart{}
+\renewcommand \partname{}
+\newpage
+\thispagestyle{empty}
+
+\appendix
+\addcontentsline{toc}{section}{Online Appendix} % Add the appendix text to the document TOC
+\part{Online Appendix} % Start the appendix part
+\parttoc % Insert the appendix TOC
+\pagebreak
+
+\setcounter{page}{1}
+\setcounter{figure}{0}		
+\setcounter{table}{0}
+\renewcommand{\thefigure}{A.\arabic{figure}}
+\renewcommand{\thetable}{A.\arabic{table}}
+
+\section{Theory Appendix}\label{TAppendix}
+{\setstretch{1.0}
+
+
+\subsection{Strategies}\label{strategies}
+
+Before describing strategies, we introduce the notation for information sets, at which the husband and the wife make choices.
+Denote $h_t^H\in H_t^H$ the information set of the husband in period $t$. At $t=1$, the husband has only one information set. At $t=2$, $h_t^H$ is characterized by the husband's observations --- the wife's purchase and usage choices at $t=1$. Denote $h_{t,g}^{NE}\in H_{t,g}^{NE}$ the non-expert wife's information set when she makes an investment choice and $h_{t,e}^{NE}\in H_{t,e}^{NE}$ when she makes a usage choice in period $t$. At $t=1$, the non-expert wife has only one information set when making the investment choice; when making the usage choice, her information set is described by the productivity of the purchased good. At $t=2$, the non-expert wife's information sets also depend on the history she observes. Similarly, denote $h_{t,g}^{E}\in H_{t,g}^{E}$ the expert wife's information set when she makes an investment choice and $h_{t,e}^{E}\in H_{t,e}^{E}$ when she makes a usage choice in period $t$. In contrast to the non-expert wife, the expert wife's information set when making the investment choice depends on the productivity of the risky good, which she observes.
+
+Denote the agent $i$'s strategy $\sigma^i$. For convenience, we also introduce notation for behavior strategies at each information set, i.e., $\sigma_t^H: H_t^H\rightarrow [0,1]$, $\sigma_{t,g}^{E}: H_{t,g}^E\rightarrow [0,1]$, $\sigma_{t,e}^{E}: H_{t,e}^E\rightarrow [0,1]$, $\sigma_{t,g}^{NE}: H_{t,g}^{NE}\rightarrow [0,1]$, $\sigma_{t,e}^{NE}: H_{t,e}^{NE}\rightarrow [0,1]$ map histories to the probability of an action (making a transfer, buying the risky good, or using the purchased good).
+
+Let $P_2(h_2^H)$ be the wife's reputation at the information set $h_2^H$. Since the wife observes more information than the husband, she also knows $P_2(h_2^H)$ in the second period. To simplify notation, we just write $P_2$ for the wife's reputation at $t=2$.
+
+We focus on a Perfect Bayesian Equilibrium, which requires sequential rationality and the beliefs to be determined by Bayes' rule whenever possible. The Bayes' rule is the following:
+
+\begin{align*}
+P_2(P_1,g_1=1,e_1=1)=\frac{P_1\sigma^{E}_{1,g}(h_{1,g}^{E})\sigma^{E}_{1,e}(h_{1,e}^{E})}{P_1\sigma^{E}_{1,g}(h_{1,g}^{E})\sigma^{E}_{1,e}(h_{1,e}^{E})+(1-P_1)\sigma^{NE}_{1,g}(h_{1,g}^{NE})\sigma^{NE}_{1,e}(h_{1,e}^{NE})}
+\end{align*}
+
+\subsection{Proof of lemma 1}\label{lemma1_proof}
+\begin{proof}
+Consider $t=2$. This is the last period, so everyone plays their static best response. For the wife, the investment strategies are $\sigma^{NE}_{2,g}(h_{2,g}^{NE})=1$ for any $h_{2,g}^{NE}$, and $\sigma^{E}_{2,g}(h_{2,g}^{E})=\begin{cases}1 \text{ if } \eta_2^R=\eta^R \\ 0  \text{ if } \eta_2^R=0 \end{cases}$. The usage strategies are $\sigma^{E}_{2,e}(h_{2,e}^{E})=\begin{cases}1 \text{ if } \eta_2\neq 0 \\ 0  \text{ if } \eta_2=0 \end{cases}$, $\sigma^{NE}_{2,e}(h_{2,e}^{NE})=\begin{cases}1 \text{ if } \eta_2\neq 0 \\ 0  \text{ if } \eta_2=0 \end{cases}$.
+The husband's payoff is increasing in $P_2$: $\lambda\eta^R+P_2(1-\lambda)\eta^S$. Therefore, the husband's best response is $\sigma^H_2(h_2^H)=\begin{cases}1 \text{ if } P_2>P_2^* \\ [0,1] \text{ if } P_2=P_2^* \\ 0  \text{ if } P_2<P_2^*\end{cases}$, where $P_2^*$ is defined by $\lambda\eta^R+P_2(1-\lambda)\eta^S=\omega$, i.e., $P_2^*=\dfrac{\omega-\lambda\eta^R}{(1-\lambda)\eta^S}$.
+\end{proof}
+
+\subsection{Proof of proposition 1}\label{prop2_proof}
+\begin{proof}
+ Suppose the hiding cost is sufficiently high: $c>\beta\lambda\eta^R$.
+    Lemma 1 pins down the equilibrium strategies at $t=2$, except for the husband's strategy when he is indifferent between making the transfer or not, i.e., at $h_2^H$ such that $P_2=P_2^*$. For these cases, let the husband randomize with probabilities $\Tilde{\sigma}_2^H(h_2^H)\in[0,1]$, which are defined further in the proof for various histories.
+    At $t=1$, equilibrium strategies are the following. The expert wife invests iff the risky good is productive and always uses the good unless it is unproductive and the hiding cost is too high:
+    \begin{center}
+    $\sigma^{E}_{1,g}(h_{1,g}^{E})=
+        \begin{cases}
+        1 \text{ if } \eta_1^R\neq 0\\ 
+        0  \text{ if } \eta_1^R=0
+        \end{cases}$;  \\
+    $\sigma^{E}_{1,e}(h_{1,e}^{E})=\begin{cases}
+        1 &\text{ if } \eta_1\neq 0 \text{ or } c<\beta(\lambda\eta^R+(1-\lambda)\eta^S) \\
+        0 &\text{ if } \eta_1 = 0 \text{ and } c \geq\beta(\lambda\eta^R+(1-\lambda)\eta^S)
+        \end{cases}$
+    \end{center}
+    The non-expert wife invests with a probability that is decreasing in reputation, always uses productive and safe goods, and never uses unproductive goods.
+    \begin{center}
+    $\sigma^{NE}_{1,g}(h_{1,g}^{NE})=
+    \begin{cases}
+    0 &\text{ if } P_1>\dfrac{P_2^*}{(1-\lambda)(1-P_2^*)+P_2^*} \\
+    \dfrac{P_2^*-P_1+\lambda P_1(1-P_2^*)}{(1-P_1)P_2^*}\leq \lambda &\text{ if } P_1\in\left[P_2^*, \dfrac{P_2^*}{(1-\lambda)(1-P_2^*)+P_2^*}\right]\\
+    \dfrac{P_2^*-P_1+\lambda P_1(1-P_2^*)}{(1-P_1)P_2^*}> \lambda &\text{ if } P_1<P_2^*\\
+    \end{cases}$; \\
+    $\sigma^{NE}_{1,e}(h_{1,e}^{NE})=\begin{cases}
+        1 &\text{ if } \eta_1\neq 0\\
+        0 &\text{ if } \eta_1 = 0
+        \end{cases}$
+    \end{center}
+
+Note, that the husband makes a transfer at $t=1$ if the expected payoff is higher than the outside option. 
+Let $V_t(P_t)$ be the expected value of the husband at time $t$ if he has a belief $P_t$. Note that \\
+$V_2(P_2)=\begin{cases}
+\omega \quad \text{ if } P_2<P_2^*\\
+\lambda\eta^R + P_2(1-\lambda)\eta^S\quad \text{ if } P_2\geq P_2^*
+\end{cases}$.\\
+
+Using productive and safe goods is weakly dominant for both wife types. When the good is unproductive, $e_1=0$ is optimal for the non-expert wife because the hiding cost is greater than the highest continuation payoff: $c>\beta\lambda\eta^R$. For the expert wife, it is sometimes optimal to use the unproductive good (off-path) if the continuation payoff is larger than the cost, i.e., if $c<\beta(\lambda\eta^R+(1-\lambda)\eta^S)$.
+Next, consider the purchase decision.
+
+We will show that the strategies of the wife and the husband form an equilibrium for different values of $P_1$ for which the wife has different investment strategies: $P_1>\dfrac{P_2^*}{(1-\lambda)(1-P_2^*)+P_2^*}$ and $P_1\leq\dfrac{P_2^*}{(1-\lambda)(1-P_2^*)+P_2^*}$. \\
+
+For all values of $P_1$, we: 
+\begin{enumerate}[itemsep=-0.5mm]
+    \item calculate the husband's Bayesian on-equilibrium and off-equilibrium posteriors $P_2(P_1|g_1,e_1)$ for $g_1 \in \{0,1\}$ and $e_1 \in \{0,1\}$ given the wife's strategies, 
+    \item show that the wife has no profitable deviation in her usage choice and calculate the husband's transfer strategy in period 2 that makes the wife indifferent between different usage choices in case she has a mixed strategy, and 
+    \item show that the wife has no profitable deviation in her investment choice and calculate the husband's transfer strategy in period 2 that makes the wife indifferent between different investment choices in case she has a mixed strategy, 
+    \item calculate the husband's transfer strategy in period 1. 
+\end{enumerate}
+First, suppose $P_1>\dfrac{P_2^*}{(1-\lambda)(1-P_2^*)+P_2^*}$.
+\begin{itemize}[itemsep=-0.5mm]
+    \item Given the strategies, the updated reputation is $P_2>P_2^*$. 
+    \item For the investment choice, it is optimal for the non-expert wife to buy the safe good because $\eta^S+\beta\lambda\eta^R\geq \lambda\eta^R+\beta\lambda^2\eta^R$. This condition holds by assumption that $\beta\lambda\eta^R(1-\lambda)\geq \lambda\eta^R-\eta^S$ (assumption 1). For the expert wife, it is optimal to buy the risky good if $\eta_1^R=\eta^R$ because $\eta^R+\beta(\lambda\eta^R+(1-\lambda)\eta^S)>\eta^S+\beta(\lambda\eta^R+(1-\lambda)\eta^S)$. For the expert wife, it is optimal to buy the safe good if $\eta_1^R=0$ because
+    $\eta^S + \beta(\lambda\eta^R+(1-\lambda)\eta^S)>\max\{0,-c+\beta(\lambda\eta^R+(1-\lambda)\eta^S)\}$.
+    \item For the husband's strategy, any posterior $P_2$ lies above $P_2^*$. In this region, $V_2(P_2)$ is linear in $P_2$, so $\mathbb{E}V_2(P_2)=\lambda\eta^R + \e P_2(1-\lambda)\eta^S=\lambda\eta^R + P_1(1-\lambda)\eta^S=V_2(P_1)$. Thus, the husband needs to only compare first-stage payoffs from $T_1=1$ and $T_1=0$. The first-stage payoff is increasing in $P_1$:
+\begin{align*}
+    \e[U^H_1(T_1=1)|P_1]=P_1(\lambda\eta^R+(1-\lambda)\eta^S)+(1-P_1)\eta^S
+\end{align*}
+Moreover, at the lower end of the interval, at $P_1=\dfrac{P_2^*}{(1-\lambda)(1-P_2^*)+P_2^*}$, the husband prefers to make the transfer:\\
+\begin{align*}
+    &\e\left[U^H_1(T_1=1)|P_1=\frac{P_2^*}{(1-\lambda)(1-P_2^*)+P_2^*}\right]-\omega\\
+    &=\dfrac{P_2^*}{(1-\lambda)(1-P_2^*)+P_2^*}(\lambda\eta^R+(1-\lambda)\eta^S)+\dfrac{(1-\lambda)(1-P_2^*)}{(1-\lambda)(1-P_2^*)+P_2^*}\eta^S-\omega\\
+    &\propto P_2^*(\lambda\eta^R+(1-\lambda)\eta^S)+(1-\lambda)(1-P_2^*)\eta^S-\omega+\omega \lambda (1-P_2^*)\\
+    &= P_2^*(\lambda\eta^R+(1-\lambda)\eta^S)+(1-P_2^*)\lambda \eta^R+(1-P_2^*)(1-\lambda)(\eta^S-\lambda \eta^R)-\omega+\omega \lambda (1-P_2^*)\\
+    &= (1-P_2^*)(\lambda(\omega-\lambda\eta^R)-(1-\lambda)(\lambda \eta^R-\eta^S)) \geq 0 \quad (\text{by assumption 1}).
+\end{align*}
+Thus, $T_1=1$ in this interval.
+\end{itemize}
+Second, suppose $P_1\leq\dfrac{P_2^*}{(1-\lambda)(1-P_2^*)+P_2^*}$.
+\begin{itemize}[itemsep=-0.5mm]
+    \item Given the strategies, $P_2(P_1|g_1=0,e_1=1)=P_2^*$, $P_2(P_1\geq \dfrac{P_2^*}{(1-P_2^*)(1-\lambda)+1}\equiv \overline{P}_1|g_1=1,e_1=1)\geq P_2^*$ and  $P_2(P_1<\overline{P}_1|g_1=1,e_1=1)<P_2^*$. Denote $\kappa_1^S\equiv\sigma_2^H(h_2^H)$ when $P_1\geq\overline{P}_1$ and $g_1=0$. Denote $\kappa_2^S\equiv\sigma_2^H(h_2^H)$ when $P_1<\overline{P}_1$ and $g_1=0$. 
+    \item For the investment choice, the non-expert wife mixes if $\eta^S+\beta\kappa_1^S\lambda\eta^R=\lambda\eta^R+\beta\lambda^2\eta^R$ and $\eta^S+\beta\kappa_2^S\lambda\eta^R=\lambda\eta^R$. These conditions pin down the husband's mixing probabilities: $\kappa_1^S=\dfrac{\lambda\eta^R-\eta^S+\beta\lambda^2\eta^R}{\beta\lambda\eta^R}$ and $\kappa_2^S=\dfrac{\lambda\eta^R-\eta^S}{\beta\lambda\eta^R}$. For the expert wife, it is optimal to buy the risky good if $\eta_1^R=\eta^R$ because $\eta^R+\beta(\lambda\eta^R+(1-\lambda)\eta^S)>\eta^S+\beta\kappa_1^S(\lambda\eta^R+(1-\lambda)\eta^S)$ and $\eta^R>\eta^S+\beta\kappa_2^S(\lambda\eta^R+(1-\lambda)\eta^S)$. The only strategies that form an equilibrium are the husband randomizing for $g_1=0$ and transferring with probability 1 for $g_1=1$, as otherwise when $P_1=\bar{P_1}$, and $P_2=P_2^*$ and the non-expert wife's investment rate is $>\lambda$, the non-expert wife would have the incentive to deviate by decreasing her investment rate. For the expert wife, it is optimal to buy the safe good if $\eta_1^R=0$ because
+    $\eta^S + \beta\kappa_1^S(\lambda\eta^R+(1-\lambda)\eta^S)>\max\{0,-c+\beta(\lambda\eta^R+(1-\lambda)\eta^S)\}$ and $\eta^S + \beta\kappa_2^S(\lambda\eta^R+(1-\lambda)\eta^S)>0$.
+    \item For the husband's strategy, we will look at three regions separately: $P_1\in\left[P_2^*,\dfrac{P_2^*}{(1-\lambda)(1-P_2^*)+P_2^*}\right]$, $P_1\in(\overline{P}_1, P_2^*)$, and $P_1\leq \overline{P}_1$:
+    \begin{itemize}
+        \item First, suppose $P_1\in\left[P_2^*,\dfrac{P_2^*}{(1-\lambda)(1-P_2^*)+P_2^*}\right]$. We look at the difference between the sum of the first-stage and continuation payoffs under the transfer and no transfer. 
+        The expected first-stage payoff if $T_1=1$ is \\
+\begin{align*}
+    \e[U^H_1(T_1=1)|P_1]&=P_1(\lambda\eta^R+(1-\lambda)\eta^S)+(1-P_1)(\sigma_{1,g}^{NE}\lambda\eta^R+(1-\sigma_{1,g}^{NE})\eta^S)\\
+    &=...=\lambda\eta^R+P_1\dfrac{1-\lambda}{P_2^*}(\eta^S-(1-P_2^*)\lambda\eta^R)  \\
+    &\geq \lambda \eta^R+(1-\lambda)[\eta^S-(1-P_2^*)\lambda \eta^R] \
+\end{align*}
+
+The difference in expected first-stage payoffs under $T_1=1$ and $T_1=0$ is
+\begin{align*}
+    \Delta \e U_1^H&=\lambda\eta^R+P_1\dfrac{1-\lambda}{P_2^*}(\eta^S-(1-P_2^*)\lambda\eta^R)-\omega
+\end{align*}
+which is increasing in $P_1$.
+The expected (discounted) second-stage continuation payoff if $T_1=1$ is
+\begin{align*}
+    \beta\e[U^H_2(T_1=1)|P_1]=&\beta[V_2(P_2(P_1|g=1,e=1))Pr(g=1,e=1)\\
+    &+\omega Pr(g=0)+\omega Pr(g=1,e=0)]
+\end{align*}
+The expected (discounted) continuation payoff if $T_1=0$ can also be written in a similar way using the linearity of payoff and $\e P_2=P_1$:
+\begin{align*}
+    &\beta\e[U^H_2(T_1=0)|P_1]=\beta V_2(P_1)\\
+    &=\beta[V_2(P_2(P_1|g=1,e=1))Pr(g=1,e=1)+\omega Pr(g=0)+\lambda\eta^R Pr(g=1,e=0)]
+\end{align*}
+The difference in the expected continuation payoffs under $T_1=1$ and $T_1=0$ is
+\begin{align*}
+    \beta\Delta\e U_2^H&=\beta Pr(g=1,e=0)(\omega-\lambda\eta^R)\\
+    &=\beta\dfrac{P_2^*-P_1+\lambda P_1(1-P_2^*)}{P_2^*}(1-\lambda)(\omega-\lambda\eta^R)
+\end{align*}
+which is decreasing in $P_1$.
+The husband chooses $T_1=1$ iff $\Delta \e U_1^H+\beta\Delta\e U_2^H\geq0$. First, we show that $\Delta \e U_1^H+\beta\Delta\e U_2^H\geq0$ at the lower end, $P_1=P_2^*$:
+\begin{align*}
+    &\Delta \e U_1^H+\beta\Delta\e U_2^H\\
+    &=\lambda\eta^R+(1-\lambda)(\eta^S-(1-P_2^*)\lambda\eta^R)-\omega+\beta \lambda (1-P_2^*)(1-\lambda)(\omega-\lambda\eta^R)\\
+    &=\lambda\eta^R+(1-\lambda)(\eta^S-(1-P_2^*)\lambda\eta^R)\\
+    &-(\lambda \eta^R+P_2^*(1-\lambda)\eta^S)+\beta \lambda (1-P_2^*)(1-\lambda)(\omega-\lambda\eta^R)\\
+    &=(1-\lambda)(1-P_2^*)(\beta \lambda(\omega-\lambda\eta^R)-(\lambda\eta^R-\eta^S))\geq 0,
+\end{align*}
+where the inequality holds by assumption 1.\\
+Second, we show that $\Delta \e U_1^H+\beta\Delta\e U_2^H$ is monotonically increasing in $P_1$:
+\begin{align*}
+    &\dfrac{\partial}{\partial P_1}(\Delta \e U_1^H+\beta\Delta\e U_2^H)\\
+    &=\dfrac{1-\lambda}{P_2^*}(\eta^S-(1-P_2^*)\lambda\eta^R)+\beta\dfrac{1-\lambda}{P_2^*}(\lambda(1-P_2^*)-1)(\omega-\lambda\eta^R)\\
+    &\propto \eta^S-(1-P_2^*)\lambda\eta^R+\beta P_2^*(1-\lambda)\eta^S(\lambda(1-P_2^*)-1)\\
+    &=P_2^*[\lambda\eta^R-\beta\eta^S(1-\lambda)(1-\lambda(1-P_2^*))]-(\lambda\eta^R-\eta^S)\\
+    &=\beta\lambda(\omega-\lambda\eta^R)\left[\dfrac{\eta^R}{\beta(1-\lambda)\eta^S}-\dfrac{1-\lambda(1-P_2^*)}{\lambda}\right]-(\lambda\eta^R-\eta^S)\\
+    &\geq\beta\lambda(\omega-\lambda\eta^R)\left[\dfrac{\eta^R}{(1-\lambda)\eta^S}-\dfrac{1-\lambda(1-P_2^*)}{\lambda}\right]-(\lambda\eta^R-\eta^S)\\
+    &=\beta\lambda(\omega-\lambda\eta^R)\left[1+\dfrac{\lambda\eta^R+\lambda^2\eta^R-\lambda\omega-\eta^S+\lambda\eta^S}{\lambda(1-\lambda)\eta^S}\right]-(\lambda\eta^R-\eta^S)>0,
+\end{align*}
+where we have used that $P_2^*=\dfrac{\omega - \lambda \eta^R}{(1-\lambda)\eta^S}$ and the inequality holds under assumption 1. Thus, the husband chooses $T_1=1$ at all $P_1\geq P_2^*$.
+\item Next, suppose $P_1\in(\overline{P}_1, P_2^*)$. Following the same approach as above, the difference in expected first-stage payoffs under $T_1=1$ and $T_1=0$ is
+\begin{align*}
+    \Delta \e U_1^H&=\lambda\eta^R+P_1\dfrac{1-\lambda}{P_2^*}(\eta^S-(1-P_2^*)\lambda\eta^R)-\omega
+\end{align*}
+which is increasing in $P_1$.
+The difference in the expected continuation payoffs under $T_1=1$ and $T_1=0$ is
+\begin{align*}
+    \beta\Delta\e U_2^H&=\beta Pr(g=1,e=1)(\lambda\eta^R+P_2(P_1|g=1,e=1)(1-\lambda)\eta^S-\omega)\\
+    &=\beta (P_1+(1-P_1)\sigma_{1,g}^{NE})\lambda(\lambda\eta^R+P_2(P_1|g=1,e=1)(1-\lambda)\eta^S-\omega)\\
+    &=\beta \dfrac{P_1P_2^*+P_2^*-P_1+\lambda P_1(1-P_2^*)}{P_2^*}\lambda \times \\
+    &\left(\lambda\eta^R+\dfrac{P_1P_2^*}{P_1P_2^*+P_2^*-P_1+\lambda P_1(1-P_2^*)}(1-\lambda)\eta^S-\omega\right)\\
+    &=\beta\lambda\left[ (\omega-\lambda\eta^R)\dfrac{(1-\lambda)P_1(1-P_2^*)-P_2^*}{P_2^*}+\eta^S(1-\lambda)P_1 \right]
+\end{align*}
+which is also increasing in $P_1$.
+Thus, $\Delta \e U_1^H+\beta\Delta\e U_2^H$ is monotonically increasing in $P_1$ in this interval. At the lower end, if $P_1=\overline{P}_1$, then $P_2(P_1|g=1,e=1)=P_2^*$, so $\beta\Delta\e U_2^H=0$. For the first-stage payoff, $\Delta \e U_1^H<0$. Therefore, the husband chooses $T_1=0$ at $P_1=\overline{P}_1$ and switches to $T_1=1$ at some higher $P_1$.
+\item Finally, suppose $P_1\leq \overline{P}_1$. On the equilibrium path, updated reputation is always below $P_2^*$. Then, following the same argument as in Proposition 1, the husband needs to only consider the first-stage payoff. The expected first-stage payoff is worse than the outside option:
+\begin{align*}
+    \e[U^H_1(T_1=1)|P_1]&=P_1(\lambda\eta^R+(1-\lambda)\eta^S)+(1-P_1)(\sigma_{1,g}^{NE}\lambda\eta^R+(1-\sigma_{1,g}^{NE})\eta^S)\\
+    &\leq P_1(\lambda\eta^R+(1-\lambda)\eta^S)+(1-P_1)\lambda\eta^R\\
+    &<P_2^*(\lambda\eta^R+(1-\lambda)\eta^S)+(1-P_2^*)\lambda\eta^R\\
+    & \leq \lambda \eta^R + (1-\lambda) \eta^S=\omega
+\end{align*}
+Thus, the husband also chooses $T_1=0$ at all $P_1<\overline{P}_1$.
+\end{itemize}
+\end{itemize}
+Combining the three intervals for the husband, we conclude that the husband uses a threshold strategy:
+\begin{align*}
+    T_1(P_1)=\begin{cases}
+    1 \text{ if } P_1\geq P_1^*\\
+    0 \text{ if } P_1< P_1^*
+    \end{cases}
+\end{align*}
+where $P_1^*\in\left(\dfrac{P_2^*}{(1-P_2^*)(1-\lambda)+1},P_2^*\right) $.    
+\end{proof}
+
+\subsection{Proof of proposition 2}\label{prop1_proof}
+\begin{proof}
+Suppose the hiding cost is sufficiently small: $c\leq\dfrac{\lambda\eta^R-\eta^S}{1-\lambda}$.
+Lemma 1 pins down the equilibrium strategies at $t=2$, except for the husband's strategy when he is indifferent between making the transfer or not, i.e., at $h_2^H$ such that $P_2=P_2^*$. For these cases, let the husband randomize with probabilities $\Tilde{\sigma}_2^H(h_2^H)\in[0,1]$, which are defined further in the proof for various histories.
+At $t=1$, equilibrium strategies are the following. The expert wife invests iff the risky good is productive and always uses the good in equilibrium:
+\begin{center}
+$\sigma^{E}_{1,g}(h_{1,g}^{E})=
+        \begin{cases}
+        1 \text{ if } \eta_1^R\neq 0\\ 
+        0  \text{ if } \eta_1^R=0
+        \end{cases}$;  \\
+    $\sigma^{E}_{1,e}(h_{1,e}^{E})=\begin{cases}
+        1 &\text{ if } \eta_1\neq 0 \text{ or } \left(\eta_1 = 0 \text{ and } P_1\geq\dfrac{P_2^*}{(1-\lambda)(1-P_2^*)+1}\right)\\
+        0 &\text{ if } \eta_1 = 0 \text{ and } P_1<\dfrac{P_2^*}{(1-\lambda)(1-P_2^*)+1}
+        \end{cases}$
+    \end{center}
+    The non-expert wife invests with probability at least $\lambda$, always uses the productive and safe goods but uses the unproductive good with positive probability only when her reputation is not too low:
+    \begin{center}
+    $\sigma^{NE}_{1,g}(h_{1,g}^{NE})=
+        \begin{cases}
+        1 &\text{ if } P_1>\dfrac{P_2^*}{P_2^*+\lambda(1-P_2^*)} \\
+        \lambda\dfrac{P_1}{1-P_1}\dfrac{1-P_2^*}{P_2^*}\geq \lambda &\text{ if } P_1\in\left[P_2^*, \dfrac{P_2^*}{P_2^*+\lambda(1-P_2^*)}\right]\\
+        \dfrac{P_2^*-P_1+\lambda P_1(1-P_2^*)}{(1-P_1)P_2^*}> \lambda &\text{ if } P_1<P_2^*
+        \end{cases}$; \\
+    $\sigma^{NE}_{1,e}(h_{1,e}^{NE})=\begin{cases}
+        1 &\text{ if } \eta_1\neq 0 \text{ or } (\eta_1 = 0 \text{ and } P_1\geq P_2^*)\\
+        \left[\dfrac{P_1(1-P_2^*)}{P_2^*-P_1+\lambda P_1(1-P_2^*)}-1\right]\dfrac{\lambda}{1-\lambda} &\text{ if } \eta_1 = 0 \text{ and } P_1\in\left[\dfrac{P_2^*}{(1-\lambda)(1-P_2^*)+1}, P_2^*\right)\\
+        0 &\text{ if } \eta_1 = 0 \text{ and } P_1<\dfrac{P_2^*}{(1-\lambda)(1-P_2^*)+1}
+        \end{cases}$
+    \end{center}
+
+We will show that the strategies of the wife and the husband form an equilibrium for different values of $P_1$ for which the wife has different investment and usage strategies:
+\begin{itemize}
+\item $P_1>\dfrac{P_2^*}{P_2^*+\lambda(1-P_2^*)}$, 
+\item $P_1\in\left[P_2^*, \dfrac{P_2^*}{P_2^*+\lambda(1-P_2^*)}\right]$,
+\item $P_1\in\left[\dfrac{P_2^*}{(1-\lambda)(1-P_2^*)+1}, P_2^*\right)$, 
+\item $P_1<\dfrac{P_2^*}{(1-\lambda)(1-P_2^*)+1}$. 
+\end{itemize}
+The proofs are structured as before. \\
+
+First, suppose $P_1>\dfrac{P_2^*}{P_2^*+\lambda(1-P_2^*)} \geq P_2^*$. 
+\begin{itemize}[itemsep=-0.5mm]
+    \item $P_2(P_1,g_1=1,e_1=1)>P_2^*$ and $P_2(P_1,g_1=0,e_1=1)=1$, $P_2(P_1,g_1=1,e_1=0)<P_2(P_1,g_1=1,e_1=1)$. 
+    \item For the usage choice, the non-expert wife always uses the purchased good if $-c+\beta\lambda\eta^R\geq 0$. This condition is satisfied because we assume $\beta\lambda\eta^R(1-\lambda)\geq \lambda\eta^R-\eta^S$ and $c\leq\dfrac{\lambda\eta^R-\eta^S}{1-\lambda}$. Under this condition, the expert wife also always uses the purchased good.
+    \item For the investment choice, the wife's static best responses are optimal (see lemma 1) as they induce a reputation $P_2>P_2^*$, which guarantees the future transfers. Therefore, there is no profitable deviation.
+    \item For the husband's strategy, as any posterior $P_2$ on the equilibrium path lies above $P_2^*$, $V_2(P_2)$ is linear in $P_2$, so $\mathbb{E}V_2(P_2)=\lambda\eta^R + \e P_2(1-\lambda)\eta^S=\lambda\eta^R + P_1(1-\lambda)\eta^S=V_2(P_1)$. Thus, the husband needs to only compare first-stage payoffs from $T_1=1$ and $T_1=0$. Since $P_1>P_2^*$, we have $\e[U^H_1(T_1=1)|P_1]>\omega$, so the husband prefers to make the transfer, $T_1=1$.
+\end{itemize}
+Second, suppose $P_1\in\left[P_2^*, \dfrac{P_2^*}{P_2^*+\lambda(1-P_2^*)}\right]$. Denote $\kappa_1^R\equiv\Tilde{\sigma}_2^H(h_2^H)$ when $P_1$ is in this range and $g_1=1$.
+\begin{itemize}[itemsep=-0.5mm]
+\item Given the strategies, the updated reputation is $P_2(P_1|g_1=1,e_1=1)=P_2^*$ and $P_2(P_1|g_1=0,e_1=1) \geq P_2^*$, $P_2(P_1,g_1=1,e_1=0)<P_2(P_1,g_1=1,e_1=1)$. 
+\item For the usage choice, the non-expert wife always uses the purchased good if $-c+\beta\kappa_1^R\lambda\eta^R\geq 0$. Once we define $\kappa_1^R$, we can show that this condition is satisfied because we assume $\beta\lambda\eta^R(1-\lambda)\geq \lambda\eta^R-\eta^S$ and $c\leq\dfrac{\lambda\eta^R-\eta^S}{1-\lambda}$. Under this condition, the expert wife also always uses the purchased good.
+\item For the investment choice, the non-expert wife is mixing if $\lambda\eta^R-(1-\lambda)c+\beta\kappa_1^R\lambda\eta^R=\eta^S+\beta\lambda\eta^R$. This condition pins down the husband's transfer strategy: $\kappa_1^R=\dfrac{\eta^S+\beta\lambda\eta^R-\lambda\eta^R+(1-\lambda)c}{\beta\lambda\eta^R}$. This value of $\kappa_1^R$ ensures that the condition for usage $-c+\beta\kappa_1^R\lambda\eta^R\geq 0$ holds. The only strategies that form an equilibrium are the husband randomizing for $g_1=1$ and transferring with probability 1 for $g_1=0$ as otherwise when $P_1=P_2^*$ and the non-expert wife's investment rate is $\lambda$, the non-expert wife would have the incentive to deviate by increasing her investment rate. 
+For the expert wife, buying the risky good is optimal when $\eta_1^R=\eta^R$ because $\eta^R+\beta\kappa_1^R(\lambda\eta^R+(1-\lambda)\eta^S)>\eta^S+\beta(\lambda\eta^R+(1-\lambda)\eta^S)$; buying the safe good is optimal when $\eta_1^R=0$ because $-c+\beta\kappa_1^R(\lambda\eta^R+(1-\lambda)\eta^S)<\eta^S+\beta(\lambda\eta^R+(1-\lambda)\eta^S)$.
+\item For the husband's strategy, again any posterior $P_2$ lies above or at $P_2^*$, so the husband only compares first-stage payoffs from $T_1=1$ and $T_1=0$ (note that it does not matter whether $P_2>P_2^*$ or $P_2=P_2^*$ as the value from the transfer is the same as the outside option for $P_2=P_2^*$). The expected first-stage payoff from $T_1=1$ is increasing in $P_1$:
+\begin{align*}
+    \e[U^H_1(T_1=1)|P_1]&=P_1(\lambda\eta^R+(1-\lambda)\eta^S)+(1-P_1)(\sigma_{1,g}^{NE}\lambda\eta^R+(1-\sigma_{1,g}^{NE})\eta^S)\\
+    \Rightarrow \dfrac{\partial \e[U^H_1(T_1=1)|P_1]}{\partial P_1}&=\lambda\eta^R(1-\sigma_{1,g}^{NE})+\eta^S(\sigma_{1,g}^{NE}-\lambda)+\dfrac{\partial \sigma_{1,g}^{NE}}{\partial P_1}(\lambda\eta^R-\eta^S)\geq0
+\end{align*}
+where we use $\dfrac{\partial \sigma_{1,g}^{NE}}{\partial P_1}\geq0$. 
+Consider the lower boundary of this interval, $P_1=P_2^*$:
+\begin{align*}
+    \e[U^H_1(T_1=1)|P_1=P_2^*]&=P_2^*(\lambda\eta^R+(1-\lambda)\eta^S)+(1-P_2^*)(\lambda^2\eta^R+(1-\lambda)\eta^S)\\
+    &<P_2^*(\lambda\eta^R+(1-\lambda)\eta^S)+(1-P_2^*)\lambda\eta^R=\omega
+\end{align*}
+Thus, the husband prefers the outside option, $T_1=0$, at $P_1=P_2^*$ and switches to $T_1=1$ at some belief $P_1^*$ that is above $P_2^*$.
+\end{itemize}
+Third, suppose $P_1\in\left[\dfrac{P_2^*}{(1-\lambda)(1-P_2^*)+1}, P_2^*\right)$. Denote $\kappa_2^R\equiv\sigma_2^H(h_2^H)$ when $P_1$ is in this range and $g_1=1$. Denote $\kappa_2^S\equiv\sigma_2^H(h_2^H)$ when $P_1$ is in this range and $g_1=0$. 
+\begin{itemize}[itemsep=-0.5mm]
+    \item Given the strategies, the updated reputation is $P_2(P_1|g_1=1,e_1=1)=P_2(P_1|g_1=0,e_1=1)=P_2^*$,  $P_2(P_1|g_1=1,e_1=0)=0$. 
+    \item For the usage choice, the non-expert wife mixes when making the usage choice if $-c+\beta\kappa_2^R\lambda\eta^R=0$. Thus, $\kappa_2^R=\dfrac{c}{\beta\lambda\eta^R}$. Under this condition, the expert wife strictly prefers to use the purchased good because her continuation payoff is higher.
+    \item For the investment choice, the non-expert wife mixes if $\lambda\eta^R-(1-\lambda)c\sigma_{1,e}^{NE}(h_{1,e}^{NE})+\beta\kappa_2^R\lambda\eta^R(\lambda+(1-\lambda)\sigma_{1,e}^{NE}(h_{1,e}^{NE}))=\eta^S+\beta\lambda\eta^R\kappa_2^S$. This condition is equivalent to $\kappa_2^S=\dfrac{\lambda(\eta^R+c)-\eta^S}{\beta\lambda\eta^R}$. The expert wife strictly prefers to buy the risky good when $\eta_1^R=\eta^R$ because $\eta^R+\beta\kappa_2^R(\lambda\eta^R+(1-\lambda)\eta^S)>\eta^S+\beta\kappa_2^S(\lambda\eta^R+(1-\lambda)\eta^S)$. The expert wife strictly prefers to buy the safe good when $\eta_1^R=0$ because $-c+\beta\kappa_2^R(\lambda\eta^R+(1-\lambda)\eta^S)<\eta^S+\beta\kappa_2^S(\lambda\eta^R+(1-\lambda)\eta^S)$.
+    \item  For the husband's strategy, note that on the equilibrium path, any posterior $P_2$ lies below $P_2^*$. In this region, $V_2(P_2)$ is constant in $P_2$, so $\mathbb{E}V_2(P_2)=\omega=V_2(P_1)$. Thus, the husband needs to only compare first-stage payoffs from $T_1=1$ and $T_1=0$:
+\begin{align*}
+    \e[U^H_1(T_1=1)|P_1]&=P_1(\lambda\eta^R+(1-\lambda)\eta^S)+(1-P_1)(\sigma_{1,g}^{NE}\lambda\eta^R+(1-\sigma_{1,g}^{NE})\eta^S)\\
+    &< P_1(\lambda\eta^R+(1-\lambda)\eta^S)+(1-P_1)\lambda\eta^R\\
+    &<P_2^*(\lambda\eta^R+(1-\lambda)\eta^S)+(1-P_2^*)\lambda\eta^R=\omega
+\end{align*}
+Thus, the husband prefers the outside option, $T_1=0$, in this interval.
+\end{itemize}
+Finally, suppose $P_1<\dfrac{P_2^*}{(1-\lambda)(1-P_2^*)+1}$. Denote $\kappa_3^S\equiv\sigma_2^H(h_2^H)$ when $P_1$ is in this range and $g_1=0$. 
+\begin{itemize}[itemsep=-0.5mm]
+    \item Given the strategies, the updated reputation is $P_2(P_1|g_1=1,e_1=1)<P_2^*$, $P_2(P_1|g_1=1,e_1=0)=0$, $P_2(P_1|g_1=0,e_1=1)=P_2^*$.  
+    \item For the usage choice, $e_1=0$ for wife types when $\eta_1=0$ because using the unproductive good cannot increase the reputation enough to reach threshold $P_2^*$. Using the productive risky and safe goods is dominant, so $e_1=1$ for both wife types when $\eta_1\neq0$.
+    \item For the investment choice, the non-expert wife mixes if $\lambda\eta^R=\eta^S+\beta\lambda\eta^R\kappa_3^S$. This condition is equivalent to $\kappa_3^S=\dfrac{\lambda\eta^R-\eta^S}{\beta\lambda\eta^R}$. The expert wife strictly prefers to buy the risky good when $\eta_1^R=\eta^R$ because $\eta^R>\eta^S+\beta\kappa_3^S(\lambda\eta^R+(1-\lambda)\eta^S)$. The expert wife strictly prefers to buy the safe good when $\eta_1^R=0$ because $0<\eta^S+\beta\kappa_3^S(\lambda\eta^R+(1-\lambda)\eta^S)$.
+    \item For the husband's strategy, note that on the equilibrium path, any posterior $P_2$ is again below $P_2^*$. Thus, as in the previous interval, the husband prefers the outside option, $T_1=0$, in this interval.
+\end{itemize} 
+Combining the four intervals, we conclude that the husband uses a threshold strategy:
+\begin{align*}
+    T_1(P_1)=\begin{cases}
+    1 \text{ if } P_1\geq P_1^*\\
+    0 \text{ if } P_1< P_1^*
+    \end{cases}
+\end{align*}
+where $P_1^*\in\left(P_2^*,\dfrac{P_2^*}{\lambda(1-P_2^*)+P_2^*}\right)$.
+\end{proof}
+
+\subsection{Proof of Proposition 3}\label{prop3_proof}
+
+\begin{proof}
+Suppose the hiding costs are intermediate: $\dfrac{\lambda\eta^R-\eta^S}{1-\lambda}<c\leq\beta\lambda\eta^R$.
+ 
+Lemma 1 pins down the equilibrium strategies at $t=2$, except for the husband's strategy when he is indifferent between making the transfer or not, i.e., at $h_2^H$ such that $P_2=P_2^*$. For these cases, let the husband randomize with probabilities $\Tilde{\sigma}_2^H(h_2^H)\in[0,1]$, which are defined further in the proof for various histories.
+
+At $t=1$, equilibrium strategies are the following. The expert wife invests iff the risky good is productive and always uses the good unless her reputation is very low:
+%
+\begin{center}
+$\sigma^{E}_{1,g}(h_{1,g}^{E})=
+    \begin{cases}
+    1 \text{ if } \eta_1^R\neq 0\\ 
+    0  \text{ if } \eta_1^R=0
+    \end{cases}$;  \\
+    $\sigma^{E}_{1,e}(h_{1,e}^{E})=\begin{cases}
+        1 &\text{ if } \eta_1\neq 0 \text{ or } \left(\eta_1 = 0 \text{ and } P_1\geq\dfrac{P_2^*}{(1-\lambda)(1-P_2^*)+1}\right)\\
+        0 &\text{ if } \eta_1 = 0 \text{ and } P_1<\dfrac{P_2^*}{(1-\lambda)(1-P_2^*)+1}
+        \end{cases}$
+\end{center}
+
+The non-expert wife invests with probability decreasing in reputation, always uses the productive and safe goods but uses the unproductive good with positive probability only when her reputation is not too low:
+
+\begin{center}
+    $\sigma^{NE}_{1,g}(h_{1,g}^{NE})=
+    \begin{cases}
+    0 &\text{ if } P_1>\dfrac{P_2^*}{(1-\lambda)(1-P_2^*)+P_2^*} \\
+    \dfrac{P_2^*-P_1+\lambda P_1(1-P_2^*)}{(1-P_1)P_2^*}\leq \lambda &\text{ if } P_1\in\left[P_2^*, \dfrac{P_2^*}{(1-\lambda)(1-P_2^*)+P_2^*}\right]\\
+    \dfrac{P_2^*-P_1+\lambda P_1(1-P_2^*)}{(1-P_1)P_2^*}> \lambda &\text{ if } P_1<P_2^*\\
+    \end{cases}$; \\
+    $\sigma^{NE}_{1,e}(h_{1,e}^{NE})=\begin{cases}
+        1 &\text{ if } \eta_1\neq 0 \text{ or } (\eta_1 = 0 \text{ and } P_1\geq P_2^*)\\
+        \left[\dfrac{P_1(1-P_2^*)}{P_2^*-P_1+\lambda P_1(1-P_2^*)}-1\right]\dfrac{\lambda}{1-\lambda} &\text{ if } \eta_1 = 0 \text{ and } P_1\in\left[\dfrac{P_2^*}{(1-\lambda)(1-P_2^*)+1}, P_2^*\right)\\
+        0 &\text{ if } \eta_1 = 0 \text{ and } P_1<\dfrac{P_2^*}{(1-\lambda)(1-P_2^*)+1}
+        \end{cases}$
+\end{center}
+
+Note that if the purchased good is productive or safe, it is weakly dominant to use it for both wife types because the cost is zero and reputation drops to $P_2=0$ if the good is not used.\\
+
+We will show that the strategies of the wife and the husband form an equilibrium for different values of $P_1$ for which the wife has different usage or investment strategies:\\ $P_1>\dfrac{P_2^*}{(1-\lambda)(1-P_2^*)+P_2^*}$, $P_1\in\left[P_2^*, \dfrac{P_2^*}{(1-\lambda)(1-P_2^*)+P_2^*}\right]$, $P_1\in\left[\dfrac{P_2^*}{(1-\lambda)(1-P_2^*)+1}, P_2^*\right)$, and \\ $P_1<\dfrac{P_2^*}{(1-\lambda)(1-P_2^*)+1}$. \\
+
+The proofs are structured as before. \\
+
+First, suppose $P_1>\dfrac{P_2^*}{(1-\lambda)(1-P_2^*)+P_2^*}$. 
+\begin{itemize}
+    \item Given the strategies, $P_2(P_1|g_1=1,e_1=1)=1$ and $P_2(P_1|g_1=0,e_1=1)>P_2^*$. 
+    \item For the usage choice, if the purchased good is unproductive, both wife types use it because $-c+\beta\lambda\eta^R\geq0$. 
+    \item For the investment choice, it is optimal for the non-expert wife to buy the safe good because $\eta^S+\beta\lambda\eta^R\geq \lambda\eta^R-(1-\lambda)c+\beta\lambda\eta^R$. This condition holds by the assumption that $c>\dfrac{\lambda\eta^R-\eta^S}{1-\lambda}$. For the expert wife, if $\eta_1^R=\eta^R$, it is optimal to buy the risky good because $\eta^R+\beta(\lambda\eta^R+(1-\lambda)\eta^S)>\eta^S+\beta(\lambda\eta^R+(1-\lambda)\eta^S)$. If $\eta_1^R=0$, it is optimal to buy the safe good for the expert wife because $\eta^S + \beta(\lambda\eta^R+(1-\lambda)\eta^S)>-c+\beta(\lambda\eta^R+(1-\lambda)\eta^S)$.
+    \item The wife's strategy in this interval is the same as in proposition 2, so the husband's payoff is also the same. Thus, $T_1=1$ in this interval.
+\end{itemize}
+
+Second, suppose $P_1\in\left[P_2^*, \dfrac{P_2^*}{(1-\lambda)(1-P_2^*)+P_2^*}\right]$. Denote $\kappa_1^S\equiv\sigma_2^H(h_2^H)$ when $P_1$ is in this interval and $g_1=0$. 
+\begin{itemize}
+    \item Given the strategies, $P_2(P_1|g_1=1,e_1=1) \geq P_2^*$ and $P_2(P_1|g_1=0,e_1=1)=P_2^*$. 
+    \item For the usage choice, if the purchased good is unproductive, both wife types use it because $-c+\beta\lambda\eta^R\geq0$. 
+    \item For the investment choice, the non-expert wife mixes if  $\eta^S+\beta\kappa_1^S\lambda\eta^R=\lambda\eta^R-(1-\lambda)c+\beta\lambda\eta^R$. These conditions pin down the husband's transfer strategy: $\kappa_1^S=\dfrac{\lambda\eta^R-\eta^S-(1-\lambda)c+\beta\lambda\eta^R}{\beta\lambda\eta^R}$. For the expert wife, it is optimal to buy the risky good if $\eta_1^R=\eta^R$ because $\eta^R+\beta(\lambda\eta^R+(1-\lambda)\eta^S)>\eta^S+\beta\kappa_1^S(\lambda\eta^R+(1-\lambda)\eta^S)$. If $\eta_1^R=0$, it is optimal to buy the safe good for the expert wife because $\eta^S + \beta\kappa_1^S(\lambda\eta^R+(1-\lambda)\eta^S)>-c+\beta(\lambda\eta^R+(1-\lambda)\eta^S)$.
+    \item For the husband's strategy, on the equilibrium path, updated reputation is always $ \geq P_2^*$. Thus, the husband needs to only consider the first-stage payoff. The expected first-stage payoff is 
+\begin{align*}
+    \Delta \e[U^H_1(T_1=1)|P_1]=\lambda\eta^R+P_1\dfrac{1-\lambda}{P_2^*}(\eta^S-(1-P_2^*)\lambda\eta^R)-\omega, 
+\end{align*}
+which is increasing in $P_1$. At the lower end of the interval, $P_1=P_2^*$, the payoff from making the transfer is lower than the outside option:
+\begin{align*}
+    \lambda\eta^R+(1-\lambda)\eta^S-(1-\lambda)(1-P_2^*)\lambda\eta^R<\lambda\eta^R+P_2^*(1-\lambda)\eta^S=\omega
+\end{align*}
+
+Thus, the husband chooses $T_1=0$ at $P_1=P_2^*$ and switches to $T_1=1$ at some higher $P_1$ in this interval.
+    \end{itemize}
+
+Third, suppose $P_1\in\left[\dfrac{P_2^*}{(1-\lambda)(1-P_2^*)+1}, P_2^*\right)$. Denote $\kappa_2^R\equiv\sigma_2^H(h_2^H)$ when $P_1$ is in this range and $g_1=1$. Denote $\kappa_2^S\equiv\sigma_2^H(h_2^H)$ when $P_1$ is in this range and $g_1=0$.
+\begin{itemize}
+    \item Given the strategies, the updated reputation is $P_2(P_1|g_1=1,e_1=1)=P_2(P_1|g_1=0,e_1=1)=P_2^*$ and $P_2(P_1|g_1=1,e_1=0)=0$.
+    \item For the usage choice, the non-expert wife mixes if $-c+\beta\kappa_2^R\lambda\eta^R=0$. Thus, $\kappa_2^R=\dfrac{c}{\beta\lambda\eta^R}$. Under this condition, the expert wife strictly prefers to use the purchased good because her continuation payoff is higher.
+    \item For the investment choice, the non-expert wife mixes if $\lambda\eta^R-(1-\lambda)c\sigma_{1,e}^{NE}(h_{1,e}^{NE})+\beta\kappa_2^R\lambda\eta^R(\lambda+(1-\lambda)\sigma_{1,e}^{NE}(h_{1,e}^{NE}))=\eta^S+\beta\lambda\eta^R\kappa_2^S$. This condition is equivalent to $\kappa_2^S=\dfrac{\lambda(\eta^R+c)-\eta^S}{\beta\lambda\eta^R}$. The expert wife strictly prefers to buy the risky good when $\eta_1^R=\eta^R$ because $\eta^R+\beta\kappa_2^R(\lambda\eta^R+(1-\lambda)\eta^S)>\eta^S+\beta\kappa_2^S(\lambda\eta^R+(1-\lambda)\eta^S)$. The expert wife strictly prefers to buy the safe good when $\eta_1^R=0$ because $-c+\beta\kappa_2^R(\lambda\eta^R+(1-\lambda)\eta^S)<\eta^S+\beta\kappa_2^S(\lambda\eta^R+(1-\lambda)\eta^S)$.
+    \item For the husband's strategy, as the updated reputation is always $\leq P_2^*$, the husband needs to only consider the first-stage payoff. The expected first-stage payoff is the same as above:
+    \begin{align*}
+        \e[U^H_1(T_1=1)|P_1]=\lambda\eta^R+P_1\dfrac{1-\lambda}{P_2^*}(\eta^S-(1-P_2^*)\lambda\eta^R)
+    \end{align*}
+    
+    Since the payoff is increasing in $P_1$, and it is lower than $\omega$ at $P_1=P_2^*$, it is also lower than $\omega$ at all $P_1<P_2^*$.
+\end{itemize}
+    
+Finally, suppose $P_1<\dfrac{P_2^*}{(1-\lambda)(1-P_2^*)+1}$. Denote $\kappa_3^S\equiv\sigma_2^H(h_2^H)$ when $P_1$ is in this range and $g_1=0$.
+
+\begin{itemize}
+    \item Given the strategies, the updated reputation is $P_2(P_1|g_1=1,e_1=1)<P_2^*$, $P_2(P_1|g_1=0,e_1=1)=P_2^*$ and $P_2(P_1|g_1=1,e_1=0)=0$.
+    \item For the usage choice, using the unproductive good cannot increase the reputation enough to reach threshold $P_2^*$. Therefore, $e_1=0$ for both types of wives when $\eta_1=0$. Using the productive risky and safe goods is weakly dominant, so $e_1=1$ for both types of wives when $\eta_1\neq0$. 
+    \item For the investment choice, the non-expert wife mixes if $\lambda\eta^R=\eta^S+\beta\lambda\eta^R\kappa_3^S$. This condition is equivalent to $\kappa_3^S=\dfrac{\lambda\eta^R-\eta^S}{\beta\lambda\eta^R}$. The expert wife strictly prefers to buy the risky good when $\eta_1^R=\eta^R$ because $\eta^R>\eta^S+\beta\kappa_3^S(\lambda\eta^R+(1-\lambda)\eta^S)$. The expert wife strictly prefers to buy the safe good when $\eta_1^R=0$ because $0<\eta^S+\beta\kappa_3^S(\lambda\eta^R+(1-\lambda)\eta^S)$.
+    \item For the husband's strategy, as above, as the updated reputation is always $<P_2^*$, the payoff is also lower than $\omega$ in this interval.
+    \end{itemize}
+
+Combining the four intervals, we conclude that the husband uses a threshold strategy:
+\begin{align*}
+    T_1(P_1)=\begin{cases}
+    1 \text{ if } P_1\geq P_1^*\\
+    0 \text{ if } P_1< P_1^*
+    \end{cases}
+\end{align*}
+where $P_1^*\in\left(P_2^*,\dfrac{P_2^*}{(1-\lambda)(1-P_2^*)+P_2^*}\right) $.
+
+\end{proof}
+
+\newpage
+
+}
+ 
+\section{Technical Appendix}
+
+\begin{spacing}{1}
+\subsection{Sampling}\label{sampling}
+
+Enumerators were instructed to enroll households using the ``left hand rule'': 
+\begin{enumerate}\itemsep0em
+    \item You will pick a house as a starting point,
+    \item Proceed such that the house you have picked is on your left.
+    \item Count 3 houses and stop at the third house. This house will be selected for sampling.
+    \item You will identify the owners of the household and ask to speak to a husband and wife pair who reside in the household.
+    \item If they are eligible for the survey, conduct the survey. Otherwise skip to the next step.
+    \item Once you are finished with the survey, or if the couple is ineligible, continue in the original direction you were walking in.
+    \item Count three houses, stop at the third house, and repeat steps 4-6.
+\end{enumerate}
+
+\subsection{Compensation and Prices}\label{compensation}
+Initially, husbands received MWK 300 and women received MWK 200 as baseline compensation for participation in the survey. Women were offered an additional MWK 100 for participating in the signaling activity in the signaling experiment. The hiding prices were MWK 50 (low hiding cost), MWK 100 (intermediate hiding cost) or MWK 150 (high hiding cost). However, enumerators noted during the first month of data collection, that the compensations and prices might be insufficient to incentivize the respondents to thoroughly think about their choices. We thus doubled the compensations given to the respondents for 2/3 of the remaining surveys to allow for geographic variation in the low- and high-compensation versions (in total 28\% of surveys had the low compensation and 72\% the high compensation). To keep the ratio of prices to compensation constant in the signaling experiment, we also doubled the hiding prices to MWK 100 (low hiding cost), MWK 200 (intermediate hiding cost) or MWK 300 (high hiding cost). In the analysis we express transfers as a percent of total compensation in the transfer experiment and control for baseline compensation fixed-effects in both experiments. 
+
+\subsection{Defining the Salience Treatment in the Transfer Experiment}
+Initially, all husbands played the game at the end of the survey, either before or after the MER module (version 1). However, enumerators noted during the first month of data collection (17\% of data collected), that the signaling experiment was serving as a large salience treatment itself. We thus moved the transfer at the beginning of the survey in the control arm (version 2) and coded all data collected thus far as assigned to the salience treatment. All results are robust to controlling for version fixed effects.
+
+\end{spacing}
+
+\setcounter{figure}{0}		
+\setcounter{table}{0}
+\renewcommand{\thefigure}{C.\arabic{figure}}
+\renewcommand{\thetable}{C.\arabic{table}}
+
+\newpage
+\section{Empirical Appendix}
+\subsection{Figures}
+
+\begin{figure}[H]
+\centering
+\caption{Handout to elicit respondent's priors about own and spouse's score}\label{bubble_handout}
+\includegraphics[width=\textwidth]{./Images/Thought_Bubble.pdf}
+\begin{footnotesize}
+\begin{flushleft}
+\end{flushleft}
+\end{footnotesize}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\caption{Percentage of wives participating in the signaling activity for each reported level of risk preference}\label{play_risk}
+\includegraphics[width=0.72\textwidth]{"./Graphs/02_Online_Appendix/Figure_C2_play_risk".png}
+\begin{footnotesize}
+\begin{flushleft}
+\textit{Notes}: The wife's risk preference was the response to the question ``You are buying 10 packets of seed. There are two kind of seeds. One will mature with a low yield, but it is guaranteed that all seeds will mature. The other will mature with a higher yield: You will get 3x as much. However, on average, half of all packets produced never mature. That means you could have all good packets or all bad packets or somewhere in between. Out of the 10 packets you will buy, how many packets of the risky seed will you buy?'' 
+\end{flushleft}
+\end{footnotesize}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\caption{Total forgone earnings in experiment 2 for each rounded mean score prior}\label{foregone_score}
+\includegraphics[width=0.72\textwidth]{"./Graphs/02_Online_Appendix/Figure_C3_foregone_score".png}
+\begin{footnotesize}
+\end{footnotesize}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\caption{Low hiding cost effectiveness sticker: airtight crop storage bag}
+\includegraphics[width=0.9\textwidth]{"./Images/PICS".png}
+\begin{footnotesize}
+\begin{flushleft}
+\end{flushleft}
+\end{footnotesize}
+\end{figure}
+\vspace{-2cm}
+\flushleft \underline{English Translation:}\\
+\textbf{The Problem:}\\
+Insects damage stored grains, leading to:\\
+- Quality loss\\
+- Weight loss\\
+- Excessive use of chemicals\\
+\textbf{The PICS Solution:}\\
+Hermetic triple-layer bags protect grain from insect damage without using chemicals.\\
+\textbf{Effective for:}\\
+Cowpea, Maize, Beans, Peas, Sorghum, Millett, Wheat, Groundnut, Rice, Soybean \\
+\textbf{PICS Bags:}\\
+- Increase income\\
+- Improve food security\\
+- Maintain food quality\\
+- Maintain seed quality\\
+
+
+\begin{figure}[H]
+\centering
+\caption{High hiding cost effectiveness sticker: children's book}
+\includegraphics[width=0.9\textwidth]{"./Images/BOOK".png}
+\begin{footnotesize}
+\begin{flushleft}
+\flushleft \underline{English Translation:}\\
+- Cognitive skills of young children are an important factor in explaining success later-on in life. They affect the likelihood of acquiring higher education and advanced training. \\
+- Cognitive skills are not fixed. They can be influenced by parental efforts. The most effective period for cognitive skill investment by parents is early on in the life of their children – in fact, from birth.\\
+- Numerous studies have found children who are ready to frequently at a very early age enter school with larger vocabularies and more advanced comprehension skills.
+\end{flushleft}
+\end{footnotesize}
+\end{figure}
+\vspace{1cm}
+
+\begin{figure}[H]
+\centering
+\caption{Donated sticker}
+\includegraphics[width=0.5\textwidth]{"./Images/FREE".png}
+\begin{footnotesize}
+\begin{flushleft}
+\end{flushleft}
+\end{footnotesize}
+\end{figure}
+\vspace{-1cm}
+\flushleft \underline{English Translation:} \textcolor{violet}{\textit{Donated to Malawian families by}} Stanford University
+
+\begin{figure}[H]
+\centering
+\caption{Heterogeneity by discretionary transfer size, using the wife's random-forest predicted expertise in experiment 3}\label{experiment_transfer_heterogeneity_RF}
+\includegraphics[width=\textwidth]{"./Graphs/02_Online_Appendix/Figure_C7_high_hus_transfers_forest".png}
+\begin{footnotesize}
+\begin{flushleft}
+\vspace{-0.45cm}
+\textit{Notes}: The graph shows the coefficients and confidence intervals from OLS regressions with Huber-White robust SEs. Low/High Transfers correspond to below/above the median. Rows 1 to 3 control for enumerator and compensation fixed effects (and version fixed effects for the transfer experiment) as well as the wife and the husband's age, education, average income in the last two months, variability of income (whether income is the same in most months or varies a lot), risk preferences, math and raven scores, and years married, number of children and number of household members, and MER index. Controls are as reported by the husband in the transfer and signaling experiment and as reported by the wife in the market experiment. Row 3 controls for enumerator and market fixed effects as well as the wife's age, education, average income in the last two months, risk preferences, math score, as well as the husband's average income in the last two months, years married, and the number of children and household members. Coefficients are presented as percentage point deviations from the control means. 
+\end{flushleft}
+\end{footnotesize}
+\end{figure}
+\vspace{-0.5cm}
+
+
+\begin{figure}[H]
+\centering
+\caption{Heterogeneity by number of children in the household (using wife's second-order math beliefs (top) and random-forest predicted types (bottom) }\label{experiment_many_children_heterogeneity}
+\includegraphics[width=\textwidth]{"./Graphs/02_Online_Appendix/Figure_C8_A_many_children_math".png}
+\includegraphics[width=\textwidth]{"./Graphs/02_Online_Appendix/Figure_C8_B_many_children_forest".png}
+\begin{footnotesize}
+\begin{flushleft}
+\vspace{-0.45cm}
+\textit{Notes}: The graph shows the coefficients and confidence intervals from OLS regressions with Huber-White robust SEs. Rows 1 to 3 control for enumerator and compensation fixed effects (and version fixed effects for the transfer experiment) as well as the wife and the husband's age, education, average income in the last two months, variability of income (whether income is the same in most months or varies a lot), risk preferences, math and raven scores, and years married, number of children and number of household members, and MER index. Controls are as reported by the husband in the transfer and signaling experiment and as reported by the wife in the market experiment. Row 4 controls for enumerator and market fixed effects as well as the wife's age, education, average income in the last two months, risk preferences, math score, as well as the husband's average income in the last two months, years married, and the number of children and household members. Coefficients are presented as percentage point deviations from the control means. 
+\end{flushleft}
+\end{footnotesize}
+\end{figure}
+\vspace{2cm}
+\subsection{Tables}
+\begin{table}[H]
+\centering
+\caption{Experiment 1: 50 randomly selected example answers to questions 1) Is your wife ever tempted to buy things advertised at the market? and 2) Has it ever happened that your wife bought something that did not work as advertised?}
+\label{experiment1_examples}
+\begin{adjustbox}{width=0.84\textwidth}
+\begin{threeparttable}
+\begin{tabular}{l|l}
+\toprule \toprule
+Tempted & Did not work \\
+\midrule
+Charcoal burner	& Soap	\\
+Pot	& Insecticides that wouldn't work	\\
+Clothes	& Wrapping paper	\\
+Door mat & Non-durable cloth	\\
+Charcoal stove & Toy	\\
+Rose flower	& Pair of trousers	\\
+Shoes &	Shoes	\\
+Not yet but tempted	& Piece of cloth poorly sewn on the edges	\\
+New dress	&	Shoes	\\
+Soap	&	Plastic bucket which broke within few days	\\
+Medicine from a pharmacy	&	Clothes	\\
+Skirt	&	Chemical that didn't work	\\
+Cooking stove and clothes	&	Clothes	\\
+Snacks  for the child but in large quantity	&	Phone battery	\\
+Doll	&	Skirt	\\
+Plates when the goal was to buy a jar	&	Battery torch which was not working	\\
+Trousers for me	&	Insecticides	\\
+Metal plates	&	Battery torch which could not produce light	\\
+Cooking stove	&Pesticides that didn't work	\\
+Charcoal burner	&	Torn blouse	\\
+Charcoal burner	&	Battery torch which was not working	\\
+Pair of non-durable shoes 	&	Radio with cut wires inside	\\
+Dress	&	Basin 	\\
+Dress	&	Cooking stove	\\
+Toys	&Stolen metal bars which were painted to conceal the rust	\\
+Not yet	but tempted &	Mosquito repellent	\\
+Charcoal burner	&	Torn dress	\\
+Charcoal stove	&	Plastic bucket	\\
+Doll	& Bucket that leaked	\\
+Duvet	&	Slippers that were not durable	\\
+Water treatment solution &	Stove	\\
+Hats &	Expired cooking oil	\\
+Cooking stove and pesticides	&	Chemicals used to kill cockroaches	\\
+Kitchen utensils	&	Headache medicines	\\
+Doll for the child	&	Too tight clothes	\\
+Clothes	&	Non-durable shoes	\\
+Mosquito net	&	Clothes	\\
+New drug advertised to help joint pain	&	Non-durable slippers	\\
+Not yet but tempted	&	Torn trousers	\\
+Dress	&	Used phone (she thought it was new)	\\
+Toy	& Clothes that lost colour after one wash	\\
+Piece of cloth	&	Too tight skirt	\\
+Cooking stove	&	Container	\\
+Basin	&Pain killers that did not work	\\
+Cooking stove that uses less charcoal	& Mosquito pesticide that never even killed ONE mosquito	\\
+Shirt for the child	&Bucket	\\
+Short trousers for me	& Shoes in the wrong size (the vendor had told her they would fit anyways) 	\\
+Toy for her child	&	Bucket which broke after a few days	\\
+Children toys and charcoal burner	& Clothes	\\
+Cooking stove	& Soap	\\
+\bottomrule	
+\end{tabular}
+\begin{tablenotes}		
+\item \textit{Notes:} To create the table, we randomly selected 50 answers to question 1 and 50 answers to question 2 - i.e., the answer choices on the left and on the right do not have to be from the same person. We preferred this to selecting 50 subjects randomly as subjects could answer no to each question - thus, we would provide fewer examples by selecting 50 respondents as opposed to 50 answer choices for each question.  
+\end{tablenotes}
+\end{threeparttable}
+\end{adjustbox}
+\end{table}
+
+ \begin{table}[H]
+		\caption{The transfer experiment: Balance, by market expertise reputation (MER) and salience}
+\label{experiment1_balance}
+        \centering
+        \begin{adjustbox}{width=\textwidth}
+        \begin{threeparttable}
+	   \begin{tabular}{L{9cm}  C{0.01cm} C{3cm}  C{0.1cm} C{3cm}  C{0.2cm}  C{3cm} C{0.1cm} C{3cm}}
+	    \toprule \toprule
+	&& Mean && $\beta_{\text{Salience}}$ && $\beta_{\text{Low MER}}$ && $\beta_{\text{Low MER*Salience}}$ \\		
+	&& (SD) && (SE) && (SE) && (SE)  \\
+	\midrule
+	Variables && (1) && (2) && (3) && (4) \\
+	\midrule
+		\end{tabular}
+				\begin{minipage}{9cm}
+					\begin{tabular}{L{9cm}}
+						\input{./Tables/02_Online_Appendix/Table_C2/exp1_balance_vars.tex}
+					\end{tabular}	
+				\end{minipage}%
+				\begin{minipage}{3.01cm}
+					\begin{tabular}{C{0.1cm} C{3cm}}
+						\input{./Tables/02_Online_Appendix/Table_C2/Col1_exp1_balance_means.tex}
+					\end{tabular}	
+				\end{minipage}%
+				\begin{minipage}{3.01cm}
+					\begin{tabular}{C{0.1cm} C{3cm}}
+						\input{./Tables/02_Online_Appendix/Table_C2/Col2_exp1_balance_salience.tex}
+					\end{tabular}
+				\end{minipage}%
+				\begin{minipage}{3.01cm}
+					\begin{tabular}{C{0.1cm} C{3cm}}
+						\input{./Tables/02_Online_Appendix/Table_C2/Col3_exp1_balance_low_MER.tex}
+					\end{tabular}
+				\end{minipage}%
+				\begin{minipage}{3.01cm}
+					\begin{tabular}{C{0.1cm} C{3cm}}
+						\input{./Tables/02_Online_Appendix/Table_C2/Col4_exp1_balance_s_low_MER.tex}\\
+					\end{tabular}
+				\end{minipage}%
+
+	   \begin{tabular}{L{9cm} C{0.01cm} C{3cm} C{0.01cm} C{3cm} C{0.01cm} C{3cm} C{0.01cm} C{3cm}}
+		\bottomrule
+		 & & & & & & & & \\
+		\end{tabular}	
+		\begin{tablenotes}		
+\item \textit{Notes:} The table shows results from OLS regressions with enumerator fixed effects and Huber-White robust SEs. Market Expertise Reputation (MER) defined as before.  All MWK values are winsorized at 3 SDs. Wife's and husband's average income as well as transfers as reported by the husband. Regressions control for enumerator fixed effects. No differences are significant after adjusting for false discovery rates (q-values). 
+\end{tablenotes}				
+\end{threeparttable}
+\end{adjustbox}
+\end{table}		
+
+\begin{landscape}
+\begin{table}[H]
+\centering
+	\begin{threeparttable}
+		\caption{Transfer experiment: Effect of reputation salience on amount (\%) transferred from the husband to the wife, by MER subcomponent and by MER score}\label{experiment1_byscore}
+		\begin{tabular}{L{5.5cm} c cccc ccc}
+			\toprule 	\toprule
+			& Index & Purchases & Tempted & Manage & Change & MER $\leq 2$ & MER=3 & MER=4 \\
+			\midrule
+			& (1) & (2) & (3) & (4) & (5) & (6) & (7) & (8)    \\
+			\midrule	
+			\input{./Tables/02_Online_Appendix/Table_C3_byscore.tex}\\
+			\bottomrule
+		\end{tabular}
+		\begin{tablenotes}		
+			\item \textit{Notes}: The table shows results from OLS regressions with Huber-White robust SEs. Market Expertise Reputation (MER) is an index that takes the values 0 to 4, depending on how many of the following questions the husband affirmed: i) his wife had never bought anything that did not work as advertised (``Purchases'', 86\%), ii) his wife is never tempted to buy advertised goods with uncertain return at the market (``Tempted'', 80\%), iii) he believes his wife can manage money received from the husband well compared to other women in the community (``Manage'', 70\%), and iv) his wife can do calculations correctly in her head when she requests change in the market (``Math'', 95\%). The table shows the effect of the salience treatment for a negative answer to each of the individual MER subcomponents and for the different MER scores. We combine MER scores of 0, 1, and 2 because of small sample sizes: 6 women have an MER of 0 (0.6\%), 38 of 1 (3.5\%), 142 of 2 (13.0\%), 336 of 3 (30.7\%) and 571 of 4 (52.2\%). All regressions include enumerator, compensation and version fixed effects. Controls include wife and husband's age, education, average income and transfers in the last two months, variability of income (whether income is the same in most months or varies a lot), risk preferences, math and raven scores, and years married, number of children and number of household members. 
+		\end{tablenotes}
+	\end{threeparttable}
+  \end{table}
+\end{landscape}
+
+ \begin{table}[H]
+\centering
+	\begin{threeparttable}
+		\caption{Scores and beliefs on the quality quiz, by quiz difficulty}\label{scores}
+		\begin{tabular}{L{7.5cm} ccccc}
+	\toprule \toprule
+	& \multicolumn{2}{c}{Easy (N=550)} & \multicolumn{2}{c}{Hard (N=543)} &  \multicolumn{1}{c}{ } \\
+	\cmidrule(lr){2-3} \cmidrule(lr){4-5} 			
+	& Mean & SD & Mean & SD & Diff. \\
+		\input{./Tables/02_Online_Appendix/Table_C4/Row_1_t_q1.tex}	
+		\input{./Tables/02_Online_Appendix/Table_C4/Row_2_t_q2.tex} 
+		\input{./Tables/02_Online_Appendix/Table_C4/Row_3_t_q3.tex}	
+		\input{./Tables/02_Online_Appendix/Table_C4/Row_4_t_q4.tex}		
+		\input{./Tables/02_Online_Appendix/Table_C4/Row_5_t_q5.tex}		
+		\input{./Tables/02_Online_Appendix/Table_C4/Row_6_t_q6.tex}		
+		\input{./Tables/02_Online_Appendix/Table_C4/Row_7_t_q.tex}	
+		\input{./Tables/02_Online_Appendix/Table_C4/Row_8_t_hus_q.tex}	
+		\input{./Tables/02_Online_Appendix/Table_C4/Row_9_t_q_w.tex}	
+		\input{./Tables/02_Online_Appendix/Table_C4/Row_10_t_q_h_w.tex}
+		\input{./Tables/02_Online_Appendix/Table_C4/Row_11_t_update_neg.tex}\\
+			\bottomrule
+		\end{tabular}
+		\begin{tablenotes}		
+			\item Two-sided t-tests. ``W about H about W" refers to the wife's belief about her husband's belief about her score. \\
+		\end{tablenotes}
+	\end{threeparttable}
+  \end{table} 
+\newpage
+
+\begin{landscape}
+\begin{table}[p]
+\centering
+\begin{adjustbox}{width=1.2\textwidth}
+	\begin{threeparttable}
+		\caption{Outcomes in the signaling experiment, including controls}\label{quality_results_controls}
+		\begin{tabular}{L{11cm} ccc | cccc | c}
+					\toprule 	\toprule
+		    & \multicolumn{3}{c|}{Whole sample} & \multicolumn{4}{c|}{Participation sample} & \multicolumn{1}{c}{Whole sample} \\
+		   & \multicolumn{3}{c|}{(N=1093)} & \multicolumn{4}{c|}{(N=786)} & \multicolumn{1}{c}{(N=1093)} \\
+		    \midrule
+		    \midrule
+		    & \multicolumn{8}{c}{Panel A: By price and low perceived score} \\
+			\midrule
+			& Initial & Participate & Foregone & Initial & Errors & Hiding & Final & Total  \\
+			& score & (\%) & comp. & score & corrected & fee & score & forgone  \\
+			\midrule
+			& (1) & (2) & (3) & (4) & (5) & (6) & (7) & (8)   \\
+			\midrule
+			\input{./Tables/02_Online_Appendix/Table_C5/Panel_A_perceived_score_full.tex}\\
+			\bottomrule
+			\midrule
+			& \multicolumn{8}{c}{Panel B: By price and difficulty of the quiz} \\
+\midrule
+			& Initial & Participate & Forgone & Initial & Errors & Hiding & Final & Total  \\
+			& score & (\%) & comp. & score & corrected & fee & score & forgone  \\
+			\midrule
+			& (1) & (2) & (3) & (4) & (5) & (6) & (7) & (8)   \\
+			\midrule			
+			\input{./Tables/02_Online_Appendix/Table_C5/Panel_B_hard_version_full.tex}\\
+			\bottomrule
+		\end{tabular}
+		\begin{tablenotes}		
+			\item \textit{Notes}: The table shows results from OLS regressions with Huber-White robust SEs. Low Perceived Score is an indicator that takes the value 1 if the wife reports an average weighted score that is lower than 5 (39\% of women). The weighted average is calculated as the average across all scores, weighted by the probability assigned to each score by the woman (each woman placed 10 beans on the 7 different scores). Foregone comp. is the amount of money wives left on the table by opting out of the game. All regressions include enumerator and compensation fixed effects. The p-value is the p-value from a Wald test comparing outcomes between low perceived score and high perceived score wives or between the hard and the easy version when the price of hiding is intermediate or high. Controls include wife and husband's age, education, average income in the last two months, variability of income (whether income is the same in most months or varies a lot), risk preferences, math, and raven scores, and years married, number of children and number of household members, and the wife's MER. 
+		\end{tablenotes}
+	\end{threeparttable}
+	\end{adjustbox}
+  \end{table} 
+\end{landscape}	    
+
+\begin{landscape}
+\vspace{-1.25cm}
+\begin{table}[p]
+\centering
+\begin{adjustbox}{width=1.25\textwidth}
+	\begin{threeparttable}
+		\caption{Outcomes in the signaling experiment, by correlates of expertise}\label{quality_results_correlates}
+		\begin{tabular}{L{11cm} ccc | cccc | c}
+					\toprule 	\toprule
+		    & \multicolumn{3}{c|}{Whole sample} & \multicolumn{4}{c|}{Participation sample} & \multicolumn{1}{c}{Whole sample} \\
+		   & \multicolumn{3}{c|}{(N=1093)} & \multicolumn{4}{c|}{(N=786)} & \multicolumn{1}{c}{(N=1093)} \\
+		    \midrule
+		    \midrule
+		    & \multicolumn{8}{c}{Panel A: By price and wife's education} \\
+			\midrule
+			& Initial & Participate & Foregone & Initial & \# Errors & Hiding & Final & Total  \\
+			& score & (\%) & comp. & score & corrected & fee & score & forgone  \\
+			\midrule
+			& (1) & (2) & (3) & (4) & (5) & (6) & (7) & (8)   \\
+			\midrule
+			\input{./Tables/02_Online_Appendix/Table_C6/Panel_A_education_sparse.tex}\\
+			\bottomrule
+			\midrule
+			& \multicolumn{8}{c}{Panel B: By price and wife's self-esteem} \\
+\midrule
+			& Initial & Participate & Foregone & Initial & \# Errors & Hiding & Final & Total  \\
+			& score & (\%) & comp. & score & corrected & fee & score & forgone  \\
+			\midrule
+			& (1) & (2) & (3) & (4) & (5) & (6) & (7) & (8)   \\
+			\midrule			
+			\input{./Tables/02_Online_Appendix/Table_C6/Panel_B_selfesteem_sparse.tex}\\
+			\bottomrule
+		\end{tabular}
+		\begin{tablenotes}		
+			\item \textit{Notes}: The table shows results from OLS regressions with Huber-White robust SEs. Low Education is an indicator that takes the value 1 if the wife has fewer than 6 years of education (the median, 46\% of women). Low Self-Esteem is an indicator that is 1 if the wife's perceived quality quiz score is lower than her actual score (26\% of women). Foregone comp. is the amount of money wives left on the table by opting out of the game. All regressions include enumerator and compensation fixed effects. The p-value is the p-value from a Wald test comparing outcomes between wives with low or high education or between wives with low or high self-esteem when the hiding cost is high. 
+		\end{tablenotes}
+	\end{threeparttable}
+	\end{adjustbox}
+  \end{table}      
+\end{landscape}	
+
+ \begin{table}[H]
+		\caption{The signaling experiment: Balance, by low expertise (NE) and hiding cost (intermediate IC or high HC)}
+\label{experiment2_balance}
+        \centering
+        \begin{adjustbox}{width=0.98\textwidth}
+        \begin{threeparttable}
+	   \begin{tabular}{L{9cm} C{0.01cm} C{2cm} C{0.01cm} C{2cm} C{0.01cm} C{2cm} C{0.01cm} C{2cm} C{0.01cm} C{2cm} C{0.01cm} C{2cm}}
+	    \toprule \toprule
+		&& Mean && $\beta_{\text{NE}}$ && $\beta_{\text{IC}}$ && $\beta_{\text{HC}}$ && $\beta_{\text{NE}\times \text{IC}}$ && $\beta_{\text{NE}\times \text{HC}}$ \\
+		&& (SD) && (SE) && (SE) && (SE) && (SE) && (SE) \\		
+	\midrule
+	Variables && (1) && (2) && (3) && (4) && (5) && (6) \\		
+	\midrule
+		\end{tabular}
+				\begin{minipage}{9cm}
+					\begin{tabular}{L{9cm}}
+						\input{./Tables/02_Online_Appendix/Table_C7/exp2_balance_vars.tex}
+					\end{tabular}	
+				\end{minipage}%
+				\begin{minipage}{2.1cm}
+					\begin{tabular}{C{0.1cm} C{2cm}}
+						\input{./Tables/02_Online_Appendix/Table_C7/Col1_exp2_balance_means.tex}
+					\end{tabular}	
+				\end{minipage}%
+				\begin{minipage}{2.1cm}
+					\begin{tabular}{C{0.1cm} C{2cm}}
+						\input{./Tables/02_Online_Appendix/Table_C7/Col2_exp2_balance_low_qw.tex}
+					\end{tabular}
+				\end{minipage}%
+				\begin{minipage}{2.1cm}
+					\begin{tabular}{C{0.1cm} C{2cm}}
+						\input{./Tables/02_Online_Appendix/Table_C7/Col3_exp2_balance_c2.tex}
+					\end{tabular}
+				\end{minipage}%
+				\begin{minipage}{2.1cm}
+					\begin{tabular}{C{0.1cm} C{2cm}}
+						\input{./Tables/02_Online_Appendix/Table_C7/Col4_exp2_balance_c3.tex}
+					\end{tabular}
+				\end{minipage}%
+				\begin{minipage}{2.1cm}
+					\begin{tabular}{C{0.1cm} C{2cm}}
+					\input{./Tables/02_Online_Appendix/Table_C7/Col5_exp2_balance_low_qw_c2.tex}
+					\end{tabular}
+				\end{minipage}%
+				\begin{minipage}{2.1cm}
+					\begin{tabular}{C{0.1cm} C{2cm}}
+					\input{./Tables/02_Online_Appendix/Table_C7/Col6_exp2_balance_low_qw_c3.tex}\\
+					\end{tabular}
+				\end{minipage}%
+	   \begin{tabular}{L{9cm} C{0.01cm} C{2cm} C{0.01cm} C{2cm} C{0.01cm} C{2cm} C{0.01cm} C{2cm} C{0.01cm} C{2cm} C{0.01cm} C{2cm}}
+		\bottomrule
+		 & & & & & & & & & & & & \\
+		\end{tabular}	
+		\begin{tablenotes}		
+\item \textit{Notes:} The table shows results from OLS regressions with enumerator fixed effects and Huber-White robust SEs. Non-Expert defined as before. All MWK values are winsorized at 3 SDs. Wife's and husband's average income as well as transfers as reported by the wife. The regressions control for enumerator and compensation fixed-effects. No differences are significant after adjusting for false discovery rates (q-values). 
+\end{tablenotes}				
+\end{threeparttable}
+\end{adjustbox}
+\end{table}
+
+ \begin{table}[H]
+		\caption{The signaling experiment: Balance, by hard version (HV) and hiding cost (intermediate IC or high HC)}
+\label{experiment2_balance_hv}
+        \centering
+        \begin{adjustbox}{width=0.98\textwidth}
+        \begin{threeparttable}
+	   \begin{tabular}{L{9cm} C{0.01cm} C{2cm} C{0.01cm} C{2cm} C{0.01cm} C{2cm} C{0.01cm} C{2cm} C{0.01cm} C{2cm} C{0.01cm} C{2cm}}
+	    \toprule \toprule
+		&& Mean && $\beta_{\text{HV}}$ && $\beta_{\text{IC}}$ && $\beta_{\text{HC}}$ && $\beta_{\text{HV}\times \text{IC}}$ && $\beta_{\text{HV}\times \text{HC}}$ \\
+		&& (SD) && (SE) && (SE) && (SE) && (SE) && (SE) \\		
+	\midrule
+	Variables && (1) && (2) && (3) && (4) && (5) && (6) \\		
+	\midrule
+		\end{tabular}
+				\begin{minipage}{9cm}
+					\begin{tabular}{L{9cm}}
+						\input{./Tables/02_Online_Appendix/Table_C8/exp4_balance_vars.tex}
+					\end{tabular}	
+				\end{minipage}%
+				\begin{minipage}{2.1cm}
+					\begin{tabular}{C{0.1cm} C{2cm}}
+						\input{./Tables/02_Online_Appendix/Table_C8/Col1_exp4_balance_means.tex}
+					\end{tabular}	
+				\end{minipage}%
+				\begin{minipage}{2.1cm}
+					\begin{tabular}{C{0.1cm} C{2cm}}
+						\input{./Tables/02_Online_Appendix/Table_C8/Col2_exp4_balance_hv.tex}
+					\end{tabular}
+				\end{minipage}%
+				\begin{minipage}{2.1cm}
+					\begin{tabular}{C{0.1cm} C{2cm}}
+						\input{./Tables/02_Online_Appendix/Table_C8/Col3_exp4_balance_c2.tex}
+					\end{tabular}
+				\end{minipage}%
+				\begin{minipage}{2.1cm}
+					\begin{tabular}{C{0.1cm} C{2cm}}
+						\input{./Tables/02_Online_Appendix/Table_C8/Col4_exp4_balance_c3.tex}
+					\end{tabular}
+				\end{minipage}%
+				\begin{minipage}{2.1cm}
+					\begin{tabular}{C{0.1cm} C{2cm}}
+					\input{./Tables/02_Online_Appendix/Table_C8/Col5_exp4_balance_hv_c2.tex}
+					\end{tabular}
+				\end{minipage}%
+				\begin{minipage}{2.1cm}
+					\begin{tabular}{C{0.1cm} C{2cm}}
+					\input{./Tables/02_Online_Appendix/Table_C8/Col6_exp4_balance_hv_c3.tex}\\
+					\end{tabular}
+				\end{minipage}%
+	   \begin{tabular}{L{9cm} C{0.01cm} C{2cm} C{0.01cm} C{2cm} C{0.01cm} C{2cm} C{0.01cm} C{2cm} C{0.01cm} C{2cm} C{0.01cm} C{2cm}}
+		\bottomrule
+		 & & & & & & & & & & & & \\
+		\end{tabular}	
+		\begin{tablenotes}		
+\item \textit{Notes:} The table shows results from OLS regressions with enumerator fixed effects and Huber-White robust SEs. All MWK values are winsorized at 3 SDs. Wife's and husband's average income as well as transfers as reported by the wife. The regressions control for enumerator and compensation fixed-effects. No differences are significant after adjusting for false discovery rates (q-values). 
+\end{tablenotes}				
+\end{threeparttable}
+\end{adjustbox}
+\end{table}
+
+\input{./Tables/02_Online_Appendix/Table_C9_respondent_characteristics_ex3.tex}		
+\vspace{-0.9cm}
+\begin{flushleft}
+\begin{footnotesize}
+\quad \quad \textit{Notes:} Kwacha values are winsorized at 3 SDs.
+\end{footnotesize}
+\end{flushleft}
+
+\begin{landscape}
+\vspace{-1.5cm}
+\begin{table}[p]
+\centering
+\begin{adjustbox}{width=1.25\textwidth}
+	\begin{threeparttable}
+		\caption{Outcomes in the signaling experiment, by alternative measures of expertise}\label{quality_results_alternative}
+		\begin{tabular}{L{11cm} ccc | cccc | c}
+					\toprule 	\toprule
+		    & \multicolumn{3}{c|}{Whole sample} & \multicolumn{4}{c|}{Participation sample} & \multicolumn{1}{c}{Whole sample} \\
+		   & \multicolumn{3}{c|}{(N=1093)} & \multicolumn{4}{c|}{(N=786)} & \multicolumn{1}{c}{(N=1093)} \\
+		    \midrule
+		    \midrule
+		    & \multicolumn{8}{c}{Panel A: By price and low score} \\
+			\midrule
+			& Initial & Participate & Foregone & Initial & \# Errors & Hiding & Final & Total  \\
+			& score & (\%) & comp. & score & corrected & fee & score & forgone  \\
+			\midrule
+			& (1) & (2) & (3) & (4) & (5) & (6) & (7) & (8)   \\
+			\midrule
+			\input{./Tables/02_Online_Appendix/Table_C10/Panel_A_score_sparse.tex}\\
+			\bottomrule
+			\midrule
+			& \multicolumn{8}{c}{Panel B: By price and accuracy of beliefs about score} \\
+\midrule
+			& Initial & Participate & Foregone & Initial & \# Errors & Hiding & Final & Total  \\
+			& score & (\%) & comp. & score & corrected & fee & score & forgone  \\
+			\midrule
+			& (1) & (2) & (3) & (4) & (5) & (6) & (7) & (8)   \\
+			\midrule			
+			\input{./Tables/02_Online_Appendix/Table_C10/Panel_B_accuracy_sparse.tex}\\
+			\bottomrule
+		\end{tabular}
+		\begin{tablenotes}		
+			\item \textit{Notes}: The table shows results from OLS regressions with Huber-White robust SEs. Non-Expert is an indicator that takes the value 1 if the wife has a quality score that is lower than 4 (the median, 28\% of women). Inaccurate beliefs is an indicator that is 1 if the absolute distance between the wife's belief about her quality score and her actual quality score is larger than 1 (the median, 40\% of women). Foregone comp. is the amount of money wives left on the table by opting out of the game. All regressions include enumerator and compensation fixed effects. The p-value is the p-value from a Wald test comparing outcomes between Non-Expert and Expert wives or between wives with accurate or inaccurate beliefs when the hiding cost is high. 
+		\end{tablenotes}
+	\end{threeparttable}
+	\end{adjustbox}
+  \end{table}      
+
+ \begin{table}[!p]
+		\caption{The market experiment: Balance, by expertise (NE=non-expert wife) and sticker treatments}
+\label{Balance_experiment3}
+        \centering
+        \begin{adjustbox}{width=1.4\textwidth}
+        \begin{threeparttable}
+	   \begin{tabular}{L{9cm}  C{0.01cm} C{2.3cm}  C{0.1cm} C{2.3cm} C{0.1cm} C{2.3cm} C{0.2cm} C{2.3cm} C{0.1cm}  C{2.3cm} C{0.1cm} C{2.3cm} C{0.1cm} C{2.3cm} C{0.1cm} C{2.3cm}}
+	    \toprule \toprule
+	&& Mean && $\beta_{\text{NE}}$ && $\beta_{\text{Donated}}$ && $\beta_{\text{D.*NE}}$ && $\beta_{\text{Effectiveness}}$ && $\beta_{\text{Eff.*NE}}$ && $\beta_{\text{D.\&Eff.}}$ && $\beta_{\text{(D.\&Eff.)*NE}}$ \\		
+    && (SD) && (SE) && (SE) && (SE) && (SE) && (SE) && (SE) && (SE) \\		
+
+	\midrule
+	Variables && (1) && (2) && (3) && (4) && (5) && (6) && (7) && (8) \\		
+	\midrule		\end{tabular}
+				\begin{minipage}{9cm}
+					\begin{tabular}{L{9cm}}
+						\input{./Tables/02_Online_Appendix/Table_C11/exp3_balance_vars.tex}
+					\end{tabular}	
+				\end{minipage}%
+				\begin{minipage}{2.31cm}
+					\begin{tabular}{C{0.1cm} C{2.3cm}}
+						\input{./Tables/02_Online_Appendix/Table_C11/Col1_exp3_balance_means.tex}
+					\end{tabular}	
+				\end{minipage}%
+				\begin{minipage}{2.31cm}
+					\begin{tabular}{C{0.1cm} C{2.3cm}}
+					\input{./Tables/02_Online_Appendix/Table_C11/Col2_exp3_balance_low_m_h_w.tex}
+					\end{tabular}
+				\end{minipage}%
+				\begin{minipage}{2.31cm}
+					\begin{tabular}{C{0.1cm} C{2.3cm}}
+					\input{./Tables/02_Online_Appendix/Table_C11/Col3_exp3_balance_free.tex}
+					\end{tabular}
+				\end{minipage}%
+				\begin{minipage}{2.31cm}
+					\begin{tabular}{C{0.1cm} C{2.3cm}}
+						\input{./Tables/02_Online_Appendix/Table_C11/Col4_exp3_balance_free_lr.tex}
+					\end{tabular}
+				\end{minipage}%
+				\begin{minipage}{2.31cm}
+					\begin{tabular}{C{0.1cm} C{2.3cm}}
+						\input{./Tables/02_Online_Appendix/Table_C11/Col5_exp3_balance_info.tex}
+					\end{tabular}
+				\end{minipage}%
+				\begin{minipage}{2.31cm}
+					\begin{tabular}{C{0.1cm} C{2.3cm}}
+						\input{./Tables/02_Online_Appendix/Table_C11/Col6_exp3_balance_info_lr.tex}
+					\end{tabular}
+				\end{minipage}%
+				\begin{minipage}{2.31cm}
+					\begin{tabular}{C{0.1cm} C{2.3cm}}
+						\input{./Tables/02_Online_Appendix/Table_C11/Col7_exp3_balance_free_info.tex}
+					\end{tabular}
+				\end{minipage}%
+				\begin{minipage}{2.31cm}
+					\begin{tabular}{C{0.1cm} C{2.3cm}}
+						\input{./Tables/02_Online_Appendix/Table_C11/Col8_exp3_balance_free_info_lr.tex}\\
+					\end{tabular}
+				\end{minipage}%
+
+	   \begin{tabular}{L{9cm}  C{0.01cm} C{2.3cm}  C{0.01cm} C{2.3cm} C{0.01cm} C{2.3cm} C{0.01cm} C{2.3cm} C{0.01cm}  C{2.3cm} C{0.01cm} R{2.3cm} C{0.01cm} R{2.3cm} C{0.01cm} R{2.3cm}}
+		\bottomrule
+		 & & & & & & & & && && && && \\
+		\end{tabular}	
+		\begin{tablenotes}		
+\item \textit{Notes:} The table shows results from OLS regressions with enumerator fixed effects and Huber-White robust SEs. All MWK values are winsorized at 3 SDs. Non-Expert defined as before. Wife's and husband's average income as well as transfers are reported by the wife, the agent of the market experiment. The regressions control for enumerator fixed effects. No differences are significant after adjusting for false discovery rates (q-values).
+\end{tablenotes}				
+\end{threeparttable}
+\end{adjustbox}
+\end{table}	
+\end{landscape}
+
+\end{document}

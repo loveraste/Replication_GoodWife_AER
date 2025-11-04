@@ -1,0 +1,882 @@
+\documentclass[12pt,english,round]{article} 
+
+%% Import packages
+\usepackage{tikz,hyperref,subcaption,multirow,dcolumn,minitoc,anysize,amssymb,amsmath,amsthm,enumitem,dsfont,lscape,array,longtable,setspace,color,tabularx,booktabs,multirow,epstopdf,pdflscape,natbib,indentfirst,graphicx,adjustbox,placeins,afterpage,tabulary,rotate,rotating,float,tikz,bbm,babel,lipsum,etoolbox,changepage}
+
+%% Packages with input
+\usepackage[toc,page,header]{appendix}
+\usepackage{rotating,capt-of,varwidth}
+\usepackage[para]{threeparttable}
+\appto\TPTnoteSettings{\footnotesize}
+\usepackage[nameinlink]{cleveref} 
+
+%% Page Setup
+\def\baselinestretch{1.25}
+\marginsize{0.85in}{0.85in}{0.65in}{0.65in}
+\linespread{1.25}
+\tolerance=1
+\emergencystretch=\maxdimen
+\hyphenpenalty=10000
+\hbadness=10000
+
+%% Columns
+\newcolumntype{d}[1]{D{.}{.}{-1}}
+\newcolumntype{s}[1]{D{.}{.}{#1}}
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{d}[1]{>{\rightdots{#1}}r<{\endrightdots}}
+
+%% Commands
+\newcommand\myrowlabel[1]{%
+  \rotatebox[origin=c]{90}{#1}%
+}
+\providecommand{\definitionname}{Definition}
+\providecommand{\propositionname}{Proposition}
+\providecommand{\assumptionname}{Assumption}
+\providecommand{\theoremname}{Theorem}
+\newtheorem{pred}{Prediction}
+\newtheorem{prem}{Premise}
+\newtheorem{bigresult}{Result}
+\newtheorem{result1}{Result}[bigresult]
+\newtheorem{result2}{Result}[result1]
+\newtheorem{result3}{Result}[result2]
+\newcounter{resultlevel}[bigresult]
+\newtheorem{corollary}{Corollary}
+\newtheorem{claim}{Claim}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newcommand{\e}{\mathbb{E}} % Make sure to add this to the preamble
+\usepackage{chngcntr}
+\counterwithin*{lemma}{section} 
+\counterwithin*{corollary}{section} 
+\newtheorem*{assumption*}{\protect\assumptionname}
+\newtheorem{assumption}{Assumption}
+\pagestyle{plain}
+\renewcommand{\thesubfigure}{\thefigure.\arabic{subfigure}}
+\newcommand{\maketableline}{\noalign{\smallskip}\midrule\noalign{\smallskip}}
+\newcommand{\maketabletopline}{\noalign{\smallskip}\toprule\noalign{\smallskip}}
+\newcommand{\maketablebottomline}{\noalign{\smallskip}\bottomrule\noalign{\smallskip}}
+\newcommand{\mc}{\mcal}
+\newcommand{\sumlow}{\sum\nolimits}
+\newcommand{\fref}[1]{Figure \ref{#1}}
+\newcommand{\fsref}[2]{Figures \ref{#1} to \ref{#2}}
+\newcommand{\fandref}[2]{Figures \ref{#1} and \ref{#2}}
+\newcommand{\eref}[1]{Equation (\ref{#1})}
+\newcommand{\esref}[2]{Equations (\ref{#1}) to (\ref{#2})}
+\newcommand{\eandref}[2]{Equations (\ref{#1}) and (\ref{#2})}
+\newcommand{\tref}[1]{Table \ref{#1}}
+\newcommand{\tsref}[2]{Tables \ref{#1} to \ref{#2}}
+\newcommand{\tandref}[2]{Tables \ref{#1} and \ref{#2}}
+\newcommand{\sref}[1]{Section \ref{#1}}
+\newcommand{\ssref}[2]{Sections \ref{#1} to \ref{#2}}
+\newcommand{\aref}[1]{Appendix \ref{#1}}
+\renewcommand{\footnoterule}{\rule{6cm}{0.2pt}\vspace{3pt}}
+\newcommand{\mb}[1]{\text{\boldm$#1$}}
+\newcommand{\tc}{\textcolor}
+\newcommand*\Mean[1]{\bar{#1}}
+\newtheorem{thm}{\protect\theoremname}
+  \theoremstyle{definition}
+  \newtheorem{defn}[thm]{\protect\definitionname}
+  \theoremstyle{plain}
+  \newtheorem*{prop*}{\protect\propositionname}
+\newtheorem{prop}{Proposition}
+\newtheorem{conjecture}[thm]{\protect\conjecturename}
+\providecommand{\conjecturename}{Conjecture}
+\providecommand{\theoremname}{Theorem}
+
+%% Tikz
+\usetikzlibrary{calc}
+\usetikzlibrary{arrows,decorations.pathreplacing}
+
+%% Sections
+\crefname{appendix}{Subsection}{Subsections}
+\crefname{section}{Section}{Sections}
+\crefname{subsection}{Subsection}{Subsections}
+\crefname{figure}{Figure}{Figures}
+
+% argmin and argmax
+\DeclareMathOperator*{\argmin}{argmin} 
+\DeclareMathOperator*{\argmax}{argmax} 
+
+%% Other
+\makeatother
+\bibliographystyle{aer}
+\setcounter{MaxMatrixCols}{5}
+
+\author{Nina Buchmann \\ Yale University \and Pascaline Dupas \\ Princeton University and NBER\and Roberta Ziparo \\ Aix-Marseille School of Economics}
+
+\title{\Large The Good Wife? Reputation Dynamics and Financial Decision-Making Inside the Household\thanks{%
+We are immensely grateful to Aaron Wolf and Maxim Bakhtin for outstanding research assistance, and to all our study participants for their time and attention. The data collection was done with the assistance of IKI Malawi. The research protocols were approved by the Stanford IRB and the Malawi National Committee on Research in the Social Sciences and Humanities. The experimental designs were pre-registered in the AEA RCT registry (ID 4069). We gratefully acknowledge funding from Stanford University. We thank three anonymous referees and the co-editor, as well as Renaud Bourlès, Lukas Bolte, Marcel Fafchamps, Yucheng Liang, Madeline McKelway, Muriel Niederle, Agathe Pernoud, Collin Raymond, David Romer, Erik Snowberg, Alessandra Voena, Leeat Yariv and multiple seminar audiences for very helpful comments and feedback. All errors are our own. Buchmann: nina.buchmann@yale.edu; Dupas: pdupas@princeton.edu; Ziparo: roberta.ziparo@univ-amu.fr.}}
+
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+
+\date{}
+
+\begin{spacing}{1}
+\begin{center}
+\begin{abstract}
+We study reputation dynamics within the household in a setting where women regularly receive transfers from their husbands for household purchases. We propose a signaling model in which wives try to maintain a good reputation in the eyes of their husband to receive high transfers. This leads them to (a) avoid risky purchases (goods with unknown returns); and (b) knowingly over-use low-return goods to hide bad purchase decisions---we call this the \textit{intra-household sunk cost effect}. We present supportive evidence for the model from a series of experiments with married couples in rural Malawi.
+
+\hspace{0.01mm}
+
+Keywords: Intra-household model, Signaling, dynamic games, experiment, technology adoption.
+JEL code: D13, J16, O12.
+
+\end{abstract}
+\end{center}
+\end{spacing}
+\clearpage
+\setcounter{page}{1}
+
+\doparttoc % Tell to minitoc to generate a toc for the parts
+\faketableofcontents % Run a fake tableofcontents command for the partocs
+
+\newpage
+
+\section{Introduction}
+
+Women worldwide rely on spousal transfers for general household expenditures---especially in low-income countries, where women's earnings are limited by a number of factors such as labor-intensive home production \citep{jayachandran2015roots}. Little is known about what drives the size of such transfers and women's discretion over how to spend them. The household bargaining literature primarily attributes the transfer size to spouses' outside options \citep{manserbrown80, chiappori88, chiappori1992}. By contrast, this paper studies the role of information asymmetries and women's intra-household reputation in explaining transfer size. In particular, we examine whether the size of discretionary transfers to wives is driven in part by husbands' beliefs that their wives will utilize these transfers wisely, and how this creates incentives for wives to maintain an intra-household reputation as expert investors---even at efficiency costs to the household.
+
+We study the role of women's intra-household reputation both theoretically in a signaling model and empirically in a series of experiments involving over 2,600 spouses in rural Malawi. The key intuition for the reputation dynamics we study is the following. If the husband only gives an allowance to his wife if he believes her to be a savvy investor, then the wife has the incentive to distort information about her real investment expertise. In particular, the wife may: i) under-invest in risky but potentially high-return goods to avoid non-savvy purchases of unproductive goods (``lemons''), and ii) exert costly effort to hide that she has purchased a lemon. Thus, women's reputation concerns may limit their willingness to try out new technologies or abandon non-productive technologies. This has important implications for understanding women's agency and well-being, as well as for designing effective anti-poverty programs such as technology adoption campaigns.
+
+We propose a signaling game in which the husband infers his wife's market expertise from her household goods purchase and usage decisions. The husband decides whether to make a discretionary transfer (``allowance") to the wife, and the wife decides which household good to purchase and whether to use the good after purchase. The wife can purchase either a safe or a risky good. The safe good has a known usage return. The risky good can have either high or zero usage return---for example, a new cookstove advertised as more efficient could truly be more efficient, or it could be no better than the existing one. Wives vary in their expertise in assessing the return of risky goods: Expert wives are able to discern the return of a risky good before purchasing it; non-expert wives only learn the return of the risky good after purchasing it. The husband does not observe the return of the goods himself but learns about his wife’s expertise by observing his wife's investment and usage decisions.
+
+In this environment, non-expert wives might i) under-invest in potentially high-return goods and ii) over-use zero-return goods (lemons). First, non-expert wives might under-invest in the risky good, i.e., sometimes purchase the safe good even if its expected return is lower than that of the risky good, to mimic the investment rate of expert wives who purchase the safe good whenever the risky good is zero-return. Second, non-expert wives might exert costly effort to use zero-return goods and hide that they purchased a lemon. This rationalizes a behavior empirically equivalent to the sunk cost fallacy, the tendency to follow through on an endeavor after having invested time, effort, or money into it. The relative importance of these two distortions---under-investment and over-use of lemons---depends on the cost of hiding the purchase of a lemon. If the cost of hiding is low (for example, it is possible to pretend a new stove is efficient by hiding how much firewood is collected and used), non-experts under-invest and hide their investment mistakes. If the cost of hiding is high---including goods for which the husband can directly observe the productivity (for example, it is quasi-impossible to hide that a manual irrigation pump does not have enough suction depth to be useful on one's land), non-experts under-invest even more (completely shying away from risky investments) but do not hide investment mistakes.
+
+We conduct three experiments in Southern Malawi to examine the basic mechanisms of the model and show how these mechanisms could impact real-world behavior. The {\it transfer experiment}, conducted with 1,093 husbands, suggests that husbands consider their wives’ previous investment decisions when deciding how much money to allocate to them. The {\it signaling experiment}, conducted with 1,093 wives, suggests that wives are willing to incur substantial financial losses to avoid sending a negative signal about their ability to assess the return of market goods to their husbands. The {\it market experiment}, conducted with a new sample of 675 wives shopping at local markets, suggests that wives are less willing to use spousal transfers to purchase unknown goods without being able to signal that the good is of high return. 
+
+The {\it transfer experiment} tests whether husbands' transfers respond to their wives' perceived expertise. Husbands play a dictator game with a multiplier with their wives and are randomly assigned to a ``salience'' treatment, in which they recall examples of their wife's (potential lack of) market expertise right \textit{before} the transfer decision. Consistent with the model premise, the salience treatment decreases the share transferred from the husband to the wife by 13\%  when he rates the wife as having low market expertise, but does not decrease the share transferred when he rates the wife as having high market expertise.
+
+The {\it signaling experiment} tests whether women internalize intra-household reputation concerns in their investments and usage decisions. We ask wives first to play a quiz discerning high- from low-quality goods (e.g., natural sponge vs. plastic sponge) and then to decide i) whether to share their quiz scores with their husbands in exchange for additional survey compensation (``investing''), and ii) how many quiz answers to correct at a given hiding fee before sharing the score (``hiding''). Consistent with the model predictions, we find that wives expecting a lower score (``non-experts") invest as much as experts but hide mistakes when the cost of hiding is low, and invest significantly less and do not hide mistakes when the cost of hiding is high. The resulting inefficiency cost is quite large. Non-expert wives forgo 125 Malawian Kwacha (MWK) in experimental earnings on average---about $36\%$ of daily income. Specifically, $35\%$ of non-expert wives do not invest at all (i.e., they request that we do not share their score with their husband and thus forgo the additional compensation), and $24\%$ invest but pay to hide mistakes.
+
+The {\it market experiment} tests whether intra-household reputation concerns influence women's real-life investment decisions. In a new sample of married women shopping alone at local markets, we elicit women's willingness to exchange some of their survey compensation for an unfamiliar good with high return. We experimentally vary whether the purchase may affect their reputation; specifically, we experimentally vary whether the husband will know that the good is high-return by attaching an ``effectiveness'' sticker to the good and whether the husband will know that the wife received the good for free by attaching a ``donated'' sticker to the good. Consistent with the model predictions, non-expert wives, when compared to expert wives, have a 25\% lower willingness to pay for the good absent any sticker, but this gap disappears if either of the two stickers removing the reputation risk is attached.
+
+The model predicts that reputation concerns only affect spouses' behavior if the wife's reputation is still above the threshold above which discretionary transfers occur. Consistently, across all three experiments, the patterns predicted by the model are observed only in couples in which wives receive high (above median) monthly transfers from their husbands, that is, in couples in which reputation dynamics are at play. This also suggests that our findings are unlikely to be explained by experimenter demand effects. 
+
+We provide theoretical and empirical evidence for reputation dynamics among low-income couples in Malawi but the proposed mechanism could be at play in many different settings. For instance, a California husband might continue using the yogurt maker that produces tasteless yogurt to maintain his reputation as an investor---and be able to buy a Sourdough bread maker in the future. The model could also apply to parents and teenage children, or international migrants and those receiving their remittances. However, we see the dynamics we model as particularly consequential for poor households in low-income countries, where the subordinate position and financial dependence of one spouse relative to the other are still common and exacerbate the issue.
+
+Understanding the extent to which reputation dynamics influence women's ability to experiment with new technologies is also an important step toward understanding the types of policies and programs that can influence technology adoption. The intra-household dynamics we describe may be one of the factors behind the low adoption of new technologies targeting women, such as preventive health products \citep{CohenDupasQJE, MeredithEtAl}, improved cookstoves \citep{berkouwer2021credit}, etc. They could, for example, explain the experimental finding that the marketing of antimalarial bednets in the presence of both spouses increases the purchase rate by 7ppt (+20\%) compared to targeting the wife or husband alone \citep{dupas2009matters}. Our findings provide suggestive evidence that marketing campaigns promoting new technologies specifically to women, as many non-governmental organizations do, may generate negative consequences for women who face reputation risks when asked to make investment decisions on their household's behalf.
+
+We contribute to four strands of literature. First, we contribute to the literature on intra-household resource allocations. We connect to the vast literature on bargaining within the household started by \citet{manserbrown80} and \citet{chiappori88, chiappori1992}. The main friction considered to date in this literature is limited commitment, with transfers within the household determined by the outside options of both spouses. As \cite{doepke2016families} wrote, ``An alternative friction that has received much less attention so far is private information within the household.'' The hiding of income \citep{hoel2015heterogeneous, boltz2016income}, spending \citep{delaat2014household} and savings \citep{anderson&baland2002gender,ashraf2009spousal,dupas2013don,Schaner2015} has been well documented. A nascent literature has considered the implications of different preferences on information diffusion within the household \citep{apedoetal2020householdinfo, Ashrafetal2022}. We study the impact of information asymmetries on intra-household resource allocations.
+
+Second, we contribute to the literature on reputation inside the household. Reputation concerns have been proposed as an explanation for intimate partner violence \citep{tauchen1991domestic} and tough parenting \citep{hao2008games, fupantano2015reputation, hotz2015strategic}: husbands and parents can have a strategic incentive to build a reputation as non-lenient, and thereby dissuade certain behaviors \citep{hao2008games, fupantano2015reputation, hotz2015strategic}. We suggest that reputation mechanisms between spouses can also affect financial decision-making and may matter for the design of social policies.
+
+Third, we contribute to the literature on dynamic signaling \citep{noldekevandamme1990, swinkels1999, kremerskrzypacz2007} and to the literature on incentives in organizations and markets \citep{dewatripont1999economics,barisaac2003}.  
+
+Finally, our model rationalizes a behavior that is observationally equivalent to the sunk cost fallacy, the greater tendency to continue an endeavor once an investment in money, effort, or time has been made \citep{arkesblumer1985}. Under standard economic models, this behavior is irrational: once the expense has been incurred, it should be irrelevant to the decision to go on. The idea that such behavior may be driven by the rational need to save face when future payouts are at stake has previously been modeled in the context of firm managers by \citet{Kanodia1989} and \citet{PrendergastStole1996}. To our knowledge, we are the first paper to suggest the existence of such a phenomenon in a setting where the cost of hiding private information is borne by the agent (the wife)---while in the firm setting, the escalation costs are borne by the principal (the firm). 
+
+The remainder of this paper is structured as follows. \cref{motivating_evidence} presents the existing evidence that motivated the paper. \cref{model} presents the model and derives a set of testable predictions. \cref{setting} presents the empirical setting. \cref{pg_experiment}, \cref{quality_experiment}, and \cref{market_experiment} describe the transfer, the signaling, and the market experiment, respectively, each designed to test different theoretical premises or predictions. \cref{transfer_heterogeneity} tests for heterogeneity by the size of the discretionary transfers from the husband to the wife, and \cref{conclusion} concludes. 
+
+\section{Motivating Evidence: Intra-Household Dynamics and Technology Adoption }\label{motivating_evidence}
+
+In this section, we provide motivating evidence from two randomized experiments and qualitative surveys that suggest that intra-household reputation concerns might contribute to i) the low adoption of new technologies observed in resource-constrained settings and ii) usage behavior akin to the sunk cost fallacy. Low adoption has been documented for technologies that can help improve health (e.g., bed nets or water treatment products), reduce effort costs inside the household (e.g., efficient cookstoves), or increase agricultural yields (e.g., high-yield seed varieties).\footnote{See \citet{dupas2017impacts} and \citet{magruder2018assessment} for reviews in health and agriculture, respectively.} The literature so far has focused on a number of explanations for why adoption of these products is low despite their returns seemingly far outweighing their costs: lack of information \citep{hussam2021translating}, liquidity constraints \citep{CohenDupasQJE, tarozzi2014micro, berkouwer2022credit}, inattention \citep{berkouwer2022credit} and procrastination \citep{banerjee2010improving}. These explanations treat the household as a unit. However, in many contexts, {\it husbands} are responsible for the generation of income for the household, while {\it wives} are responsible for the adoption decisions of the household. These intra-household dynamics may contribute to the low adoption of certain household production technologies. 
+
+The first experimental study we revisit suggests that demand for a new type of antimalarial bed nets in Kenya is higher when both spouses jointly rather than either of the spouses alone are provided information about the bed nets \citep{dupas2009matters}. In the experiment, either the wife alone, the husband alone, or both spouses together were randomly selected to receive the opportunity to buy the bednet at a randomized price (the randomized price was the focus of \citet{dupas2009matters}'s analysis). First, the pre-selected spouse(s) received information about a new type of antimalarial bed net not yet available in the market, a long-lasting insecticide-treated net branded as ``Olyset\textsuperscript{\textregistered}," described as more effective than older generation bed nets. Second, the pre-selected spouse(s) received a voucher for a subsidized Olyset\textsuperscript{\textregistered}. Third, the pre-selected spouse(s) had three months to redeem their vouchers. 
+
+Take-up of the bednet was significantly higher (+7ppts, or 20\%) among households in which both spouses were jointly given the information (\autoref{kenya_investment}). This is despite the fact that all participants had three months to redeem the vouchers, i.e., women had ample time to convince their husbands to give them money for the new product, and men to ask their wives if they were interested in the new product. The fact that take-up was higher only when {\it both spouses} received the same information is consistent with a model in which wives face a reputation risk when returns are uncertain but are expected to cast the deciding vote. 
+
+\begin{figure}[H]
+\centering
+\caption{Bed Net Investment Decision in Kenya (2007)}\label{kenya_investment}
+\vspace{-0.4cm}
+\includegraphics[width=0.6\textwidth]{"./Graphs/00_Main/Figure_1_kenya_investment".png}
+\vspace{-0.5cm}
+\begin{footnotesize}
+\begin{flushleft}
+\begin{spacing}{1}
+\textit{Notes}: Data from \citet{dupas2009matters}. The experiment took place in Kenya in 2007. The sample is limited to households who had to pay a non-zero price for the bed net (N=1,222). The spouse offered the voucher was randomized. 
+\end{spacing}
+\end{flushleft}
+\end{footnotesize}
+\end{figure}
+\vspace{-0.5cm}
+
+The second experimental study we revisit suggests behavior akin to the sunk cost fallacy: Married but not unmarried women are more likely to use a new water treatment product in Zambia when they paid for the product than when they received the product for free \citep{ashraf2010can}. In the experiment, female household heads willing to purchase the product (called `Clorin') were randomly offered a discount such that some received the product for free while others had to pay a positive amount.\footnote{\citet{ashraf2010can} use this design to test for the sunk cost fallacy and fail to find any evidence that those who ultimately had to pay more were more likely to put the product to use.} 
+
+Restricting the data to women who had never used Clorin before, we find that married but not unmarried women were more likely (+7ppts, or 18\%) to put the product to use if they had to pay some non-zero price for it (\autoref{zambia_usage}). This could be suggestive that the sunk cost fallacy operates \textit{at the household level}: married women feel compelled to use the Clorin for which they paid in order to ``justify" their purchase, even if the product appears not well suited for their household.\footnote{Indeed, more than half of married women who got the Clorin for free report {\it not} using it at the follow-up visit---this is consistent with the finding that many households dislike the chlorinated taste that can result from water treatment \citep{DupasChlorine2023}.} However, as single and married women may differ in many dimensions, the finding that price has a differential impact on their usage patterns, while suggestive of a potential intra-household sunk cost fallacy, could reflect some other differences between these two types of households. In the next section, we thus generate testable predictions for a formal model, and in the rest of the paper, we describe experiments specifically designed to test these predictions.
+
+\begin{figure}[H]
+\centering
+\caption{Clorin Usage in Zambia, by Final Price paid}\label{zambia_usage}
+\vspace{-0.4cm}
+\includegraphics[width=0.6\textwidth]{"./Graphs/00_Main/Figure_2_zambia_usage2".png}
+\vspace{-0.5cm}
+\begin{footnotesize}
+\begin{flushleft}
+\begin{spacing}{1}
+\textit{Notes}: Data from \citet{ashraf2010can}. The graph shows adjusted means from OLS regressions with Huber-White robust SEs. The experiment took place in Zambia in 2006. The sample is limited to women with no prior experience using Clorin and who expressed willingness to pay the initial price quoted (N married=388, N single=88). The final price was randomized. 
+\end{spacing}
+\end{flushleft}
+\end{footnotesize}
+\end{figure}
+\vspace{-0.5cm}
+Our last piece of motivating evidence comes from two sets of qualitative interviews. The first set was conducted with a small group of women in Ghana in 2017, and provided useful insights as we wrote the model. When asked what their husband's reaction would be if they brought home a new product, one woman said ``he might reduce the amount he will give next time", and another one said ``he will be okay as long as the product is useful." A second, larger set of interviews was conducted in Kenya in 2023, i.e., \textit{after} we wrote the model and ran the Malawi experiments. We surveyed 132 married men and 209 married women. One third of men report they would reduce the allowance to their wife if she bought any product that did not work and 40\% of men if she bought an expensive product that did not work. Men also report that their \textit{neighbors} would reduce their wives' allowances by 55\% and 61\%, respectively, which we take as evidence for social desirability bias in own reports, which are likely an underestimate. In turn, 56\% of women report that they consider their husband's reaction when deciding what to buy; and 69\% report that either they or their neighbor would have a harder time getting money from their husband after buying a bad product. 31\% of women report they can \textit{pretend to use} the bad product and another 27\% report they can \textit{use} the bad product in order to prevent their husband from finding out that the product they bought does not work well.
+
+\vspace{-0.75cm}
+\section{A Signaling Model with Endogenous Budget Allocations}\label{model}
+
+In this section, we propose an intra-household signaling model with endogenous budget allocations. First, we describe the set-up with two spouses, one (``husband'') who chooses whether to make a transfer and one (``wife'') who chooses which good to purchase with the transfer and whether to use it. Second, we analyze the wife's optimal purchase and usage decisions without and with reputation concerns. Finally, we derive testable predictions. 
+
+\subsection{Setup}
+
+\paragraph{Husband's Choice}
+There are two periods: $t\in\{1, 2\}$.\footnote{An alternative modeling choice in games that are played so frequently that the horizon approaches only very slowly and is thus ignored (i.e., it does not enter people's strategic calculations) is an infinite horizon (see section 4.1. in \citet{MailathSamuelson}). We sketched an infinite-horizon model (available upon request) that we conjecture generates identical predictions.} In each period, the husband chooses between making a transfer $T_t\in\{0,1\}$ to his wife and investing himself in a project that has value $\omega$ for himself and 0 for the wife.\footnote{The investment of the husband if he keeps the transfers can be in either a public or a private good. The evaluation of the value for the wife being 0 is a normalization. The key assumption is that the value of not receiving the allowance is \textit{lower} for the wife than that of receiving the allowance. This assumption reflects the substantial evidence that husbands and wives make different public goods investments (e.g., children's education, \cite{thomas1990intra,Thomas1993,duflo2003}) and, thus, the wife prefers to have direct control over the allowance (see \citet{azfaletall2022}  on demand for agency in the household).} This transfer is in addition to a basic transfer determined by outside options as in the bargaining literature, which we normalize to zero.
+
+\paragraph{Wife's Choices} If the wife receives the transfer, she makes both an investment (purchase) and an effort (usage) choice. First, the wife decides whether to buy a safe household good, $g_t=0$ (e.g., a well-known grain, medicine, or food, or even just savings), or a new risky household good, $g_t=1$ (e.g., a new grain with potentially higher returns, a new medicine advertised to have fewer side effects, or a new food advertised to be more nutritious).\footnote{We assume that the types of goods for which wives receive transfers relate to specific purchases/types of investment for which women have a comparative advantage (due to, e.g., differences in information or differences in the opportunity cost of time). This implies that husbands never purchase such goods themselves. However, our model also generalizes to a model of altruistic preferences, in which the husband makes a transfer to the wife, which she uses to buy goods for private consumption. Finally, the model also generalizes to settings where spouses have private income as long as there is some collective sharing of resources and spouses need to decide how to split the shared resources. The model applies as long as the opportunity cost of assigning more resources to women depends on their ability to manage these resources.} Second, the wife decides whether to exert effort to use the good she bought, $e_t\in\{0, 1\}$. 
+
+The safe good has productivity $\eta_t=\eta^S$. The risky good has productivity $\eta_t=\eta^R$ with probability $\lambda\in(0,1)$ and productivity $\eta_t=0$ with probability $1-\lambda$. The value of the good depends on its productivity and on the wife's usage decision: $y_t=\eta_te_t$. Using the safe good or the productive risky good does not entail any cost, $c=0$. Using the unproductive risky good requires the wife to bear a hiding cost $c>0$ (for example, pretending a new stove is efficient by hiding how much firewood is collected and used).
+
+\paragraph{Wife Types}
+As investors, wives can be either experts or non-experts, $\theta \in \{E,NE\}$. A wife's expertise is private information to the wife (she learned it through experimentation before marriage).\footnote{With many different types of goods, wives might be experts in some domains and non-experts in others, e.g., a wife could be an expert in farming investments but not in health investments. Thus, one should think of the model as applying to each domain separately, e.g., the husband decides independently whether to make transfers for farming purchases and whether to make transfers for health purchases.} The expert wife observes the productivity of the risky good, $\eta_t^R$, before the purchase decision, while the non-expert wife observes it only after the purchase decision.
+
+The husband updates his beliefs that the wife's type is $E$, her reputation $P_t \in (0,1)$, based on the wife's investment and usage decisions, but might not directly observe the productivity of the good.\footnote{The assumption that the productivity of the good is not immediately observable to husbands is not as extreme as it may seem: as will become clear later, goods whose low productivity can be observed over time are considered to have very high hiding cost, i.e., they are too costly to hide, so they will not be purchased in equilibrium.} 
+
+\vspace{-0.2cm}
+\paragraph{Payoffs}
+
+Both spouses enjoy the utility of the goods, but only the wife bears the cost of usage. The husband's utility in each period is 
+\vspace{-0.2cm}
+\begin{align*}
+    U_t^H = \begin{cases}
+    y_t &\text{ if } T_t=1 \\
+    \omega &\text{ if } T_t=0
+    \end{cases}
+\end{align*}
+where $\omega$ is the husband's outside option.\footnote{To focus on the role of reputation concerns, we assume that the outside option of both spouses is constant. This assumption implies that the bargaining power of the two spouses is constant apart from the reputation dynamics analyzed in the paper.} 
+ The wife's utility each period is
+ \vspace{-0.3cm}
+\begin{align*}
+    U_t^W = \begin{cases}
+    y_t-ce_t &\text{ if } T_t=1 \\
+    0  &\text{ if } T_t=0.
+    \end{cases}
+\end{align*}
+The total utility is a discounted sum of period utilities:
+\begin{align*}
+    U^i=U^i_1+\beta U^i_2 \quad \text{for } i \in \{H,W\}.
+\end{align*}
+
+\vspace{-0.4cm}
+\paragraph{Strategies}
+We focus on Perfect Bayesian Equilibria, which require sequential rationality and the beliefs to be determined by Bayes' rule whenever possible. We solve the model by deriving optimal strategies of the husband and both types of wives for all possible starting priors (Appendix \cref{strategies}). 
+
+\paragraph{Assumptions}
+We impose the following assumptions on the parameters of the model:
+
+\begin{enumerate}[itemsep=0mm]
+    \item  $\beta\geq \frac{\lambda\eta^R-\eta^S}{\lambda(\omega-\lambda\eta^R)} $
+    \item $\lambda\eta^R>\eta^S>0$
+    \item $\omega>\lambda\eta^R$, $\omega<\lambda\eta^R+(1-\lambda)\eta^S$
+\end{enumerate}
+
+Assumption 1 states that the wife is sufficiently patient and hence has reason to care about her reputation.\footnote{It implies that $\beta\lambda\eta^R(1-\lambda)\geq \lambda\eta^R-\eta^S$, which affects the wife's strategy at intermediate levels of costs, as we discuss below.} It also ensures that the husband always prefers to have a wife with a higher reputation. Assumption 2 states that the risky good is better than the safe good in expectation, and both are useful. Assumption 3 states that the husband's outside option is better than the safe or the risky good in expectation, but worse than buying the risky good if and only if it is productive. As a result of this assumption, the husband prefers to make the transfer if he knows that the wife is an expert and not to make the transfer if he knows that the wife is not an expert.\footnote{Assumptions 1 and 3 are key for the main results of the model. We impose assumption 2 because it fits the low take-up of high-return goods discussed in \cref{motivating_evidence} and because, for ethical concerns, we wanted to offer only high-return goods in our experiments. However, the reputation dynamics we highlight are at play even in the opposite scenario (i.e., if this assumption is reversed). Assumption 2 also implicitly assumes risk neutrality in order to study a new mechanism that is unrelated to risk preferences. However, we control for risk preferences across all three experiments.}
+
+\subsection{Optimal Strategies Without Reputation Concerns}
+
+We first consider the equilibrium strategies at $t=2$. Since this is the last period of the game, the wife does not care about her future reputation, and the strategies serve as a benchmark for the spouses' behavior without reputation concerns. 
+\begin{lemma}
+    At $t=2$, the expert wife buys the risky good if and only if it is productive. She always uses the good. The non-expert wife always buys the risky good. She uses the good if and only if it is productive. The husband uses a threshold strategy.
+\end{lemma}
+Intuitively, without reputation concerns, everyone plays their static optimal action (the proof is provided in Appendix \cref{lemma1_proof}). The expert wife buys the risky good whenever it is productive. She always uses the good. The non-expert wife always buys the risky good because it gives a higher payoff in expectation. She uses the good only if it is productive. The husband compares the expected payoff from making the transfer with the outside option. As the expected payoff from the transfer depends on the wife’s reputation, the husband makes the transfer if and only if the wife’s reputation is sufficiently high.
+
+The equilibrium strategies of both types of wives without reputation concerns correspond to their first-best actions as they maximize household welfare (the weighted sum of the utilities of both spouses) conditional on the transfer. The first-best action of the expert wife (investing in the risky good if and only if it is productive) implies that transfers to the expert wife maximize household welfare for any welfare weight placed on the wife as $\lambda \eta^R+(1-\lambda) \eta^S > \omega$ by assumption. The first-best action of the non-expert wife (always investing in the risky good) implies that transfers to the non-expert wife maximize household welfare for any welfare weight $\geq \frac{\omega-\lambda \eta^R}{\omega}$ (in which case the household welfare with the transfer, $2\lambda \eta^R$, is at least as large as the household welfare without the transfer, $\leq 2\left(1-\frac{\omega-\lambda \eta^R}{\omega}\right) \omega$).
+
+\subsection{Optimal Strategies With Reputation Concerns} 
+
+Next, we consider the equilibrium strategies at $t=1$. As these strategies incorporate reputation concerns, they serve as the basis for testable predictions. 
+
+The expert wife, who does not risk losing her reputation as she does not make investment mistakes, uses the same strategy as in the case without reputation concerns. She always buys the risky good if it is productive, which happens at rate $\lambda$, and the safe good if it is not. Then, she always uses the purchased good on the equilibrium path.
+
+The non-expert wife risks losing her reputation and transfers from purchasing the risky good at a rate different from $\lambda$ or from buying the unproductive good and may thus not play her static-optimal action in period 1. 
+
+The husband updates his beliefs about his wife's type from his wife's purchase and usage decisions using Bayes' rule. He transfers to the wife if her reputation is at least $P_1^*$. He always transfers to the expert wife who always plays her static optimal action in period 1 and may or may not transfer to the non-expert wife based on the wife's reputation. As the non-expert wife does not play her static optimal action in period 1, the husband's expected payoff from being married to a non-expert wife is lower in period 1 than in period 2 and $P_2^*<P_1^*$. 
+
+The equilibrium strategies of the non-expert wife and the cutoff strategy of the husband $P_1^*$ depend on the hiding cost $c$. \autoref{fig:model_results} provides a graphical illustration of the equilibria, with each row corresponding to a hiding cost level.
+
+\begin{figure}[ht!]
+  \centering
+\caption{Hiding Cost}\label{fig:model_results}
+  \begin{subfigure}[c]{0.49\textwidth}\raggedleft
+    \caption*{Purchase Probability}
+    \myrowlabel{High Hiding Cost}
+    \raisebox{-.5\height}{\includegraphics[width=.92\textwidth]
+    {"./Images/buying_high".png}}
+    \myrowlabel{Intermediate Cost}
+    \raisebox{-.5\height}{\includegraphics[width=.92\textwidth]
+    {"./Images/buying_int".png}}
+    \myrowlabel{Low Hiding Cost}
+    \raisebox{-.5\height}{\includegraphics[width=.92\textwidth]
+    {"./Images/buying_low".png}}\\
+\end{subfigure}%
+\begin{subfigure}[c]{0.49\textwidth}\raggedleft
+    \caption*{Lemon Usage Probability}
+    \includegraphics[width=.92\textwidth]
+    {"./Images/using_high".png}
+    \includegraphics[width=.92\textwidth]
+    {"./Images/using_int".png}
+    \includegraphics[width=.92\textwidth]  
+    {"./Images/using_low".png}
+\end{subfigure}
+\begin{minipage} {.98\textwidth} \setstretch{.9} \medskip\footnotesize{\emph{Notes:} The figures depict the equilibria of the model: they show the probability of buying the risky good and the probability of using the low-return good, conditionally on buying it in equilibrium, by the cost of using the good for each type of wife. $P_1^*$ is the reputation threshold below which the husband stops giving transfers in the first period, and $P_2^*$ is the reputation threshold below which the husband stops giving transfers in the second period.}
+	\end{minipage}
+\end{figure}
+
+\begin{proposition}\label{prop2}
+    Suppose the hiding cost is high. The expert wife buys the risky good if and only if it is productive (this happens at rate $\lambda$). She always uses the good. The non-expert wife buys the risky good at a rate less than $\lambda$ unless her reputation is very low. She only uses the good if it is productive. The husband uses a threshold strategy.
+\end{proposition}
+This case is depicted in the top row of \autoref{fig:model_results} (the proof as well as the formal definition of low hiding cost and of the husband threshold are provided in Appendix \cref{prop2_proof}). 
+
+When the hiding cost is high, the non-expert wife does not use the unproductive good because the usage cost would outweigh the reputation benefit.\footnote{Note that if the husband can directly observe the productivity of a good, it has hiding cost $\infty$.} 
+
+As the expert wife never purchases an unproductive good and the non-expert wife does not hide the unproductive good, buying the risky good involves a high risk of losing all reputation. Therefore, the non-expert wife has an incentive to never invest in the risky good and the purchase of the risky good sends a positive signal about the wife's type. 
+
+The non-expert wife's equilibrium investment rate balances the first-period payoff gain from the positive signal from investing in the risky good with the expected second-period reputation and payoff loss from potentially making an investment mistake. If the wife's first-period reputation is far above the threshold below which transfers will stop in the second-period, the expected reputation loss from investing in the risky good is high, and the non-expert wife invests in the risky good at probability 0.\footnote{This result relies on the assumption that expert wives make no investment mistakes. If expert wives made (few) mistakes, then \textit{high-reputation} non-expert wives could invest more than expert wives if their expected payoff gain from investing in the risky good outweighed their expected reputation loss. However, this would not be a sustainable strategy in a repeated game: Both investing in the risky good and making an investment mistake would signal one to be non-expert and quickly reduce the non-expert wife's reputation below the threshold below which transfers stop. We thus consider the assumption that expert wives never make investment mistakes in a two-period model to be a good approximation of a repeated game in which expert wives make sufficiently fewer (even if not zero) mistakes than non-expert wives.\label{mistake_assumption}} As her reputation approaches the threshold, the non-expert wife increases her investment rate (as the reputation gain from investing into the risky good increases relative to the expected reputation loss from making an investment mistake) until it reaches exactly $\lambda$ at the threshold so that the husband does not update his beliefs at all. When her reputation is below the threshold, the expected reputation loss from investing in the risky good is low (as it is unlikely the wife will receive transfers in the second period), and the non-expert wife's investment rate is above $\lambda$.
+
+\begin{proposition}\label{prop1}
+    Suppose the hiding cost is low. The expert wife buys the risky good if and only if it is productive (this happens at rate $\lambda$). She always uses the good. The non-expert wife buys the risky good at a rate of at least $\lambda$ but less than 1 unless her reputation is very high. She uses the good if it is productive or if it is unproductive and her reputation is not too low. The husband uses a threshold strategy.
+\end{proposition}
+
+This case is depicted in the bottom row of \autoref{fig:model_results}. We describe first the non-expert wife's usage and investment strategies and then the husband's threshold strategy (the proof as well as the formal definition of low hiding cost and of the husband threshold are provided in Appendix \cref{prop1_proof}). When the hiding cost is low, the non-expert wife uses the unproductive good and bears the hiding cost to maintain her reputation. She only does not use the good if her reputation is so low that using the unproductive good does not help improve the reputation sufficiently.
+
+The non-expert wife's first-period payoff is increasing in her investment rate (as the expected payoff of the risky good is larger than that of the safe good). Therefore, the non-expert wife has an incentive to always invest in the risky good (at a rate higher than $\lambda$) and the purchase of the risky good sends a negative signal about the wife's type. If the non-expert wife invested in the risky good at a rate lower than $\lambda$, then purchasing the risky good would be a positive signal about the wife's type. Together with the higher first-period payoff, this would give non-expert wives an incentive to increase their investment rate. Thus, it is not an equilibrium that the non-expert wife invests in the risky good at a rate lower than $\lambda$. 
+
+The non-expert wife's equilibrium investment rate balances the first-period payoff gain from investing in the risky good with the second-period payoff loss from hiding an investment mistake. If the wife's first-period reputation is far above the threshold below which transfers will stop in the second-period, the reputation gain of investing in the safe good is low, and the non-expert wife invests in the risky good at probability 1. As her reputation approaches the threshold, the non-expert wife reduces her investment rate until it reaches exactly $\lambda$ at the threshold so that the husband does not update his beliefs at all. When her reputation is below the threshold, the expected second-period payoff loss from hiding an investment mistake is low (as it is becoming less likely the wife will receive transfers in the second period and thus does not need to hide investment mistakes), and the non-expert wife's investment rate is above $\lambda$. 
+
+The husband's threshold strategy $P_1^*$ is higher than in the case with high hiding cost (i.e., transfers stop earlier) because being married to a non-expert wife is more costly for the husband in period 1 as he is less likely to find out his wife's type from an investment mistake. 
+
+\begin{proposition}\label{prop3}
+    Suppose the hiding cost is intermediate. The expert wife buys the risky good if and only if it is productive (this happens at rate $\lambda$). She always uses the good. The non-expert wife buys the risky good at a rate less than $\lambda$ unless her reputation is very low. She only uses the good if it is productive or if it is unproductive and her reputation is not too low. The husband uses a threshold strategy.
+\end{proposition}
+This case is depicted in the middle row of \autoref{fig:model_results}. When the hiding cost is intermediate, the non-expert wife uses an investment strategy like that described in \autoref{prop2} (high cost) and the same usage strategy as the one described in \autoref{prop1} (low cost). The proof is provided in Appendix \cref{prop3_proof}. When the hiding cost is intermediate, the non-expert wife uses the unproductive good and bears the hiding cost to maintain her reputation. However, as the hiding of investment mistakes is more costly, the non-expert wife shies away from investing into the risky good as much as possible.
+
+The husband's threshold strategy $P_1^*$ is higher than in the case with low hiding cost (i.e., transfers stop earlier) because the husband's expected payoff from being married to a non-expert wife is lower as the wife invests in the risky good with a lower probability.
+
+\subsection{Testable Predictions}
+The results from the previous subsection give us predictions that we empirically test through a series of experiments in Malawi. We test the following key premise and predictions: 
+\begin{prem}\label{prem}
+Husbands’ financial transfers to their wives respond to their beliefs about their wives’ expertise as investors.
+\end{prem}
+\begin{pred}\label{pred1}
+When the hiding cost is low, non-expert wives invest no less than expert wives (but less than what would be optimal in the absence of reputation concerns). When the hiding cost is intermediate or high, non-expert wives invest less than expert wives (under-investment).
+\end{pred}
+\begin{pred}\label{pred2}
+Non-expert wives, conditional on investing, hide investment mistakes when the hiding cost is low or intermediate (over-use of lemons).
+\end{pred}
+\begin{pred}\label{pred3}
+The investment rates of all wives maximize present payoffs when reputation is not at stake, i.e., if the wives do not use the husband transfer for the investment or there is no uncertainty about the quality of the risky good. 
+\end{pred}
+\begin{pred}\label{pred4}
+The husband's transfer choice is not affected by the wife's reputation once the wife's reputation is too low. Non-expert wives whose reputation is below the threshold below which transfers stop in the second period do not invest less when the hiding cost is intermediate or high and do not hide investment mistakes. 
+\end{pred}
+
+The rest of the paper tests these predictions. We present the empirical setting in \cref{setting}. In \cref{pg_experiment}, we test Premise \autoref{prem} in an experiment in which husbands transfer money to their wives and we randomly vary the salience of the wife's market expertise reputation. In \cref{quality_experiment}, we use a complementary experiment to test Predictions \autoref{pred1} and \autoref{pred2}. We do so by randomly varying the hiding cost and studying investment and hiding for wives. In \cref{market_experiment}, we test Predictions \autoref{pred1} and \autoref{pred3} in an experiment involving a real-life purchase decision: we offer an unfamiliar good to women while they are running errands at the market, randomly varying the hiding and reputation costs of the good. Finally, in \cref{transfer_heterogeneity}, we test Prediction \autoref{pred4} by testing whether results across all three experiments are driven by couples with high transfers from husband to wife. 
+
+\section{Empirical Setting: Couples in Rural Malawi}\label{setting}
+
+The transfer experiment and the signaling experiment were done side-by-side with 1,093 married monogamous couples between May and July 2019. The couples were sampled from 36 villages in Neno district, in Southern Malawi. We selected dwellings randomly and enrolled households in which both spouses were available to participate in an hour-long survey administered separately to the husband and the wife.\footnote{Enumerators used the ``left-hand" rule to sample dwellings, as described in Online Appendix \cref{sampling}.} The surveys administered included standard questions on household demographics, schooling, and employment, as well as a module on expenditures and budget decisions inside the household, recent transfers from the husband to the wife, and financial literacy. In addition, we elicited respondents' performance on six math questions to test respondents' ability to solve everyday math problems, and on 12 Raven's Progressive Matrices \citep{cattell1963theory} to measure respondents' reasoning ability. The husband survey embedded the \textit{transfer experiment}. The wife survey embedded the \textit{signaling experiment}. Everything took place at the couples' homes, with one surveyor speaking with the husband while the other spoke with the wife. Interviews were held outdoors and far enough apart to respect complete confidentiality for both spouses. 
+\input{./Tables/00_Main/Table_1_respondent_characteristics_ex12.tex}
+\vspace{-1cm}
+\begin{flushleft}
+\begin{footnotesize}
+\quad \quad \textit{Notes:} Kwacha values are winsorized at 3SDs. They represent averages over the preceding two months. 
+\end{footnotesize}
+\end{flushleft}
+\vspace{-0.25cm}
+
+\autoref{characteristics12} provides summary statistics on the couples surveyed. They have been married for an average of 10 years and have 2.6 children. Husbands are an average of 36 years old, have 6.8 years of education, and have earned an average of Malawian Kwacha (MWK) 29,770 (approx. USD 42) per month in the preceding two months (conditional on working). Wives are an average of 30 years old, have 5.7 years of education, and have earned an average of MWK 10,660 (approx. USD 15) per month in the preceding two months (conditional on working). Husbands report transferring an average of MWK 8,452 (approx. USD 12, 28\% of their income) per month to their wives in the preceding two months.\footnote{Wives report transfers that are half in magnitude, suggesting that they might omit substantial transfers that husbands considered. We thus use husbands' reports of transfers whenever available.} Interestingly, both wives and husbands substantially underestimate their spouses' income, suggesting that there are indeed substantial information frictions inside the household. 
+
+\vspace{-0.25cm}
+\section{Does Reputation Matter for Budget Shares? The Transfer Experiment}
+\label{pg_experiment}
+We test that husbands' financial transfers to their wives respond to husbands' beliefs about their wives' expertise according to Premise \autoref{prem} using both transfers reported by husbands and observed in the \textit{transfer experiment}. First, we describe our measure of husbands' perception of their wives' expertise and how it correlates with transfers as reported by husbands. Second, we explain how we experimentally manipulate the salience of the wives' types. Finally, we present dictator game transfers to wives perceived as either experts or non-experts. 
+
+\subsection{Measuring Market Expertise Reputation}\label{defining_MER}
+
+During the survey with the husband, we elicited his beliefs about his wife's market expertise. From this, we construct the wife's Market Expertise Reputation (MER) index, which takes the values 0 to 4, depending on how many of the following questions the husband affirmed: i) his wife has never bought anything that did not work as advertised (``Purchases'', 86\%), ii) his wife is never
+tempted by marketing advertisement (``Tempted'', 80\%), iii) his wife can manage money well compared to other women in the community (``Manage'', 70\%), and iv) his wife can do calculations correctly in her head when she requests change in the market (``Change'', 95\%). The distribution of the MER index is as follows: 0.6\% of women have an MER of 0, 3.5\% have an MER of 1, 13\% have an MER of 2, 31\% have an MER of 3, and 52\% have an MER of 4. 
+
+When asked to recall their wives' purchase behavior, husbands were asked to provide examples of instances when the wife was
+tempted by marketing advertisements and instances when a good purchased by the wife did not work as advertised. Online Appendix \autoref{experiment1_examples} lists 50 randomly selected answer choices for each question. The main ``flaw" of non-expert wives appears to be gullibility, in the sense that they get easily fooled by vendors. Examples of direct quotes from the husband surveys include: ``She bought a drug that wasn't effective at all. She got carried away by what the vendor was telling her''; ``She bought a pair of shoes that were not of the required foot size because a vendor told her it will fit''; ``She bought atelic 'super dust' that didn't work''; ``She bought second-hand burglar bars, which were painted to conceal the rust''; ``She was given short trousers by the vendor instead of a skirt.''
+
+Consistent with Premise \autoref{prem}, we find that the amount of money a wife receives from her husband is positively correlated with her intra-household reputation as an expert. Controlling for husband and wife characteristics, reported average transfers in the previous two months are monotonically increasing in the wife's MER (\autoref{MER_correlations}). On average, women with an MER of 0 or 1 receive MWK 8,187, women with an MER of 2 MWK 8,198, women with an MER of 3 MWK 9,031, and women with an MER of 4 MWK 9,497 (column 1). To verify that men transfer discretionary funds to their wives according to a threshold strategy, 
+we define women as ``Low MER'' if they have an MER of 0, 1, or 2 (17\%). Indeed, having a low MER is associated with a decrease in reported average transfers in the previous two months by MWK 1,086 (13\%, column 2). These results are unchanged when we control for an indicator that is 1 if the wife has a below-median ``General Ability Reputation'' (GAR), a mean effects index (see \cite{kling2007experimental}) of the husband's beliefs of the wife's scores on six math questions and 12 raven matrices (columns 3-4). We observe little correlation between women's GAR and transfers in the last two months. This is consistent with the model primitive that women could be experts in some domains and non-experts in others and that transfers only respond to women's reputation in finance-related domains. We also find a significant, negative, and large correlation between a low MER and another measure of budget control: whether the husband reports that his wife has access to cash and savings (column 5).\footnote{As we show in the next subsection, our results in the \textit{transfer experiment} are also consistent with an equilibrium in threshold strategies with a threshold MER of 3.}
+
+The fact that most husbands (83\%) believe their wives are experts suggests that either the share of experts in the population is very high, or that men perceive some non-experts as experts as predicted by the model. Nevertheless, the MER as reported by husbands seems correlated with true types: 73\% of wives with a low MER report that the statement ``I buy things that I later regret because I bought them on impulse" applies to them. This share falls to 61\%  among wives with a high MER (the p-value of the difference is $<$0.01).\footnote{The correlation between high MER and risk-aversion of the wife is close to 0, suggesting that high MER does not simply proxy risk aversion. The results are robust to controlling for a measure of risk aversion.}   
+
+\subsection{The Transfer Experiment - Experimental Design}
+We complement the observational results with a ``transfer experiment'' in which husbands play a dictator game with multiplier with their wives. The observational correlations provide suggestive evidence in favor of Premise \autoref{prem} but do not nail causation. For example, the correlation between reputation and transfers could be driven by recall bias: men who hold their wives in high esteem could be more likely to remember a transfer to their wives. We thus test whether husbands' transfers respond to experimentally increasing the salience of the wife's reputation before the transfer choice. 
+
+Husbands were offered to choose what share of their experiment compensation of MWK 600 would be doubled and transferred to their wives in one of two treatment conditions. We randomly assigned husbands to either: 
+\begin{itemize}\itemsep0em
+\itemsep0em
+\item \textit{Salience Treatment:} Husbands played the game at the end of the survey, immediately following the MER module asking them to recall their wife's purchase behavior.
+\item \textit{Control:} Husbands played the game early in the survey, before the MER module asking them to recall their wife's purchase behavior.
+\end{itemize}
+While our model predicts that husbands should transfer less to women with a non-expert reputation in a standard dictator game (as we have already shown they do observationally), we multiply all transfers to the wife to give all husbands an incentive to transfer to their wives. By randomizing how ``top of mind'' the wife's (potential lack of) market expertise is at the time the husbands make their transfer choice, we can then obtain a causal estimate of the importance of reputation in the husband's allocation decision. To reduce the risk of experimenter demand effects, the husband's decision was not observed by the surveyor toward whom demand effects might be largest: husbands privately placed the transfer to the wife in an envelope, which was then handed (with the husband bearing witness) to the surveyor speaking with the wife.  
+
+Husbands were explained the dictator game as follows:
+\vspace{+0.25cm}
+\begin{spacing}{1}
+\footnotesize``\textit{As promised, we are going to give you 600 kwacha for participating in the survey. Here is the 600, please count it to make sure it's correct. But before you pocket it, I am going to offer you a chance to give some of this 600 to your wife. Here is how it will work. You will choose how much of the 600 you want to give to your wife. Whatever you choose to give her, we will double. So if you give 20 to your wife, we will give her 40 and you keep 580. If you give 400, we will give your wife 800 and you keep 200. [...] If you choose to give money to your wife, she will get it right away. We will not tell her where this money is coming from: We will only tell her that this is part of the survey. If you choose to give 0, we will not tell her anything at all.}"\\
+\normalsize
+\end{spacing}
+
+We estimate the following equation:\vspace{-0.25cm}
+\begin{equation}
+T_{i}= \alpha + \beta_{1} LowMER_i + \beta_{2} S_i + \beta_{3}(LowMER_i \times S_i) + \beta_{4}'X_{i}  + \mu_e+\delta_c+\lambda_v+ \epsilon_{i}
+\vspace{-0.25cm}
+\end{equation}
+where $T_{i}$ is the dictator game transfer of husband $i$ to his wife, $LowMER_i$ is a binary variable equal to 1 if the wife's MER score is below 3, and $S_i$ is the assignment of husband $i$ to the salience treatment. $\epsilon_i$ are Huber-White robust standard errors. We include enumerator fixed-effects $\mu_e$, compensation fixed effects $\delta_c$, and version fixed effects $\lambda_v$ (see technical Online Appendix \autoref{compensation} for details on what the different compensations and versions are). We show results both without and with a vector of predictive individual controls $X_{i}$. 
+
+The treatment and control groups appear balanced within each MER group (Online Appendix \autoref{experiment1_balance})---even though we were unable to stratify by MER level since we elicited the MER at the same time as we implemented the experiment.
+
+\subsection{The Transfer Experiment: Results}
+
+The results are presented in  \autoref{experiment1_main}. Making the wife's lack of market expertise salient decreases the transfer share by 9ppts (13\%) among women with a low MER, but it does not change anything for women with a high MER. In other words, the salience module made husbands of low-MER wives think twice and adjust their transfer downward from what it would have been (results in table form are presented in  \autoref{experiment1_robustness}, and the breakdown by MER component is shown in Online Appendix \autoref{experiment1_byscore}.)\footnote{We do not observe that husbands transfer more to high-MER wives without the salience treatment or that the salience treatment significantly increases transfers to high-MER wives. Husbands transfer 69\% of the funds to their wives on average---a relatively large share compared to the outcomes of similar games in most other contexts, which are usually not played within couples \citep{andreoni2001fair, andreoni2002giving, jakiela2013equity}. Given the multiplier, all husbands willing to transfer anything to their wives may already have done so. This is particularly plausible given that money is fungible; that is, husbands could have later deducted the money from a future transfer to the wife. Thus, given the incentive to transfer to wives (which allows us to detect a reduction in transfers as predicted by our model), we only observe that the salience treatment reduces transfers to low-MER wives after reminding the husband about the wife's previous investment mistakes. By contrast, the fact that husbands do not transfer everything to their wives is consistent with the literature on inefficient intra-household allocations. Inefficient resource allocations are well-documented both in real-life agricultural production \citep{Udry1996, derconkrishnan2000, Andrewsetal2015, Guirkingeretal2015} and in lab-in-the field settings \citep{Kebedeetal2014, Hoel2015, iversenetal2011}. Inefficient allocations might be explained by spouses' demand for agency \citep{azfaletal2022} and willingness to control and hide resources \citep{ashraf2009spousal, almasetal2018,  JakielaOzier2015}. Both explanations suggest the existence of contracting problems in the household \citep[see discussion by][]{Bakhtiaretal2022,  apedoetal2020householdinfo}.} 
+
+We conduct several robustness analyses in \autoref{experiment1_robustness}. First, we show robustness to including controls. Second, as we observed in \cref{defining_MER} that transfers do not react to wives' general ability reputation, we rule out experimenter demand effects by verifying that the salience treatment did not reduce transfers to wives considered non-experts on the general ability domain (low-GAR wives). Third, we rule out that anger about their wives' previous investment mistakes caused husbands to reduce their transfers by verifying that husbands who may have gotten angry due to another section of the survey (those who scored poorly on the math and raven's quiz) did not reduce transfers. Finally, we rule out that the salience treatment works through other characteristics of the household/match, specifically, whether the wife has an income or the couple has fewer than three children.
+
+\begin{figure}[H]
+\centering
+\caption{Transfer experiment: Effect of reputation salience on amount (\%) transferred}\label{experiment1_main}
+\vspace{-0.4cm}
+\includegraphics[width=0.55\textwidth]{"./Graphs/00_Main/Figure_4_main".png}
+\vspace{-0.5cm}
+\begin{footnotesize}
+\begin{flushleft}
+\textit{Notes}: The graph shows adjusted means from OLS regressions with Huber-White robust SEs. The ``Salience" treatment was randomized. Low MER is an indicator that takes the value 1 if the wife has an MER of 0, 1, or 2 (see main text). Each bar is the sum of the control mean and the relevant regression coefficients, i.e., control mean, control mean+$\beta_{Low MER}$, control mean+$\beta_{Salience}$, and control mean+$\beta_{Low MER}$+$\beta_{Salience}$+$\beta_{Salience \times Low MER}$. We show 95\% confidence intervals based on the estimated standard errors of $\beta_{Low MER}$, $\beta_{Salience}$, and $\beta_{Low MER}$+$\beta_{Salience}$+$\beta_{Salience \times Low MER}$, respectively. Significance from testing equal transfers to high-MER and low-MER wives in control ($\beta_{Low MER}=0$) or in salience ($\beta_{Low MER}$+$\beta_{Salience \times Low MER}=0$). $p<0.10^*, p<0.05^{**}, p<0.01^{***}$.
+\end{flushleft}
+\end{footnotesize}
+\end{figure}
+\vspace{-1cm}
+\section{Are Women Strategic? The Signaling Experiment}
+\label{quality_experiment}
+Having shown that husbands act on their beliefs about their wife's expertise as a buyer, we next test Prediction \autoref{pred1}---\textit{under-investment}, and Prediction \autoref{pred2}---\textit{over-use of lemons} in the \textit{signaling experiment}. This experiment was implemented with the wives of the men who participated in the transfer experiment. First, we describe our measure of wives' perceived expertise and how we experimentally vary wives' hiding costs. Second, we present the investment and hiding choices of both expert and non-expert wives.  
+
+\subsection{Experimental Design}
+
+First, we asked wives to assess the quality (productivity) of different goods in a ``quality quiz'' to measure their market expertise. In each of six rounds (and two practice rounds), we showed wives a high- and a low-quality version of a good (as determined by our local research team: on several occasions, the low-quality good was a counterfeit good), and asked them to identify the high-quality version. The six goods were a sponge, a water bottle, a razor, a toothbrush, flour, and a candle, and the order in which the goods were presented was randomized. On average, both women and men identified 4.2 high-quality goods correctly.
+
+Second, we elicited wives' beliefs about their score on the quiz to measure their own perceived market expertise. We elicited wives' prior distributions about their score using beans to represent probabilities and visual aids to represent the support \citep{delavande2011measuring}. That is, for every possible score between 0 to 6, we asked the wife to state her perceived probability that she had received that score using the beans. 
+
+Third, we asked wives to decide whether to share their quality quiz scores with their husbands for additional compensation (``investing'') and how many mistakes on the quiz to correct against a fee before sharing the score (``hiding''). Specifically, we offered each wife an additional compensation of MWK 200 (approx. USD 0.30, 50\% of the original survey compensation of MWK 400, or USD 0.60) if we could inform her husband about her corrected score on the quality quiz at the end of the survey. For the score to be meaningful to the husbands, we administered the same quiz to them as part of the survey during the transfer experiment.\footnote{Men and women performed equally well on the quality quiz. See detailed scores in Online Appendix \autoref{scores}. Also, consistent with the idea that some non-experts are able to hide their type, we find that husbands whose wives have a high MER are more likely to overestimate their wife's score on the quiz, compared to husbands whose wife has a low MER (55\% vs. 43\%, p$<$0.001).} However, to ensure that the experiment did not cause any conflict between husbands and wives, the husbands did not learn that the wives had also completed the quiz if the wives chose not to share their scores. This differs from the theoretical set-up in which investing in the safe good does send a signal about the wife's type.\footnote{Ethical concerns are also the reason why we did not simply market ``lemons" to wives in order to directly test the over-use of lemons prediction. We believe that our experimental design is the best possible test of the model predictions that respect the Belmont Report principle of beneficence.} If the wives chose to share their scores, husbands received the final scores of the wives (after hiding) without being informed that the wives had been able to pay to improve their scores.
+
+Our design allows us to measure wives' investment and hiding choices as a function of their perceived expertise and the cost of hiding mistakes. We elicited wives' choices in the following order: First, we provided the wife with the unit price she would have to pay to correct a mistake in the quality quiz. We clearly spelled out how many answers she could afford using the experimental payments (the participation fee for the extra activity itself + the participation fee for the survey). We also made it very clear to the wife that she could not purchase answers with her own funds. Second, we asked the wife to decide whether to tell her final (post-hiding) score to her husband. Third, if the wife was willing to share her score for money, we elicited how many mistakes she wanted to correct under each possible scenario (i.e., in case she had 0, 1, 2, ... questions correct). Since the hiding cost was deducted from the compensation fee yet to be paid out, the elicitation was incentive-compatible (the wife could not renege on her correction choice after seeing her score). Finally, after deciding whether to participate in the investment activity and how many mistakes to correct, wives were informed about their initial score as well as the final score to be given to their husbands. 
+
+We randomly assigned wives to one of the following hiding costs:
+\begin{itemize}\itemsep0em
+\item \textit{Low hiding cost:} The low cost of MWK 100 (approx USD 0.15) per corrected question allowed wives to correct up to two mistakes when using the additional compensation from participating in the activity and up to six (i.e., all possible) mistakes when using the additional compensation from the activity as well as their survey compensation. 
+\item \textit{Intermediate hiding cost:} The intermediate cost of MWK 200 (approx. USD 0.30) per corrected question allowed wives to correct up to one mistake when using the additional compensation from participating in the activity and up to three mistakes when using the additional compensation from the activity as well as their survey compensation. 
+\item \textit{High hiding cost:} The high cost of MWK 300 (approx. USD 0.45) per corrected question allowed wives to correct no mistake when using the additional compensation from participating in the activity and up to two mistakes when using the additional compensation from the activity as well as their survey compensation. 
+\end{itemize}
+
+In addition, we classified wives according to their prior distributions about their scores:\footnote{Since we did not tell women their scores before eliciting their choice, a wife's belief about her own score is the signal she thought the husband would likely receive.} 
+\begin{itemize}\itemsep0em
+\item \textit{``Self-Identified Expert''}: Women with a mean prior (averaged across the 7 possible scores) of 5 or 6 (61\% of the sample). These are women at lower (perceived) risk of sending a ``bad" signal to their husbands if they choose to participate without hiding.\footnote{This is smaller than the share of wives \textit{perceived} as experts by their husbands (wives with high MER) in \cref{pg_experiment}, further suggesting the presence of information frictions: husbands perceive some non-expert as expert wives.}
+\item \textit{``Self-Identified Non-Expert''}: Women with a mean prior (averaged across the 7 possible scores) of below 5 (39\% of the sample). These are women at greater (perceived) risk of sending a ``bad" signal to their husbands if they choose to participate without hiding.\footnote{Self-identified non-expert wives have a significantly lower score than self-identified expert wives (3.9 vs. 4.1, p$<$0.10). Note that this is not mechanical---women could be off about their own expertise, but the data suggests they are not. Results of the signaling experiment are almost identical when using the modal, minimum, or maximum prior.}
+\end{itemize}
+
+We test Predictions \autoref{pred1} and \autoref{pred2} of the signaling model by randomly varying the hiding cost. Specifically, given that participating in the game generated a non-negative payout with certainty, the only rational reason for a wife to \textit{not} participate in the activity for compensation or to participate but pay to hide mistakes is to avoid sending a bad signal about her market expertise.\footnote{Wives might try to avoid sending a bad signal to their husbands or those to whom the husband might communicate the wife's score. However, our heterogeneity results (discussed in \cref{transfer_heterogeneity}) are consistent with signaling to the husband rather than others outside the household.} By observing non-zero rates of non-participation and hiding, we can already assert that women are concerned about their reputation. By randomly varying the hiding cost, we test whether
+\begin{itemize}\itemsep0em
+\item Prediction \autoref{pred1}: non-expert wives invest no less than expert wives when the cost of hiding is low but less when the cost of hiding is intermediate or high (\textit{under-investment)}.
+\item Prediction \autoref{pred2}: non-expert wives, conditional on investing, hide more than expert wives (\textit{over-use of lemons}) when the hiding cost is low or intermediate.
+\end{itemize}
+
+We estimate the impact of the intermediate and high hiding cost on the participation and hiding behavior by self-identified expertise using the following equation:\vspace{-0.25cm}
+\begin{equation}
+\label{equationSE}
+Y_{i}= \alpha + \beta_{1} NE_i + \beta_{2} IC_i + \beta_{3} HC_i+ \beta_{4}(NE_i \times IC_i) +\beta_{5}(NE_i \times HC_i) + \beta_{6}'X_{i} +\mu_e+\delta_c +\epsilon_{i}\vspace{-0.25cm}
+\end{equation}
+where $Y_{i}$ is outcome for wife $i$. $NE_i$ is an indicator that is 1 if the wife self-identifies as non-expert (her average prior about her performance is at most 4 out of 6) and $IC_i$ and $HC_i$ are indicators that are 1 if wife $i$ is assigned to the intermediate or high hiding cost. $\epsilon_i$ are Huber-White robust standard errors. As above, we include enumerator fixed-effects $\mu_e$, and compensation fixed effects $\delta_c$.\footnote{Controlling for whether the husband was assigned to the salience treatment in the transfer experiment described in \cref{pg_experiment} does not change the results, as expected since the flow of the wife survey and embedded experiment were completely independent of that of the husband's.}
+
+In addition, we create exogenous variation in quiz performance to address potential concerns regarding the endogeneity of the wife's self-identified expertise. For example, one might be concerned about differences in reporting by type (e.g., non-experts forgo more because they are worse at math). We thus randomized wives into two versions of the quiz: 
+\begin{itemize}\itemsep0em
+\item \textit{Hard version}: Wives did the quality quiz without hints. 
+\item \textit{Easy version}: Wives were provided hints to help them discern the high-quality good during the quiz. 
+\end{itemize}
+Online Appendix \autoref{scores} documents that the hints succeeded in increasing wives' performance in the quiz: the hints significantly increased the share of wives who correctly discerned the high-quality good for each of the six pairs, thereby increasing the average score by 1.1 points from 3.6 points (out of 6) in the hard version to 4.7 points in the easy version. In addition, the hints also significantly increased wives' priors about their performance. To verify that this also reduced wives' perceived risk of sending a bad signal, we elicited their second-order beliefs (beliefs about their  husbands'  beliefs  about  the wife's  score  in  the  quiz),  using  the  visual  handouts shown in Online Appendix \autoref{bubble_handout}. As intended, the hints substantially reduced the share of wives whose first-order prior was \textit{lower} than their second-order prior, i.e., who believed their husband would update his belief about his wife's market expertise \textit{downward} if she participated in the investment activity: 31\% of wives playing the hard version vs. 22\% of wives playing the easy version. 
+
+This randomization allows us to test whether wives with an exogenously lower performance participate \textit{less} in the investment activity when hiding is costly, and pay to hide their mistakes when hiding is cheap. We do so by estimating the following equation:
+\vspace{-0.25cm}
+\begin{equation*}
+Y_{i}= \alpha + \beta_{1} Hard_i + \beta_{2} IC_i+ \beta_{3} HC_i + \beta_{4}(Hard_i \times IC_i)+ \beta_{5}(Hard_i \times HC_i) + \beta_{6}'X_{i} +\mu_e+\delta_c+\lambda_s +\epsilon_{i}\vspace{-0.25cm}
+\end{equation*}
+where $Hard_i$ is an indicator that is 1 if the wife was assigned to the hard quiz and $IC_i$ and $HC_i$ are indicators that are 1 if the wife was assigned to the intermediate or high hiding cost. $\epsilon_i$ are Huber-White robust standard errors.
+
+\subsection{Results}
+
+Consistent with theoretical Prediction \autoref{pred1}, non-experts do not participate less when the hiding cost is low but participate less when the hiding cost is intermediate or high (\autoref{experiment2_play}). Only around 75\% of women decide to participate even if the hiding cost is low but rates do not differ by self-identified expertise.\footnote{Online Appendix \autoref{play_risk} documents that participation rates are increasing substantially in the women's reported risk preferences. All our results are robust to controlling for risk preferences (we show results with controls in Online Appendix \autoref{quality_results_controls}).} However, the intermediate and high hiding costs decrease the participation rate of non-expert wives by 12.5ppts (-16\%) and 11.2ppts (-15\%) respectively (\autoref{quality_results}, Panel A, column 2). Overall, self-identified non-experts forgo 71 MWK in participation fee on average (about 50\% more than self-identified experts, \autoref{quality_results}, Panel A, column 3).
+
+
+\begin{figure}[H]
+\caption{Game participation in the signaling experiment}\label{experiment2_play}
+\vspace{-0.4cm}
+\centering
+\includegraphics[width=0.55\textwidth]{"./Graphs/00_Main/Figure_5_play".png}
+\vspace{-0.5cm}
+\begin{footnotesize}
+\begin{flushleft}
+\textit{Notes}: The graph shows adjusted means from OLS regressions with Huber-White robust SEs. Each bar is the sum of the control mean and the relevant regression coefficients, i.e., control mean, control mean+$\beta_{NE}$, control mean+$\beta_{IC}$/$\beta_{HC}$, and control mean+$\beta_{NE}$+$\beta_{IC}$/$\beta_{HC}$+$\beta_{IC/HC \times NE}$. We show 95\% confidence intervals based on the estimated standard errors of $\beta_{NE}$, $\beta_{IC}$/$\beta_{HC}$, and $\beta_{NE}$+$\beta_{IC}$/$\beta_{HC}$+$\beta_{IC/HC \times NE}$, respectively. Significance from testing equal participation of expert and non-expert wives when the hiding cost is low ($\beta_{NE}=0$), intermediate ($\beta_{NE}+\beta_{IC \times NE}=0$), or high ($\beta_{NE}+\beta_{HC \times NE}=0$). $p<0.10^*, p<0.05^{**}, p<0.01^{***}$.
+\end{flushleft}
+\end{footnotesize}
+\end{figure}\vspace{-0.5cm}
+
+Consistent with theoretical Prediction \autoref{pred2}, non-expert wives who participate hide significantly more than expert wives who participate when the hiding cost is low or intermediate: they correct 0.25 more errors when the hiding cost is low and 0.22 more errors when the hiding cost is intermediate, thus paying substantially more in hiding fees (\autoref{experiment2_scores} and \autoref{quality_results}, Panel A, column 6).\footnote{We focus on binary types in our analysis to match our proposed model. However, we show in Online Appendix \autoref{foregone_score} that forgone earnings are decreasing close to linearly in women's mean prior score.} 
+Conditional on participating, non-expert wives still have a significantly lower score than expert wives (-0.36 points, \autoref{quality_results}, Panel A, column 4).\footnote{Note that the difference in scores between experts and non-experts is smaller when the hiding cost is high since, as predicted, fewer non-experts decide to participate in the game for money.} However, final scores (sent to husbands) are statistically indistinguishable between non-expert and expert wives (\autoref{quality_results}, Panel A, column 7).
+
+Note that this set of findings makes it unlikely that our results are explained by experimenter demand effects. In the presence of experimenter demand effects, we would expect non-expert wives (who would have to be responding more to experimenter demand effects than expert wives) to react similarly (at least in direction) to the intermediate and high hiding costs for both participation and errors corrected. That is, non-expert wives would pay attention to the prices and stop correcting and participating either when the cost of hiding is intermediate or the cost of hiding is high. It is implausible that they would change their behavior in response to the prices consistent with the specific pattern that is predicted by our theory, i.e., they participate less when the hiding cost is intermediate or high but hide less only when the hiding cost is high. 
+
+\begin{figure}[H]
+\caption{Hiding in the signaling experiment}\label{experiment2_scores}
+\vspace{-0.4cm}
+\centering
+\includegraphics[width=0.55\textwidth]{"./Graphs/00_Main/Figure_6_errors_corrected".png}
+\vspace{-0.5cm}
+\begin{footnotesize}
+\begin{flushleft}
+\textit{Notes}: Sample restricted to wives who choose to participate in the activity. The graph shows adjusted means from OLS regressions with Huber-White robust SEs. Each bar is the sum of the control mean and the relevant regression coefficients, i.e., control mean, control mean+$\beta_{NE}$, control mean+$\beta_{IC}$/$\beta_{HC}$, and control mean+$\beta_{NE}$+$\beta_{IC}$/$\beta_{HC}$+$\beta_{IC/HC \times NE}$. We show 95\% confidence intervals based on the estimated standard errors of $\beta_{NE}$, $\beta_{IC}$/$\beta_{HC}$, and $\beta_{NE}$+$\beta_{IC}$/$\beta_{HC}$+$\beta_{IC/HC \times NE}$, respectively. Significance from testing equal hiding of expert and non-expert wives when the hiding cost is low ($\beta_{NE}=0$), intermediate ($\beta_{NE}+\beta_{IC \times NE}=0$), or high ($\beta_{NE}+\beta_{HC \times NE}=0$). $p<0.10^*, p<0.05^{**}, p<0.01^{***}$.
+\end{flushleft}
+\end{footnotesize}
+\end{figure}
+\vspace{-0.4cm}
+
+Wives forgo experimental earnings on both the extensive (participation) and intensive (hiding) margin in order to avoid sending what they think will be a bad signal. Self-identified non-experts forgo 30\% more earnings (MWK +25, from a base of 83) than experts when the hiding cost is low, 63\% more (MWK +53, from a base of 84) when the hiding cost is intermediate, and 40\% more (MWK +39, from a base of 97) when the hiding cost is high (\autoref{experiment2_foregone}, Panel A, and \autoref{quality_results}, column 8).\footnote{Since our predictions and key estimations concern the interaction between expertise status and the randomly assigned hiding cost, the relevant ``balance check" is within each expertise group. We show this in Online Appendix \autoref{experiment2_balance}.} 
+
+We do not find that our results are driven by two potential correlates of being non-expert, lower education or self-esteem (\autoref{quality_results_correlates}). Women with low education (fewer than 6, the median, 46\% of women) play less but do not differentially so across hiding costs and do not correct more errors. Women with low self-esteem (wives who believe that their quality quiz score is lower than their actual score, 46\% of women) play less when the hiding cost is high (even though not significantly so) and do not correct more errors. 
+
+\begin{figure}[H]
+\caption{Total forgone earnings in the signaling experiment}\label{experiment2_foregone}
+\centering
+\includegraphics[width=0.65\textwidth]{"./Graphs/00_Main/Figure_7_foregone".png}
+\vspace{-0.4cm}
+\begin{footnotesize}
+\begin{flushleft}
+\textit{Notes}: The graph shows adjusted means from OLS regressions with Huber-White robust SEs. Non-Expert is an indicator that takes the value 1 if the wife reports an average weighted score that is at most 4 out of 6 (see main text) in Panel A and an indicator that takes the value 1 if the wife was randomized into the hard quiz in Panel B. Each bar is the sum of the control mean and the relevant regression coefficients, i.e., control mean, control mean+$\beta_{NE}/\beta_{Hard}$, control mean+$\beta_{IC}$/$\beta_{HC}$, and control mean+$\beta_{NE}/\beta_{Hard}$+$\beta_{IC}$/$\beta_{HC}$+$\beta_{IC/HC \times NE/Hard}$. We show 95\% confidence intervals based on the estimated standard errors of $\beta_{NE}$/$\beta_{Hard}$, $\beta_{IC}$/$\beta_{HC}$, and $\beta_{NE}$+$\beta_{IC}$/$\beta_{HC}$+$\beta_{IC/HC \times NE/Hard}$, respectively. Significance from testing equal forgone earnings of expert and non-expert wives when the hiding cost is low ($\beta_{NE}/\beta_{Hard}=0$), intermediate ($\beta_{NE}/\beta_{Hard}+\beta_{IC \times NE/Hard}=0$), or high ($\beta_{NE}/\beta_{Hard}+\beta_{HC \times NE/Hard}=0$). $p<0.10^*, p<0.05^{**}, p<0.01^{***}$.
+\end{flushleft}
+\end{footnotesize}
+\end{figure}
+\vspace{-0.4cm}
+
+We find similar results by exogenous variation in performance (\autoref{quality_results}, Panel B). The harder version of the quiz succeeded in exogenously lowering women's scores from 4.6 to 3.5 points (column 1). Wives participate as much in the hard as in the easy quiz if the hiding cost is low. However, the intermediate and high hiding costs decrease the participation rates in the hard quiz by 11.8ppts (-16\%) and 6.3ppts (-9\%) respectively (\autoref{quality_results}, Panel B, column 2). In addition, wives who participate hide significantly more in the hard than the easy quiz when the hiding cost is low or intermediate (\autoref{quality_results}, Panel B, column 5). Overall, wives in the hard quiz forego 14\% more earnings (MWK +12, from a base of 85) when the hiding cost is low, 62\% more (MWK +48, from a base of 78) when the hiding cost is intermediate, and 35\% more (MWK +33, from a base of 94) when the hiding cost is high (\autoref{experiment2_foregone}, Panel B, and \autoref{quality_results}, Panel B, column 8). This is consistent with wives in the hard quiz being more likely to believe that their husbands will update their beliefs downwards and wanting to avoid sending this bad signal.\footnote{Overall, our results using the exogenously varied scores are slightly noisier, which might be due to some random imbalances. For example, wives in the hard quiz with intermediate or high hiding costs have a higher market expertise reputation, have been married for fewer years, and have a lower math score and education (see Online Appendix \autoref{experiment2_balance_hv}.).}
+
+We also present results by two alternative measures of expertise, the wife's quality quiz score and the accuracy of her beliefs (Online Appendix \autoref{quality_results_alternative}). First, we find that wives with a low quality quiz score (5, the median, 39\% of women) do not play less when the price of hiding is high but hide more mistakes. Second, we find that wives who have inaccurate beliefs about their quality quiz score (they are off by a score of more than 1, the median, 40\% of women) play less when the price of hiding is high but do not hide more mistakes.  
+
+\paragraph{Financial or Non-Financial Reputation Incentives?}
+
+While theoretically plausible, we consider it unlikely that our experimental results are driven by wives trying to maintain their intra-household reputation to avoid non-financial consequences of a low reputation, such as domestic violence or emotional abuse. The model encompasses such an alternative: transfers could be not only financial but also in-kind (with abuse being a negative transfer).\footnote{It could also be that people care about their reputation for self-image reasons. An ideal way to test this would have been to implement a version of experiment 2 with a quiz in a domain completely unrelated to household finances. We did not do such a placebo experiment. Nonetheless, the fact that we see heterogeneity by size of intra-household transfers (see \cref{transfer_heterogeneity}) suggests that self-image concerns would need to be higher for wives in households with higher transfers for this mechanism to explain the entirety of the results, and this seems unlikely.} From an ethical standpoint, however, the implications of our experimental design are quite different across the two interpretations. Specifically, if the risk of abuse increases in response to poor investment choices, could our signaling experiment have put our participants at risk? We piloted the protocols extensively in settings where women could freely share with us their concerns, and abuse was never brought up.\footnote{Domestic abuse is present but not widespread in our study setting: The share of adult women in Neno District who reported experiencing physical or sexual intimate partner violence in the past 12 months is 12\% \citep{malawiDHS2015}, compared to 25\% in Kenya \citep{kenyadhs2014}, 27\% in Bangladesh \citep{bangladesh2016report}, 9\% in Guatemala \citep{guatemaledhs2014} and 5\% in the US \citep{smith2018national}.} Our enumerators, after sharing the wife's performance with the husband (with the wife present), systematically witnessed husbands congratulating their wives on their good performance (the wife's final reported score was 4.6 out of 6 on average, higher than the husbands' average of 4.2). Furthermore, the finding that reputation matters for transfers in the transfer experiment, as well as our heterogeneity analyses, are much better aligned with the hypothesis that women attempt to maintain their reputation to receive financial transfers (rather than to avoid abuse). We find strong heterogeneity by transfers, suggesting that women who could lose more financially also respond more to our experiments (see \cref{transfer_heterogeneity}). Finally, the 2015/2016 Malawi DHS shows that spousal violence is decreasing in both the wife's and husband's level of education (p. 285--286, \cite{malawiDHS2015}) but we do not find the playing and hiding patterns by either the wife's or husband's median education.
+
+\section{The Market Experiment}
+\label{market_experiment}
+
+The \textit{market experiment} tests Prediction \autoref{pred1} for real-life investment rates---do non-experts invest no less than experts when the hiding cost is low but less when the hiding cost is intermediate or high?, and Prediction \autoref{pred3}---do non-expert and expert wives invest at the same rate (the payoff-maximizing rate) when their reputation is not at stake? Following the completion of our lab-in-the-field experiments, we conducted short surveys and a field experiment with 675 married women in monogamous relationships, recruited while they were shopping at one of six local markets in Zomba district in July 2019.\footnote{We initially aimed to recruit 1000 married women, as pre-registered, but due to delays, we did not complete the data collection before the research associate overseeing the field work had to leave the country for a new position.} We did not conduct the market experiment with the wives in the transfer and signaling experiment because the market experiment required us to present the wives with goods that they could have acquired while shopping alone at the local markets.\footnote{It is extremely common for women to go to the market on their own in this context.} Therefore, we recruited women who were shopping alone at the market. 
+
+The married women in the market experiment have characteristics similar to those of the first two experiments (Online Appendix \autoref{characteristics3}). They have been married for an average of 10 years and have 2.5 children. They are an average of 30 years old and have 7.3 years of education. They have earned an average income of MWK 15,117 (approx. USD 23) in the preceding two months, are married to husbands whom they report have earned an average income of MWK 20,397 (approx. USD 30) in the preceding two months, and report average transfers from their husbands of MWK 11,293 (approx. USD 17) in the preceding two months.
+
+We first describe our measure of wives’ expertise and the experimental design and then present the investment choices of both expert and non-expert wives. 
+
+\subsection{Experimental Design}
+
+We use an alternative measure of expertise as we could not administer the quality quiz used in the signaling experiment and elicit women's beliefs about their scores on that quiz.\footnote{There are two reasons for this: (i) the quiz could have created tensions vis-a-vis market vendors, some of which were selling some of the low-quality goods in the quiz (since we procured them from local markets); and (2) going through the quiz takes quite some time because lengthy instructions need to be given.} To identify this alternative, we used a random forest algorithm to predict the perceived score in experiment 2 from all exogenous husband and wife characteristics.\footnote{We chose a random forest algorithm as it minimizes over-fitting for out-of-sample predictions \citep{breiman2001randomForest}. We tuned the hyper parameters, the number of trees and the variables considered at each split, using a grid search. We tried values between 25 and 400 in steps of 25 for the number of trees and between one and the number of independent values for the number of variables. We chose the algorithm that minimizes the out-of-bag error rate: 250 trees and two variables. The out-of-bag error rate is 0.93 (on a scale of 0--6) with these optimal hyper parameters.} The random forest algorithm chose the wife's second-order beliefs about her husband's beliefs about her market math score (elicited using the visual handout shown in Online Appendix \autoref{bubble_handout}) as the most important predictor of the wife's perceived score in experiment 2. Given this finding, we only administered the 6 market math questions to the market experiment sample and elicited second-order beliefs.
+\begin{itemize}\itemsep0em
+\item \textit{``Non-Experts''}: Women with a second-order belief about their math score of at most 4 out of 6 (44\% of the sample).
+\item \textit{``Experts''}: Women with a second-order belief about their math score of 5 or 6 out of 6 (56\% of the sample).
+\end{itemize}
+We also show results when classifying women with a below-median random-forest predicted perceived score as non-experts (we also show results using this classification for experiment 2). 
+
+Using a Becker-DeGroot-Marschak (BDM) mechanism \citep{becker1964measuring}, we elicited women's willingness to trade part or all the cash value of their survey compensation of MWK 1,000 (approximately USD 1.5) for an unfamiliar good. This generated an estimate of their willingness to pay for the unfamiliar good without the amount of cash they had at the time of the survey being a constraint. 
+
+We randomly offered women one of two unfamiliar goods with different hiding costs:
+\begin{itemize}\itemsep-0em
+    \item \textit{Low hiding (time) cost:} An airtight crop storage bag purchased in Blantyre, the second largest city in Malawi. These bags are hermetically sealed to protect harvested grains (e.g., maize, red beans) from insect pests. They are used to store grains for months on end. While the returns of these bags are substantial, they were unknown to the women. The usage cost of a storage bag is low (in terms of the model, the hiding cost is low). This is because once the bag has been filled, even if it did not truly protect from pests, leaving the grains in the bag for the rest of the season would have no cost (since the status quo is to store the grains in non-sealed bags). In addition, if some of the grain rots, the wife can sort through and throw it away while the husband is absent. 
+    \item \textit{High hiding (time) cost:} A child picture book (imported from overseas by the research team): Either Richard Scarry's ``A Day at the Airport'' picture book, or the illustrated ``Lift-the-flap'' Animal ABC baby book by Jonny Lambert. Such books are relatively expensive (USD 10 before shipping costs) and totally unavailable in Malawi: Even low-quality picture books are completely absent from even markets in the capital city. The evidence on the benefits of showing books and describing pictures to very young children is strong (but underestimated by parents worldwide). Board books are meant to be looked at/shown/read to children over and over again. The usage cost (hiding cost) is thus high because the good needs to be used repeatedly as it is obvious if it stays on the shelf for too long without being used.\footnote{Because we had to bring the books by plane in a suitcase (there is no reliable shipping service to Malawi), we were only able to offer the books to 26\% of the women in the sample.} 
+\end{itemize}
+We implemented the intervention on market days so that, in case the respondent brought the good home, the husband would infer that the respondent had bought the good at the market. 
+
+To test Predictions \autoref{pred1} and \autoref{pred3} of the model, women were further randomly allocated to one of four sticker groups:
+\begin{itemize}\itemsep0em
+    \item \textit{Donated:} We put a ``donated by Stanford University" sticker on the good.
+  \item \textit{Effectiveness:} We put a sticker on the good describing its proven effectiveness (e.g., describing the positive effects of reading/looking at picture books with children).
+  \item \textit{Both}: We put both Donated and Effectiveness stickers on the good.
+  \item \textit{None}: We put no stickers on the good.
+\end{itemize}
+The stickers are shown in Online Appendix Figures B.4 and B.5.\footnote{Even though literacy is high in our setting (88\% among adult men and 78\% among adult women in Zomba district \citep{malawiDHS2015}), we attempted to make the sticker content as clear as possible using images.} When deciding whether and how much to invest, the women could see the stickers. Hence they knew what information would be available to their husband. Specifically:
+\begin{itemize}\itemsep0em
+\item The donated sticker gave the woman the guarantee that the spouse would see that the good was acquired at no financial cost to the household (as it indeed was, since it was given in exchange for her time). In such a case, the reputation mechanism in the model is not at play as the cost of the good to the husband is 0, i.e., the payoff to the husband cannot be negative. The prediction is that investment rates should differ across experts and non-experts absent the sticker, but not in the presence of the sticker. 
+\item The effectiveness sticker aimed to eliminate uncertainty about the quality of the risky good to the husband ($\lambda=1)$. The prediction is that investment rates should differ across experts and non-experts absent the sticker, but not in the presence of the sticker.\footnote{To minimize a potential concern that the effectiveness sticker could be interpreted as a marketing ploy by husbands, we purposefully designed the stickers as information leaflets added to the products externally. This contrasts with traditional advertisements that are commonly integrated into product packaging.} 
+\end{itemize}
+
+Importantly, to ensure that the stickers did not work by changing women's beliefs, all women in all treatment arms were shown ``flyer" versions of the stickers and read the information on the stickers by the enumerators before making their investment decisions. However, only in the sticker treatment arms were the stickers attached to the goods, and women could take the information home.
+
+We estimate the impact of the stickers on the willingness to pay using the following equation:\vspace{-0.4cm}
+\begin{align}
+WTP_{i}= & \alpha + \beta_{1} NE_i + \beta_{2} D_i + \beta_{3} Eff_i + \beta_4 (D\&Eff_i) + \beta_5 (NE_i \times D_i) + \beta_6 (NE_i \times Eff_i) \nonumber \\
+& + \beta_7 (NE_i \times D\&Eff_i) +  \beta_{8}'X_{i} +\mu_e+\delta_m+\epsilon_{i}\vspace{-5cm}\end{align}
+where $WTP_{i}$ is woman $i$'s willingness to pay for the good. $NE_i$ is an indicator that is 1 if the woman is classified as a non-expert wife, $D_i$ is an indicator that is 1 if woman $i$ is assigned to the donated treatment arm, $Eff_i$ is an indicator that is 1 if woman $i$ is assigned to the effectiveness treatment arm, and $D\&Eff_i$ is an indicator that is 1 if woman $i$ is assigned to both stickers (donated and effectiveness). $\epsilon_i$ are Huber-White robust standard errors. We include enumerator fixed-effects $\mu_e$ and market fixed effects $\delta_m$ and show estimations with and without adjusting for individual controls $X_{i}$.\footnote{We did not specify that we would focus on heterogeneity by expertise in the AEA RCT registration for the study, nor did we specify how we would proxy expertise. The former was an oversight (our model \textit{is} about types and all our predictions are about types). The latter was that we did not have data from experiment 2 yet by the time we registered since we registers all three experiments at once. For transparency, we show the results estimating the effects of the stickers on the pooled sample of expert and non-expert wives in columns 6-9 of \autoref{market_results}.}
+
+Wife characteristics are broadly balanced by treatment arms, though not perfectly (see Online Appendix \autoref{Balance_experiment3}). Results are similar both with and without controls.\footnote{The most concerning imbalance is that expert wives assigned to the effectiveness sticker treatment have been married longer, hence have larger families, and received a significantly lower transfer from their husbands in the previous two months. This is not the case for non-expert wives assigned to that arm. This means that a differential impact of the effectiveness sticker by expertise could possibly be due to these differences, especially those in income. These could not explain differences in the impacts of the `donated sticker', however.}  
+
+\subsection{Results}
+
+Consistent with Prediction \autoref{pred1}, non-expert wives have a lower willingness to invest than experts without stickers but not with the stickers (\autoref{experiment3_main}; the full estimation results are shown in \autoref{market_results}). For simplicity, we pool both stickers into one ``sticker arm" since their predicted effects are of the same sign and their observed effects cannot be distinguished from each other (\autoref{market_results}). Without the stickers, expert wives have an average willingness to pay of MWK 351 and non-expert wives have an average willingness to pay of MWK 265 (-25\%, column 2). Neither the donated nor the effectiveness sticker affect the willingness to pay of expert wives whose investment decisions already maximize their present payoffs, but any sticker increases the average willingness to pay of non-expert wives by MWK 93 (+26\%, column 5), such that the willingness to pay of expert and non-expert wives is not statistically different if the good is offered with either of the two stickers.\footnote{The stickers (insignificantly) decrease the willingness-to-pay of expert wives, and the effect of the two combined stickers is in the same direction as each sticker alone, although somewhat muted and not significant. Anecdotally, it seems that expert wives perceived the goods as ``tempered'' with the stickers, and the two stickers combined occupied too much space on the goods and therefore made them less attractive.} All results are robust to omitting our vector of controls and controlling for market fixed effects.
+
+\begin{figure}[H]
+\centering
+\caption{Market experiment: Willingness to pay, by wife's expertise}\label{experiment3_main}
+\vspace{-0.4cm}
+\includegraphics[width=0.65\textwidth]{"./Graphs/00_Main/Figure_8_all_math".png}
+\vspace{-0.5cm}
+\begin{footnotesize}
+\begin{flushleft}
+\textit{Notes}: The graph shows adjusted means from OLS regressions with Huber-White robust SEs. The dependent variable is the willingness to pay in Malawian Kwacha. Non-Expert is an indicator that takes the value 1 if the wife has a second-order belief about her math score of at most 4 out of 6. Any Sticker is an indicator that takes the value 1 if either the donated or effectiveness sticker was attached to the good. Each bar is the sum of the control mean and the relevant regression coefficients, i.e., control mean, control mean+$\beta_{NE}$, control mean+$\beta_{Any Sticker}$, and control mean+$\beta_{NE}$+$\beta_{Any Sticker}$+$\beta_{NE\times Any Sticker}$. We show 95\% confidence intervals based on the estimated standard errors of $\beta_{NE}$, $\beta_{Any Sticker}$, and $\beta_{NE}$+$\beta_{Any Sticker}$+$\beta_{NE\times Any Sticker}$, respectively. Significance from testing equal willingness to pay of expert and non-expert wives in control ($\beta_{NE}=0$) or in the sticker treatments ($\beta_{NE}$+$\beta_{NE\times Any Sticker}=0$). $p<0.10^*, p<0.05^{**}, p<0.01^{***}$.
+\end{flushleft}
+\end{footnotesize}
+\end{figure}
+\vspace{-0.6cm}
+
+Consistent with Prediction \autoref{pred3}, we find stronger effects among women offered a book (high hiding cost) than women offered the bags (low hiding cost, \autoref{experiment3_book}). The investment gap between expert and non-expert wives absent a sticker is much greater when the hiding cost is high than when it is low. These findings seem to be again inconsistent with experimenter demand effects, which would not predict differential behavior for the two goods.\footnote{The results could possibly be due to differences in preferences of husbands and wives for the goods, with husbands particularly disliking the book without stickers. Shying away from bringing home a good that the husbands dislike could be the result of reputation dynamics or simply due to the wife caring about her husband's utility. We view the likelihood that husbands have preferences over the presence of stickers as unlikely, however.} 
+
+The investment gap between expert and non-expert wives is greater when we increase the salience of the husband-wife relationship (\autoref{experiment3_salience}), suggesting that it is indeed due to intra-household reputation concerns (as opposed to, for example, concerns about friends or neighbors). In half of the sample the BDM was played before the survey and in half of the sample the BDM was played after the survey, i.e., after eliciting the wife's second-order beliefs and asking her about previous transfers and her financial decision-making inside the household.\footnote{This also alleviates concerns that the stickers might operate by changing the wife's beliefs about the goods. The salience effect as well as the heterogeneity by discretionary transfer size shown in the following section further rule out another potential mechanism: the stickers may help the wife convince the husband to use (or let her use) the product.}
+
+\begin{figure}[H]
+\centering
+\caption{Market experiment: Willingness to pay, by wife's expertise and hiding cost}\label{experiment3_book}
+\vspace{-0.3cm}
+\includegraphics[width=0.65\textwidth]{"./Graphs/00_Main/Figure_9_book_math".png}
+\vspace{-0.5cm}
+\begin{footnotesize}
+\begin{flushleft}
+\textit{Notes}: The graph shows adjusted means from OLS regressions with Huber-White robust SEs. Regressions are run separately for bags (left Panel) and books (right Panel). The dependent variable is the willingness to pay in Malawian Kwacha. Non-Expert is an indicator that takes the value 1 if the wife has a second-order belief about her math score of at most 4 out of 6. Any Sticker is an indicator that takes the value 1 if either the donated or effectiveness sticker was attached to the good. Each bar is the sum of the control mean and the relevant regression coefficients, i.e., control mean, control mean+$\beta_{NE}$, control mean+$\beta_{Any Sticker}$, and control mean+$\beta_{NE}$+$\beta_{Any Sticker}$+$\beta_{NE\times Any Sticker}$. We show 95\% confidence intervals based on the estimated standard errors of $\beta_{NE}$, $\beta_{Any Sticker}$, and $\beta_{NE}$+$\beta_{Any Sticker}$+$\beta_{NE\times Any Sticker}$, respectively. Significance from testing equal willingness to pay of expert and non-expert wives in control ($\beta_{NE}=0$) or in the sticker treatments ($\beta_{NE}$+$\beta_{NE\times Any Sticker}=0$). $p<0.10^*, p<0.05^{**}, p<0.01^{***}$. The p-values on the interactions ``Any Sticker $\times$ Book'' and ``Non-Expert $\times$ Any Sticker $\times$ Book'' in the fully interacted model are 0.40 and 0.14, respectively.
+\end{flushleft}
+\end{footnotesize}
+\end{figure}
+\vspace{-0.6cm}
+
+Finally, we note that all results presented in this section are robust to using the random-forest predicted types instead of the second-order beliefs (\cref{experiment3_main_RF,experiment3_book_RF,experiment3_salience_RF}). 
+
+Overall, the findings of the market experiment are in line with the idea that women internalize potential reputation costs when making real-life investment decisions. These results suggest that women might have a limited ability to experiment with new technologies unless it is ensured that they are able to credibly convey certain information to their husbands.\footnote{Communication alone (just letting the husband and wife communicate) may not be effective in improving the ability of women to experiment with new technology: the existing evidence on the limited ability of spouses to convey effective information is growing \citep{conlon2022household, fehr2022, bjorkman2023}, especially in contexts in which spouses may have conflicting interests \citep{Ashrafetal2022} or contracting problems \citep{apedoetal2020householdinfo}. This suggests that policies providing external tools to reduce information gaps between spouses may be beneficial.}
+
+\begin{figure}[H]
+\centering
+\caption{Market experiment: Willingness to pay, by wife's expertise and relationship salience}\label{experiment3_salience}
+\vspace{-0.5cm}
+\includegraphics[width=0.65\textwidth]{"./Graphs/00_Main/Figure_10_bdm_last_math.png"}
+\vspace{-0.3cm}
+\begin{footnotesize}
+\begin{flushleft}
+\textit{Notes}: The graph shows adjusted means from OLS regressions with Huber-White robust SEs. Regressions are run separately in the control treatment (left Panel) and the relationship salience treatment (right Panel). The dependent variable is the willingness to pay in Malawian Kwacha. Non-Expert is an indicator that takes the value 1 if the wife has a second-order belief about her math score of at most 4 out of 6. Any Sticker is an indicator that takes the value 1 if either the donated or effectiveness sticker was attached to the good. Each bar is the sum of the control mean and the relevant regression coefficients, i.e., control mean, control mean+$\beta_{NE}$, control mean+$\beta_{Any Sticker}$, and control mean+$\beta_{NE}$+$\beta_{Any Sticker}$+$\beta_{NE\times Any Sticker}$. We show 95\% confidence intervals based on the estimated standard errors of $\beta_{NE}$, $\beta_{Any Sticker}$, and $\beta_{NE}$+$\beta_{Any Sticker}$+$\beta_{NE\times Any Sticker}$, respectively. Significance from testing equal willingness to pay of expert and non-expert wives in control ($\beta_{NE}=0$) or in the sticker treatments ($\beta_{NE}$+$\beta_{NE\times Any Sticker}=0$). $p<0.10^*, p<0.05^{**}, p<0.01^{***}$. The p-values on the interactions ``Any Sticker $\times$ Salience'' and ``Non-Expert $\times$ Any Sticker $\times$ Salience'' in the fully interacted model are 0.94 and 0.74, respectively.
+\end{flushleft}
+\end{footnotesize}
+\end{figure}
+\vspace{-0.6cm}
+
+\vspace{-0.4cm}
+\section{Heterogeneity by Discretionary Transfer Size}\label{transfer_heterogeneity} 
+\vspace{-0.2cm}
+
+In this section, we test Prediction \autoref{pred4} of the model by assessing whether the results in all three experiments are driven by households in which women still receive discretionary transfers from their husbands. Our model predicts that spouses' behavior should stop responding to the wife's reputation once the reputation has fallen below the threshold above which discretionary transfers occur in the second period. 
+
+To test Prediction \autoref{pred4}, we compare experimental results in households in which the wife receives only ``subsistence level'' transfers  (i.e., transfers for basic household necessities) and households in which she receives additional discretionary transfers for investments.\footnote{We use transfers to classify households since we have this information for all three experiments.} This corresponds to households below or above the median transfer size. We use husbands' reports where available (experiments 1 and 2) as wives' reporting could be correlated with the wife's type. Transfers reported by husbands respond substantially to wives' perceived expertise, with a low MER reducing transfers by 13\% (-MWK 1076, Appendix \autoref{MER_correlations}). 
+
+\begin{figure}[H]
+\centering
+\caption{Heterogeneity by discretionary transfer size}\label{experiment_transfer_heterogeneity}
+\includegraphics[width=\textwidth]{"./Graphs/00_Main/Figure_11_high_hus_transfers_math".png}
+\begin{footnotesize}
+\begin{flushleft}
+\vspace{-0.45cm}
+\textit{Notes}: The graph shows the coefficients and confidence intervals from OLS regressions with Huber-White robust SEs. Low/High Transfers correspond to below/above the median. Rows 1 to 3 control for enumerator and compensation fixed effects (and version fixed effects for the transfer experiment) as well as the wife and the husband's age, education, average income in the last two months, variability of income (whether income is the same in most months or varies a lot), risk preferences, math and raven scores, and years married, number of children and number of household members, and MER index. Controls are as reported by the husband in the transfer and signaling experiment and as reported by the wife in the market experiment. Row 4 controls for enumerator and market fixed effects as well as the wife's age, education, average income in the last two months, risk preferences, math score, as well as the husband's average income in the last two months, years married, and the number of children and household members. Coefficients are presented as percentage point deviations from the control means. 
+\end{flushleft}
+\end{footnotesize}
+\end{figure}
+\vspace{-0.5cm}
+
+Consistent with Prediction \autoref{pred4}, we observe significant estimates only in households in which the wife's reputation is still above the threshold, and women thus still receive discretionary transfers (\autoref{experiment_transfer_heterogeneity}, all coefficients are shown in percentage point deviations from the control mean). First, only husbands who transfer to their wives for non-necessities investments (high transfers) reduce their transfers in the salience treatment if their wife has a low MER in the transfer experiment.\footnote{All husbands should use the dictator game to transfer for basic necessities (given the multiplier) and reduce their own private transfers to the wife afterwards.} Second, only non-expert wives who still receive transfers from their husbands reduce their participation in the high hiding cost treatments (as the prediction is the same for both intermediate and high hiding costs, we pool both costs, however, the results are the same for both costs individually) or hide mistakes to avoid sending a signal in the signaling experiment.\footnote{Note that we also observe that non-experts with low transfers hide (insignificantly) more. This could be due to the binary transfer measure being a noisy proxy of cutoff reputation or wives who lost their discretionary transfers being concerned about their reputation for reasons other than transfers.} Finally, only non-expert wives who still receive transfers from their husbands increase their willingness to pay for the unfamiliar goods in the sticker treatments in the market experiment (we show results using the random-forest predicted expertise in Online Appendix \autoref{experiment3_main_RF}). Taken together, our results thus provide strong evidence for the external relevance of the experiments as spouses' behaviors seem to be driven by real-life reputation concerns inside the household (and not, for example, experimenter demand effects).
+
+We also find that husbands and wives in households with more children, a proxy of budget tightness, react more across the three experiments (even though the differences in reaction are not statistically different; see Online Appendix \autoref{experiment_many_children_heterogeneity}).
+
+\section{Conclusion}\label{conclusion}
+
+This paper offers a new perspective on some potential dynamics at play between spouses in contexts where women are specialized in household production and at least partly depend on their husband's income. We develop a signaling model in which a woman's access to the household budget varies with her husband's perceptions of her skills as an investor. Our theoretical results thus suggest that, to maintain control over a greater share of the budget, women may experiment too little when they have difficulty assessing the productivity of new goods and technologies or incur costs to hide bad purchase decisions. Hence, our model could explain behavior akin to the sunk cost fallacy---using a product even after one has realized it does not have positive returns---within the realm of neoclassical economics.
+
+Three experiments were designed to test specific pieces of the theory. The transfer experiment shows that husbands whose wives made bad market choices in the past transfer less to their wives in a dictator game with a multiplier if asked to recall these choices just before playing the game. The signaling experiment suggests that women forego earnings to avoid sending a bad signal about their investment skills. Finally, the market experiment suggests that wives are less willing to purchase unknown goods without being able to signal that the good is free or of high return. In all three experiments, results are driven by couples in which wives still receive transfers from their husbands---providing additional evidence for the external relevance of our experimental findings.
+
+Our paper brings to light novel insights about the role of dynamic reputation concerns and how they could influence both investment and usage decisions. In particular, we present experimental evidence suggesting that reputation concerns could lead to two distortions: under-investment in potentially high-return goods and over-use of unproductive goods (lemons). Although our results show that the behavior of both men and women responds to the reputation of women and is \emph{consistent} with women signaling to their husbands to maintain their budget share, we cannot conclusively rule out that women are not signaling to others instead. We hope that this study opens the door to future researchers interested in firmly establishing the relationship between intra-household reputation and financial transfers and in providing evidence for the existence of what we coin the ``intra-household sunk cost fallacy". 
+
+From a policy point of view, the mechanisms we propose could explain the relatively low willingness to pay for high-return investments observed in many programs and experiments aimed at women \citep{CohenDupasQJE, MeredithEtAl}. Campaigns promoting new technologies or goods could potentially be more successful and pose a smaller reputation risk to women if they involved both spouses or ensured that women have the means to credibly convey information about the benefits of the goods to their spouses. We leave it to future research to evaluate and test the policy implications of the novel insights our theory provides.   
+
+Finally, while this paper focused on the husband as principal and the wife as an agent given the prevailing context of gender inequality, there is no reason why the mechanism would not be completely symmetric in a context where spousal roles are reversed. When both spouses earn equal income, reputation may still matter for the share of the budget that one has control over. For example, a husband who purchased a bench press that was used only twice in the past year may face resistance when he next suggests buying a treadmill. The welfare implications of such dynamics are likely much less stark in contexts where households can afford bench presses and treadmills, however, as compared to contexts with limited and unequal consumption such as the one we consider in rural Malawi.
+
+\AtBeginEnvironment{thebibliography}{\linespread{1}\selectfont}
+\setlength{\bibsep}{0ex}
+\bibliography{Biblio} 
+\appendix
+{\linespread{1}\selectfont}
+\vspace{-0.5cm}
+
+\newpage
+
+\section*{Appendix Figures and Tables}
+
+\linespread{1.15}
+\setcounter{figure}{0}		
+\setcounter{table}{0}
+\renewcommand{\thefigure}{A.\arabic{figure}}
+\renewcommand{\thetable}{A.\arabic{table}}
+
+\begin{figure}[H]
+\centering
+\caption{Market experiment: Willingness to pay, by wife's random-forest predicted expertise}\label{experiment3_main_RF}
+\vspace{-0.4cm}
+\includegraphics[width=0.65\textwidth]{"./Graphs/01_Appendix/Figure_A1_all_forest".png}
+\vspace{-0.5cm}
+\begin{footnotesize}
+\begin{flushleft}
+\textit{Notes}: The graph shows adjusted means from OLS regressions with Huber-White robust SEs. The dependent variable is the willingness to pay in Malawian Kwacha. Non-Expert is an indicator that takes the value 1 if the random-forest predicted perceived score on the quality quiz is at most 4.8 (the median) out of 6. Any Sticker is an indicator that takes the value 1 if either the donated or effectiveness sticker was attached to the good. Each bar is the sum of the control mean and the relevant regression coefficients, i.e., control mean, control mean+$\beta_{NE}$, control mean+$\beta_{Any Sticker}$, and control mean+$\beta_{NE}$+$\beta_{Any Sticker}$+$\beta_{NE\times Any Sticker}$. We show 95\% confidence intervals based on the estimated standard errors of $\beta_{NE}$, $\beta_{Any Sticker}$, and $\beta_{NE}$+$\beta_{Any Sticker}$+$\beta_{NE\times Any Sticker}$, respectively. Significance from testing equal willingness to pay of expert and non-expert wives in control ($\beta_{NE}=0$) or in the sticker treatments ($\beta_{NE}$+$\beta_{NE\times Any Sticker}=0$). $p<0.10^*, p<0.05^{**}, p<0.01^{***}$.
+\end{flushleft}
+\end{footnotesize}
+\end{figure}
+\begin{figure}[H]
+\centering
+\caption{Market experiment: Willingness to pay, by wife's random-forest predicted expertise and hiding cost}\label{experiment3_book_RF}
+\vspace{-0.3cm}
+\includegraphics[width=0.65\textwidth]{"./Graphs/01_Appendix/Figure_A2_book_forest".png}
+\vspace{-0.5cm}
+\begin{footnotesize}
+\begin{flushleft}
+\textit{Notes}: The graph shows adjusted means from OLS regressions with Huber-White robust SEs. Regressions are run separately for bags (left Panel) and books (right Panel). The dependent variable is the willingness to pay in Malawian Kwacha. Non-Expert is an indicator that takes the value 1 if the random-forest predicted perceived score on the quality quiz is at most 4.8 (the median) out of 6. Any Sticker is an indicator that takes the value 1 if either the donated or effectiveness sticker was attached to the good. Each bar is the sum of the control mean and the relevant regression coefficients, i.e., control mean, control mean+$\beta_{NE}$, control mean+$\beta_{Any Sticker}$, and control mean+$\beta_{NE}$+$\beta_{Any Sticker}$+$\beta_{NE\times Any Sticker}$. We show 95\% confidence intervals based on the estimated standard errors of $\beta_{NE}$, $\beta_{Any Sticker}$, and $\beta_{NE}$+$\beta_{Any Sticker}$+$\beta_{NE\times Any Sticker}$, respectively. Significance from testing equal willingness to pay of expert and non-expert wives in control ($\beta_{NE}=0$) or in the sticker treatments ($\beta_{NE}$+$\beta_{NE\times Any Sticker}=0$). $p<0.10^*, p<0.05^{**}, p<0.01^{***}$. The p-values on the interactions ``Any Sticker $\times$ Book'' and ``Non-Expert $\times$ Any Sticker $\times$ Book'' in the fully interacted model are 0.49 and 0.34, respectively.
+\end{flushleft}
+\end{footnotesize}
+\end{figure}
+\vspace{-0.6cm}
+\begin{figure}[H]
+\centering
+\caption{Market experiment: Willingness to pay, by wife's random-forest predicted expertise and relationship salience}\label{experiment3_salience_RF}
+\vspace{-0.5cm}
+\includegraphics[width=0.65\textwidth]{"./Graphs/01_Appendix/Figure_A3_bdm_last_forest".png}
+\vspace{-0.8cm}
+\begin{footnotesize}
+\begin{flushleft}
+\textit{Notes}: The graph shows adjusted means from OLS regressions with Huber-White robust SEs. Regressions are run separately in the control treatment (left Panel) and the relationship salience treatment (right Panel). The dependent variable is the willingness to pay in Malawian Kwacha. Non-Expert is an indicator that takes the value 1 if the random-forest predicted perceived score on the quality quiz is at most 4.8 (the median) out of 6. Any Sticker is an indicator that takes the value 1 if either the donated or effectiveness sticker was attached to the good. Each bar is the sum of the control mean and the relevant regression coefficients, i.e., control mean, control mean+$\beta_{NE}$, control mean+$\beta_{Any Sticker}$, and control mean+$\beta_{NE}$+$\beta_{Any Sticker}$+$\beta_{NE\times Any Sticker}$. We show 95\% confidence intervals based on the estimated standard errors of $\beta_{NE}$, $\beta_{Any Sticker}$, and $\beta_{NE}$+$\beta_{Any Sticker}$+$\beta_{NE\times Any Sticker}$, respectively. Significance from testing equal willingness to pay of expert and non-expert wives in control ($\beta_{NE}=0$) or in the sticker treatments ($\beta_{NE}$+$\beta_{NE\times Any Sticker}=0$). $p<0.10^*, p<0.05^{**}, p<0.01^{***}$. The p-values on the interactions ``Any Sticker $\times$ Salience'' and ``Non-Expert $\times$ Any Sticker $\times$ Salience'' in the fully interacted model are 0.89 and 0.77, respectively.
+\end{flushleft}
+\end{footnotesize}
+\end{figure}
+\vspace{-0.6cm}
+
+\begin{table}[H]
+\centering
+	\begin{threeparttable}
+		\caption{Correlations between reputation and transfers from the husband to the wife in the previous two months (MWK) as well as the share of wives who have access to cash and savings}\label{MER_correlations}
+		\vspace{-0.3cm}
+		\begin{tabular}{L{4cm} cc cc | c}
+				\toprule \toprule
+			& \multicolumn{4}{c|}{Avg. transfers in the last two months (MWK)} & Access to cash (\%) \\
+			\cmidrule(lr){2-5} \cmidrule(lr){6-6}	& (1) & (2) & (3) & (4)  & (5)   \\
+			\midrule	
+			\input{./Tables/01_Appendix/Table_A1_correlations.tex}\\
+			\bottomrule
+		\end{tabular}
+		\begin{tablenotes}		
+			\item \textit{Notes}: The table shows results from OLS regressions with Huber-White robust SEs. The data is winsorized at 3 SDs (1.7\% of the data). MER$=$2, MER$=$3, and MER$=$4 are binary variables that take the value 1 if the woman has an MER of 2 (13\%), 3 (31\%), or 4 (52\%) respectively. Access to cash is an indicator that takes the value 1 if the husband reports that his wife has ``access to cash and savings''. The regressions control for the wife and the husband's age, education, average income in the last two months (as reported by the husband), variability of income (whether income is the same in most months or varies a lot), risk preferences, math, and raven scores, as well as years married, number of children and household members and enumerator fixed effects. 
+		\end{tablenotes}
+	\end{threeparttable}
+  \end{table}
+\vspace{-0.5cm}
+\begin{table}[H]
+\centering
+\begin{adjustbox}{width=0.9\textwidth}
+	\begin{threeparttable}
+		\caption{Transfer experiment: Effect of reputation salience on amount (\%) transferred from the husband to the wife}\label{experiment1_robustness}
+		\begin{tabular}{L{8.5cm} cccccc }
+			\toprule 	\toprule
+			& (1) & (2) & (3) & (4) & (5) & (6)  \\
+			\midrule	
+			\input{./Tables/01_Appendix/Table_A2_robustness.tex}\\
+			\midrule
+			Benchmark specification from \autoref{experiment1_main} & \checkmark &  &  & & &  \\
+			Including controls &  & \checkmark &  & & & \\
+			Testing for experimenter demand effect & & & \checkmark & & & \\
+			Testing for effect of the husband's mood &  & & &\checkmark & & \\
+   			Testing for effect of wife's income &  & & & & \checkmark & \\
+			Testing for effect of children &  & & & & & \checkmark \\
+			\bottomrule
+		\end{tabular}
+		\begin{tablenotes}		
+			\item \textit{Notes}: The table shows results from OLS regressions with Huber-White robust SEs. All regressions include enumerator, compensation and version fixed effects. Market Expertise Reputation (MER) defined as before. Column 2 tests for robustness when including additional controls (see \autoref{MER_correlations} notes for the list of controls). Column 3 tests for experimenter demand effects by assessing the impact of the salience treatment by the wife's General Ability Reputation (GAR). GAR is the normalized mean of the husband's beliefs about the wife's correct answers in a math test, and a raven game. Low GAR is a binary variable that takes the value 1 if the woman has a General Ability Reputation below the median, and 0 otherwise. Column 4 tests whether the salience treatment works through making husbands angrier by assessing the impact of the salience treatment by the husband's General Ability Reputation (GAR). This is the normalized mean of the husband's beliefs about his correct answers in a math test and a raven game. Low Husband GAR is a binary variable that takes the value 1 if the husband has a general ability reputation below the median, and 0 otherwise. Columns 5 and 6 test whether the salience treatment works through other characteristics of the household/match, specifically, whether the wife has an income or the couple has fewer than three children.
+		\end{tablenotes}
+	\end{threeparttable}
+\end{adjustbox}
+\end{table}
+
+\begin{landscape}
+\vspace{-1.5cm}
+\begin{table}[p]
+\centering
+\begin{adjustbox}{width=1.25\textwidth}
+	\begin{threeparttable}
+		\caption{Outcomes in the signaling experiment}\label{quality_results}
+		\begin{tabular}{L{11cm} ccc | cccc | c}
+					\toprule 	\toprule
+		    & \multicolumn{3}{c|}{Whole sample} & \multicolumn{4}{c|}{Participation sample} & \multicolumn{1}{c}{Whole sample} \\
+		   & \multicolumn{3}{c|}{(N=1093)} & \multicolumn{4}{c|}{(N=786)} & \multicolumn{1}{c}{(N=1093)} \\
+		    \midrule
+		    \midrule
+		    & \multicolumn{8}{c}{Panel A: By price and low perceived score} \\
+			\midrule
+			& Initial & Participate & Forgone & Initial & \# Errors & Hiding & Final & Total  \\
+			& score & (\%) & comp. & score & corrected & fee & score & forgone  \\
+			\midrule
+			& (1) & (2) & (3) & (4) & (5) & (6) & (7) & (8)   \\
+			\midrule
+			\input{./Tables/01_Appendix/Table_A3/Panel_A_perceived_score_sparse.tex}\\
+			\bottomrule
+			\midrule
+			& \multicolumn{8}{c}{Panel B: By price and difficulty of the quiz} \\
+\midrule
+			& Initial & Participate & Forgone & Initial & \# Errors & Hiding & Final & Total  \\
+			& score & (\%) & comp. & score & corrected & fee & score & forgone  \\
+			\midrule
+			& (1) & (2) & (3) & (4) & (5) & (6) & (7) & (8)   \\
+			\midrule			
+			\input{./Tables/01_Appendix/Table_A3/Panel_B_hard_version_sparse.tex}\\
+			\bottomrule
+		\end{tabular}
+		\begin{tablenotes}		
+			\item \textit{Notes}: The table shows results from OLS regressions with Huber-White robust SEs. Non-Expert is an indicator that takes the value 1 if the wife reports an average weighted score that is lower than 5 (39\% of women). The weighted average is calculated as the average across all scores, weighted by the probability assigned to each score by the woman (each woman placed 10 beans on the 7 different scores). Forgone comp. is the amount of money wives left on the table by opting out of the game. All regressions include enumerator and compensation fixed effects. The p-value is the p-value from a Wald test comparing outcomes between Non-Expert and Expert wives or between the hard and the easy version when the hiding cost is high. 
+		\end{tablenotes}
+	\end{threeparttable}
+	\end{adjustbox}
+  \end{table}      
+\end{landscape}	
+
+\begin{table}[H]
+\centering
+\begin{adjustbox}{width=\textwidth}
+	\begin{threeparttable}
+		\caption{Market experiment: Willingness to pay, by wife's expertise}\label{market_results}
+		\begin{tabular}{L{9cm} cccccc ccc}
+			\toprule 	\toprule 
+			& (1) & (2) & (3) & (4) & (5) & (6) & (7) & (8) & (9)  \\
+			\midrule	
+			\input{./Tables/01_Appendix/Table_A4_math.tex}\\
+			\bottomrule
+			Market FE &  & \checkmark & \checkmark &  & \checkmark & \checkmark &  & \checkmark & \checkmark \\
+			Controls &  &  & \checkmark &  &  & \checkmark &  &  & \checkmark\\
+			\bottomrule		
+			\end{tabular}
+		\begin{tablenotes}	
+		\item \textit{Notes}: The table shows results from OLS regressions with Huber-White robust SEs. The dependent variable is the willingness to pay in Malawian Kwacha. Non-Expert is an indicator that takes the value 1 if the wife reports that her husband has a  prior about her math score below 5 (44\%). All regressions include enumerator fixed effects. Market fixed effects are dummies for the different markets in which the enumerators recruited married women. Controls include the wife's age, education, average income in the last and previous month, risk preferences, math score, as well as the husband's average income in the last and previous month, years married, and the number of children and household members.
+		\end{tablenotes}
+	\end{threeparttable}
+	\end{adjustbox}
+  \end{table}
+
+\newpage
+\appendix
+\input{Online_appendix}
+
+\end{document}
